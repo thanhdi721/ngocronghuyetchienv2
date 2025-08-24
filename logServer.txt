@@ -1,0 +1,19 @@
+Xuat hien boss gau tuong cop mapName=Rừng Bamboo zoneId=2: 17h50 24/08/2025
+Name=Kamin zoneId=8 mapName=Hành tinh ngục tù: 17h50 24/08/2025
+Name=Oren zoneId=8 mapName=Hành tinh ngục tù: 17h50 24/08/2025
+Name=Tiểu đội trưởng zoneId=0 mapName=Núi khỉ đỏ: 17h51 24/08/2025
+Name=Số 1 zoneId=0 mapName=Núi khỉ đỏ: 17h51 24/08/2025
+Name=Số 2 zoneId=0 mapName=Núi khỉ đỏ: 17h51 24/08/2025
+Name=Số 3 zoneId=0 mapName=Núi khỉ đỏ: 17h51 24/08/2025
+Name=Số 4 zoneId=0 mapName=Núi khỉ đỏ: 17h51 24/08/2025
+Name=Fide Đại Ca 1 zoneId=9 mapName=Núi khỉ vàng: 17h51 24/08/2025
+Name=Android 19 zoneId=0 mapName=Cao nguyên: 17h52 24/08/2025
+Name=Dr.Kôrê zoneId=0 mapName=Cao nguyên: 17h52 24/08/2025
+Name=Android 15 zoneId=12 mapName=Sân sau siêu thị: 17h52 24/08/2025
+Name=Android 14 zoneId=12 mapName=Sân sau siêu thị: 17h52 24/08/2025
+Name=Pic zoneId=0 mapName=Ngọn núi phía bắc: 17h52 24/08/2025
+Name=Poc zoneId=0 mapName=Ngọn núi phía bắc: 17h52 24/08/2025
+Name=King Kong zoneId=0 mapName=Ngọn núi phía bắc: 17h52 24/08/2025
+Name=Xên bọ hung zoneId=9 mapName=Thị trấn Ginder: 17h52 24/08/2025
+Name=Xên hoàn thiện zoneId=5 mapName=Võ đài Xên bọ hung: 17h52 24/08/2025
+Name=Black Goku zoneId=1 mapName=Thành phố phía nam: 17h53 24/08/2025

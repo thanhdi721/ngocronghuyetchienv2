@@ -1,0 +1,211 @@
+package dragon.v;
+
+import dragon.object.Char;
+import dragon.object.Map;
+import dragon.object.ZoneMap;
+import dragon.server.mResources;
+import dragon.t.Player;
+import dragon.u.Util;
+import java.util.ArrayList;
+
+/**
+ *
+ * @author TGDD
+ */
+public class BWar {
+    
+    public BWar(int bId, String name, boolean removeAtTheEnd, ZoneMap zone) {
+        this.removeAtTheEnd = removeAtTheEnd;
+        this.bId = bId;
+        this.name = name;
+        this.zone = zone;
+    }
+    
+    public int bId;
+    public final ArrayList<Char> ARRPLAYER = new ArrayList<>();
+    public final ArrayList<Char> ARRPLAYERLOSS = new ArrayList<>();
+    public boolean isWar;
+    public String name;
+    public ZoneMap zone;
+    public boolean removeAtTheEnd;
+    
+    public static final ArrayList<BWar> ARRBWAR = new ArrayList<>();
+    
+    private static final ArrayList<BWar> ARRBWAR2 = new ArrayList<>();
+    
+    public static void add(BWar b) {
+        synchronized(ARRBWAR) {
+            ARRBWAR.add(b);
+        }
+    }
+    
+    public static void remove(BWar b) {
+        synchronized(ARRBWAR) {
+            ARRBWAR.remove(b);
+        }
+    }
+    
+    public static void addBWar(int bId, String name, boolean removeAtTheEnd, ZoneMap zone) {
+        BWar b = new BWar(bId, name, removeAtTheEnd, zone);
+        add(b);
+    }
+    
+    public static void update() {
+        ARRBWAR2.clear();
+        synchronized(ARRBWAR) {
+            for (int i = 0; i < ARRBWAR.size(); i++) {
+                ARRBWAR2.add(ARRBWAR.get(i));
+            }
+        }
+        for (int i = 0; i < ARRBWAR2.size(); i++) {
+            BWar bWar = ARRBWAR2.get(i);
+            //war
+            if (bWar.isWar) {
+                if (bWar.bId == 1) {
+                    if (bWar.ARRPLAYER.get(1).gameTick % 20 == 0 && !bWar.ARRPLAYER.get(1).isMove) {
+                        //son tinh chay
+                        int xTo = bWar.ARRPLAYER.get(1).cx + Util.gI().nextInt(-150, 150);
+                        if (xTo > bWar.ARRPLAYER.get(1).zoneMap.mapTemplate.pxw - 50) {
+                            xTo = bWar.ARRPLAYER.get(1).zoneMap.mapTemplate.pxw - 50;
+                        }
+                        if (xTo < 50) {
+                            xTo = 50;
+                        }
+                        bWar.ARRPLAYER.get(1).setMove(0, xTo, 150, 50, 1, 200);
+                    }
+                    if (bWar.ARRPLAYER.get(1).gameTick % 150 == 0) {
+                        //thuy tinh doi mi nuong
+                        bWar.ARRPLAYER.get(0).addChat(1, mResources.THUY_TINH_CHAT1);
+                        //son tinh thach
+                        bWar.ARRPLAYER.get(1).addChat(1, mResources.SON_TINH_CHAT1);
+                    }
+                    if (bWar.ARRPLAYER.get(1).gameTick % 250 == 0) {
+                        //thuy tinh goi nuoc
+                        bWar.ARRPLAYER.get(0).addChat(1, mResources.THUY_TINH_CHAT2);
+                        //son tinh thach
+                        bWar.ARRPLAYER.get(1).addChat(1, mResources.SON_TINH_CHAT2);
+                    }
+                }
+                if (bWar.bId == 2) {
+                    if (bWar.ARRPLAYER.get(0).gameTick % 20 == 0 && !bWar.ARRPLAYER.get(0).isMove && !bWar.ARRPLAYER.get(0).isChuyenMap && bWar.ARRPLAYER.get(0).stealCharId == -1) {
+                        //di lai
+                        int xTo = Util.gI().nextInt(50, bWar.ARRPLAYER.get(0).zoneMap.mapTemplate.pxw - 50);
+                        bWar.ARRPLAYER.get(0).setMove(0, xTo, 150, 50, 1, 200);
+                    }
+                    //Chuyen map or khu
+                    if (!bWar.ARRPLAYER.get(0).isStand() && bWar.ARRPLAYER.get(0).isChuyenMap) {
+                        bWar.ARRPLAYER.get(0).isChuyenMap = false;
+                        bWar.ARRPLAYER.get(0).isSteal = true;
+                        kiemtra:
+                        {
+                            //tim map uu tien dong nguoi
+                            int num2 = 0;
+                            int max = 500;
+                            while(num2++ < max) {
+                                try {
+                                    Map map = Map.getMapServer(Util.gI().nextInt(Map.MAPS_SERVER.size()));
+                                    if (map.isMapThuong() || map.isMapNappa() || map.isMapCold1() || map.isMapTL()) {
+                                        ZoneMap zone = map.zones.get(Util.gI().nextInt(map.zones.size()));
+                                        if (zone.countBossById(138) > 0 || bWar.ARRPLAYER.get(0).zoneMap == zone) {
+                                            continue;
+                                        }
+                                        if (num2 < max / 1.5) {
+                                            Char player = zone.getPLayerNotAI();
+                                            if (player != null) {
+                                                bWar.ARRPLAYER.get(0).zoneMap.exit(bWar.ARRPLAYER.get(0), 0);
+                                                zone.join(bWar.ARRPLAYER.get(0), 0, player.cx, player.cy);
+                                                break kiemtra;
+                                            }
+                                        } else {
+                                            bWar.ARRPLAYER.get(0).zoneMap.exit(bWar.ARRPLAYER.get(0), 0);
+                                            zone.join(bWar.ARRPLAYER.get(0), 0, 120, 150);
+                                            break kiemtra;
+                                        }
+                                    }
+                                } catch (Exception e) {
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            if (!bWar.isWar) {
+                //clear
+                if (!bWar.ARRPLAYER.isEmpty()) {
+                    for (int j = 0; j < bWar.ARRPLAYER.size(); j++) {
+                        bWar.ARRPLAYER.get(j).timeClear = 0;
+                    }
+                    bWar.ARRPLAYER.clear();
+                }
+                //clear or continue
+                if (bWar.removeAtTheEnd) {
+                    remove(bWar);
+                } else {
+                    //son tinh thuy tinh
+                    if (bWar.bId == 1) {
+                        
+                        int[] arrMap = new int[] {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 42, 43, 44};
+                        //thuy tinh, son tinh
+                        kiemtra:
+                        {
+                            //Tim map and khu
+                            int num2 = 0;
+                            while(num2++ < 50) {
+                                try {
+                                    Map map = Map.getMapServer(arrMap[Util.gI().nextInt(arrMap.length)]);
+//                                    Map map = Map.getMapServer(0);
+                                    //xuat hien uu tien cac khu truoc
+                                    ZoneMap zone = map.zones.get(Util.gI().nextInt(Util.gI().nextInt(Util.gI().nextInt(20))));
+                                    if (zone.countBossById(136) > 0) {
+                                        continue;
+                                    }
+                                    //thuy tinh
+                                    bWar.ARRPLAYER.add(Player.addBoss(136, 0, -1, -1, true, Util.gI().nextInt(50, zone.mapTemplate.pxw - 50), 150, zone, -1, -1));
+                                    bWar.ARRPLAYER.get(0).bWar = bWar;
+                                    bWar.ARRPLAYER.get(0).changeFlag(1);
+                                    //son tinh
+                                    bWar.ARRPLAYER.add(Player.addBoss(137, 0, -1, -1, true, Util.gI().nextInt(50, zone.mapTemplate.pxw - 50), 150, zone, -1, -1));
+                                    bWar.ARRPLAYER.get(1).bWar = bWar;
+                                    bWar.ARRPLAYER.get(1).changeFlag(2);
+                                    bWar.isWar = true;
+                                    break kiemtra;
+                                } catch (Exception e) {
+                                }
+                            }
+                            bWar.removeAtTheEnd = true;
+                        }
+                    }
+                    //an trom
+                    if (bWar.bId == 2) {
+                        kiemtra:
+                        {
+                            //Tim map and khu
+                            int num2 = 0;
+                            while(num2++ < 50) {
+                                try {
+                                    Map map = Map.getMapServer(Util.gI().nextInt(Map.MAPS_SERVER.size()));
+                                    if (map.isMapThuong() || map.isMapNappa() || map.isMapCold1() || map.isMapTL()) {
+                                        ZoneMap zone = map.zones.get(Util.gI().nextInt(map.zones.size()));
+                                        if (zone.countBossById(138) > 0) {
+                                            continue;
+                                        }
+                                        //an trom
+                                        bWar.ARRPLAYER.add(Player.addBoss(138, 5, -1, -1, false, Util.gI().nextInt(50, zone.mapTemplate.pxw - 50), 150, null, -1, -1));
+                                        bWar.ARRPLAYER.get(0).cName = bWar.name;
+                                        bWar.ARRPLAYER.get(0).bWar = bWar;
+                                        bWar.isWar = true;
+                                        zone.join(bWar.ARRPLAYER.get(0), 0, -1, -1);
+                                        break kiemtra;
+                                    }
+                                } catch (Exception e) {
+                                }
+                            }
+                            bWar.removeAtTheEnd = true;
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+}
