@@ -1,5 +1,7 @@
 package dragon.object;
 
+import dragon.a.AnhSangHandler;
+import dragon.a.BongToiHandler;
 import dragon.server.Server;
 import dragon.u.Util;
 import dragon.server.mResources;
@@ -19,7 +21,7 @@ import java.util.stream.Collectors;
 public class Combine {
 
     public static int[] percent_plh = new int[]{50, 20, 10, 5, 3, 1, 1, 1};
-    public static int[] coin_plh = new int[]{50000000, 60000000, 80000000, 120000000, 150000000, 200000000, 300000000, 400000000};
+        public static int[] coin_plh = new int[]{50000000, 60000000, 80000000, 120000000, 180000000, 230000000, 400000000, 500000000};
     public static int[] ngoc_phl = new int[]{1, 2, 3, 4, 5, 6, 7, 30};
 
     public static int ngoc_ep = 10;
@@ -44,6 +46,28 @@ public class Combine {
         {16, 15},
         {15, 14}
     };
+    
+        //bong toi hoa | anh sang hoa
+    public static int[] percent_bongtoi_anhsang_tb = new int[]{70, 40, 25, 10, 5, 3, 1, 1, 1, 1};
+    static List<Integer> type_item_can_bongtoi_or_anhsang_tb = Arrays.asList(0, 1, 2, 3, 4, 5);
+    static List<Integer> option_item_bongtoi = Arrays.asList(247, 248, 249);
+    static List<Integer> option_item_anhsang = Arrays.asList(251, 252, 253);
+    public static int[] vang_bongtoi_anhsang_tb = new int[]{10000000, 30000000, 50000000, 80000000, 100000000, 150000000, 200000000, 400000000, 400000000, 400000000};
+    public static int[] ngoc_bongtoi_anhsang_tb = new int[]{10, 20, 30, 50, 70, 90, 100, 120, 140, 200};
+    public static int[] da_bongtoi_anhsang_tb = new int[]{15, 25, 40, 60, 80, 80, 100, 110, 120, 120};
+    public static int max_level_bongtoi_anhsang_tb = 10;
+
+    public static int ngoc_tay_thuoc_tinh = 100;
+    public static int so_da_tay_thuoc_tinh = 50;
+
+    public static int id_da_bong_toi = 2038;
+    public static int id_da_anh_sang = 2039;
+    public static int id_option_bong_toi_level = 250;
+    public static int id_option_anh_sang_level = 254;
+    public static int id_dinh_hon_thach = 2040;
+
+    public static int id_tinh_the_hac_am = 2036;
+    public static int id_tinh_the_thanh_quang = 2037;
 
     public static int idOption(int type) {
         int id = -1;
@@ -88,6 +112,243 @@ public class Combine {
     }
 
     public static void Combine(Char charz, byte action, Item[] items) {
+        if (charz.menuBoard.typeInfo == 530) {
+            if (items != null && items.length == 2 && items[0] != null && items[1] != null) {
+                Item daBongToi;
+                Item trangBi;
+                int currLevelTB = 0;
+                if (items[0].template.id == id_da_bong_toi && isItemCanBongToiOrAnhSangHoa(items[1])) {
+                    daBongToi = items[0];
+                    trangBi = items[1];
+                } else if (items[1].template.id == id_da_bong_toi && isItemCanBongToiOrAnhSangHoa(items[0])) {
+                    daBongToi = items[1];
+                    trangBi = items[0];
+                } else {
+                    charz.session.service.startOKDlg(mResources.TRANGBI_O_PHU_HOP);
+                    return;
+                }
+                if (getItemAnhSangLevel(trangBi) > 0) {
+                    charz.session.service.startOKDlg(mResources.KHONG_DUOC_BONG_TOI_HOA);
+                    return;
+                }
+                currLevelTB = getItemBongToiLevel(trangBi) + 1;
+                if (currLevelTB >= max_level_bongtoi_anhsang_tb) {
+                    charz.session.service.startOKDlg(mResources.MAX_BONG_TOI_HOA);
+                    return;
+                }
+
+                int percent = percent_bongtoi_anhsang_tb[currLevelTB - 1];
+                int coin = vang_bongtoi_anhsang_tb[currLevelTB - 1];
+                int ngoc = ngoc_bongtoi_anhsang_tb[currLevelTB - 1];
+                int soluongdabongtoi = da_bongtoi_anhsang_tb[currLevelTB - 1];
+                charz.resetMenu();
+
+                if (charz.getXu() < coin) {
+                    charz.menuBoard.chat = String.format(mResources.SAY_INFO_BONG_TOI_HOA, trangBi.template.name, currLevelTB, Util.gI().numberTostring(coin), ngoc, soluongdabongtoi, percent);
+                    charz.menuBoard.arrMenu.add(new MenuInfo(String.format(mResources.CONTHIEU_VANG, Util.gI().numberTostring(coin - charz.xu)), -1));
+                } else if (charz.getLuong() < ngoc) {
+                    charz.menuBoard.chat = String.format(mResources.SAY_INFO_BONG_TOI_HOA, trangBi.template.name, currLevelTB, Util.gI().numberTostring(coin), ngoc, soluongdabongtoi, percent);
+                    charz.menuBoard.arrMenu.add(new MenuInfo(String.format(mResources.CONTHIEU_NGOC, (ngoc - charz.luong)), -1));
+                } else if (charz.getQuantityITem(daBongToi.template.id) < soluongdabongtoi) {
+                    charz.menuBoard.chat = String.format(mResources.SAY_INFO_BONG_TOI_HOA, trangBi.template.name, currLevelTB, Util.gI().numberTostring(coin), ngoc, soluongdabongtoi, percent);
+                    charz.menuBoard.arrMenu.add(new MenuInfo(String.format(mResources.CONTHIEU_ITEM_1, (soluongdabongtoi - charz.getQuantityITem(daBongToi.template.id)), daBongToi.template.name), -1));
+                } else if (charz.getXu() >= coin && charz.getLuong() >= ngoc && charz.getQuantityITem(daBongToi.template.id) >= soluongdabongtoi) {
+                    charz.arrItem = items;
+                    charz.menuBoard.chat = String.format(mResources.SAY_INFO_BONG_TOI_HOA, trangBi.template.name, currLevelTB, Util.gI().numberTostring(coin), ngoc, soluongdabongtoi, percent);
+                    charz.menuBoard.arrMenu.add(new MenuInfo(mResources.NANG_CAP_BONG_TOI_HOA, -530, 1));
+                    charz.menuBoard.arrMenu.add(new MenuInfo(mResources.NANG_CAP_BONG_TOI_HOA_X10, -530, 10));
+                    charz.menuBoard.arrMenu.add(new MenuInfo(mResources.REFUSE, 530));
+                }
+                charz.menuBoard.openUIConfirm(charz.menuBoard.npcId, null, null, -1);
+            } else {
+                charz.session.service.startOKDlg(mResources.TRANG_BI_THIEU_K_PHU_HOP);
+                return;
+            }
+            charz.menuBoard.typeInfo = 530;
+        }
+        // </editor-fold>
+
+        // <editor-fold defaultstate="collapsed" desc="Tẩy Thuộc Tính Bóng Tối Hoá">
+        //tay bong toi hoa
+        if (charz.menuBoard.typeInfo == 531) {
+            //2 lựa chọn: tẩy hết (giảm hết) hoặc tẩy ngẫu nhiên 1 chỉ số (giảm 1 cấp)
+            if (items != null && items.length == 2 && items[0] != null && items[1] != null) {
+                Item daAnhSang;
+                Item trangBi;
+                if (items[0].template.id == id_da_anh_sang && isItemCanBongToiOrAnhSangHoa(items[1])) {
+                    daAnhSang = items[0];
+                    trangBi = items[1];
+                } else if (items[1].template.id == id_da_anh_sang && isItemCanBongToiOrAnhSangHoa(items[0])) {
+                    daAnhSang = items[1];
+                    trangBi = items[0];
+                } else {
+                    charz.session.service.startOKDlg(mResources.TRANGBI_O_PHU_HOP);
+                    return;
+                }
+                if (getItemBongToiLevel(trangBi) < 1) {
+                    charz.session.service.startOKDlg(mResources.TRANGBI_O_PHU_HOP);
+                    return;
+                } else if (getItemAnhSangLevel(trangBi) > 0) {
+                    charz.session.service.startOKDlg(mResources.TRANGBI_O_PHU_HOP);
+                    return;
+                }
+
+                charz.resetMenu();
+
+                if (charz.getLuong() < ngoc_tay_thuoc_tinh) {
+                    charz.menuBoard.chat = String.format(mResources.SAY_INFO_TAY_BONG_TOI, ngoc_tay_thuoc_tinh, so_da_tay_thuoc_tinh);
+                    charz.menuBoard.arrMenu.add(new MenuInfo(String.format(mResources.CONTHIEU_NGOC, (ngoc_tay_thuoc_tinh - charz.luong)), -1));
+                } else if (charz.getQuantityITem(daAnhSang.template.id) < so_da_tay_thuoc_tinh) {
+                    charz.menuBoard.chat = String.format(mResources.SAY_INFO_TAY_BONG_TOI, ngoc_tay_thuoc_tinh, so_da_tay_thuoc_tinh);
+                    charz.menuBoard.arrMenu.add(new MenuInfo(String.format(mResources.CONTHIEU_ITEM_1, (so_da_tay_thuoc_tinh - charz.getQuantityITem(daAnhSang.template.id)), daAnhSang.template.name), -1));
+                } else if (charz.getLuong() >= ngoc_tay_thuoc_tinh && charz.getQuantityITem(daAnhSang.template.id) >= so_da_tay_thuoc_tinh) {
+                    charz.arrItem = items;
+                    charz.menuBoard.chat = String.format(mResources.SAY_INFO_TAY_BONG_TOI, ngoc_tay_thuoc_tinh, so_da_tay_thuoc_tinh);
+                    charz.menuBoard.arrMenu.add(new MenuInfo(mResources.TAY_BONG_TOI_1_LAN, -531, 1));
+                    charz.menuBoard.arrMenu.add(new MenuInfo(mResources.TAY_BONG_TOI_ALL, -531, 2));
+                    charz.menuBoard.arrMenu.add(new MenuInfo(mResources.REFUSE, 531));
+                }
+                charz.menuBoard.openUIConfirm(charz.menuBoard.npcId, null, null, -1);
+            } else {
+                charz.session.service.startOKDlg(mResources.TRANG_BI_THIEU_K_PHU_HOP);
+                return;
+            }
+            charz.menuBoard.typeInfo = 531;
+        }
+        // </editor-fold>
+
+        // <editor-fold defaultstate="collapsed" desc="Ánh Sáng Hoá">
+        if (charz.menuBoard.typeInfo == 532) {
+            if (items != null && items.length == 2 && items[0] != null && items[1] != null) {
+                Item daAnhSang;
+                Item trangBi;
+                int currLevelTB = 0;
+                if (items[0].template.id == id_da_anh_sang && isItemCanBongToiOrAnhSangHoa(items[1])) {
+                    daAnhSang = items[0];
+                    trangBi = items[1];
+                } else if (items[1].template.id == id_da_anh_sang && isItemCanBongToiOrAnhSangHoa(items[0])) {
+                    daAnhSang = items[1];
+                    trangBi = items[0];
+                } else {
+                    charz.session.service.startOKDlg(mResources.TRANGBI_O_PHU_HOP);
+                    return;
+                }
+                if (getItemBongToiLevel(trangBi) > 0) {
+                    charz.session.service.startOKDlg(mResources.KHONG_DUOC_ANH_SANG_HOA);
+                    return;
+                }
+                currLevelTB = getItemAnhSangLevel(trangBi) + 1;
+                if (currLevelTB >= max_level_bongtoi_anhsang_tb) {
+                    charz.session.service.startOKDlg(mResources.MAX_ANH_SANG_HOA);
+                    return;
+                }
+
+                int percent = percent_bongtoi_anhsang_tb[currLevelTB - 1];
+                int coin = vang_bongtoi_anhsang_tb[currLevelTB - 1];
+                int ngoc = ngoc_bongtoi_anhsang_tb[currLevelTB - 1];
+                int soluongdabongtoi = da_bongtoi_anhsang_tb[currLevelTB - 1];
+                charz.resetMenu();
+
+                if (charz.getXu() < coin) {
+                    charz.menuBoard.chat = String.format(mResources.SAY_INFO_ANH_SANG_HOA, trangBi.template.name, currLevelTB, Util.gI().numberTostring(coin), ngoc, soluongdabongtoi, percent);
+                    charz.menuBoard.arrMenu.add(new MenuInfo(String.format(mResources.CONTHIEU_VANG, Util.gI().numberTostring(coin - charz.xu)), -1));
+                } else if (charz.getLuong() < ngoc) {
+                    charz.menuBoard.chat = String.format(mResources.SAY_INFO_ANH_SANG_HOA, trangBi.template.name, currLevelTB, Util.gI().numberTostring(coin), ngoc, soluongdabongtoi, percent);
+                    charz.menuBoard.arrMenu.add(new MenuInfo(String.format(mResources.CONTHIEU_NGOC, (ngoc - charz.luong)), -1));
+                } else if (charz.getQuantityITem(daAnhSang.template.id) < soluongdabongtoi) {
+                    charz.menuBoard.chat = String.format(mResources.SAY_INFO_ANH_SANG_HOA, trangBi.template.name, currLevelTB, Util.gI().numberTostring(coin), ngoc, soluongdabongtoi, percent);
+                    charz.menuBoard.arrMenu.add(new MenuInfo(String.format(mResources.CONTHIEU_ITEM_1, (soluongdabongtoi - charz.getQuantityITem(daAnhSang.template.id)), daAnhSang.template.name), -1));
+                } else if (charz.getXu() >= coin && charz.getLuong() >= ngoc && charz.getQuantityITem(daAnhSang.template.id) >= soluongdabongtoi) {
+                    charz.arrItem = items;
+                    charz.menuBoard.chat = String.format(mResources.SAY_INFO_ANH_SANG_HOA, trangBi.template.name, currLevelTB, Util.gI().numberTostring(coin), ngoc, soluongdabongtoi, percent);
+                    charz.menuBoard.arrMenu.add(new MenuInfo(mResources.NANG_CAP_ANH_SANG_HOA, -532, 1));
+                    charz.menuBoard.arrMenu.add(new MenuInfo(mResources.NANG_CAP_ANH_SANG_HOA_X10, -532, 10));
+                    charz.menuBoard.arrMenu.add(new MenuInfo(mResources.REFUSE, 532));
+                }
+                charz.menuBoard.openUIConfirm(charz.menuBoard.npcId, null, null, -1);
+            } else {
+                charz.session.service.startOKDlg(mResources.TRANG_BI_THIEU_K_PHU_HOP);
+                return;
+            }
+            charz.menuBoard.typeInfo = 532;
+        }
+        // </editor-fold>
+
+        // <editor-fold defaultstate="collapsed" desc="Tẩy Thuộc Tính Ánh Sáng Hoá">
+        //tay anh sang hoa
+        if (charz.menuBoard.typeInfo == 533) {
+            //2 lựa chọn: tẩy hết (giảm hết) hoặc tẩy ngẫu nhiên 1 chỉ số (giảm 1 cấp)
+            if (items != null && items.length == 2 && items[0] != null && items[1] != null) {
+                Item daBongToi;
+                Item trangBi;
+                if (items[0].template.id == id_da_bong_toi && isItemCanBongToiOrAnhSangHoa(items[1])) {
+                    daBongToi = items[0];
+                    trangBi = items[1];
+                } else if (items[1].template.id == id_da_bong_toi && isItemCanBongToiOrAnhSangHoa(items[0])) {
+                    daBongToi = items[1];
+                    trangBi = items[0];
+                } else {
+                    charz.session.service.startOKDlg(mResources.TRANGBI_O_PHU_HOP);
+                    return;
+                }
+                if (getItemBongToiLevel(trangBi) > 0) {
+                    charz.session.service.startOKDlg(mResources.TRANGBI_O_PHU_HOP);
+                    return;
+                } else if (getItemAnhSangLevel(trangBi) < 1) {
+                    charz.session.service.startOKDlg(mResources.TRANGBI_O_PHU_HOP);
+                    return;
+                }
+
+                charz.resetMenu();
+
+                if (charz.getLuong() < ngoc_tay_thuoc_tinh) {
+                    charz.menuBoard.chat = String.format(mResources.SAY_INFO_TAY_ANH_SANG, ngoc_tay_thuoc_tinh, so_da_tay_thuoc_tinh);
+                    charz.menuBoard.arrMenu.add(new MenuInfo(String.format(mResources.CONTHIEU_NGOC, (ngoc_tay_thuoc_tinh - charz.luong)), -1));
+                } else if (charz.getQuantityITem(daBongToi.template.id) < so_da_tay_thuoc_tinh) {
+                    charz.menuBoard.chat = String.format(mResources.SAY_INFO_TAY_ANH_SANG, ngoc_tay_thuoc_tinh, so_da_tay_thuoc_tinh);
+                    charz.menuBoard.arrMenu.add(new MenuInfo(String.format(mResources.CONTHIEU_ITEM_1, (so_da_tay_thuoc_tinh - charz.getQuantityITem(daBongToi.template.id)), daBongToi.template.name), -1));
+                } else if (charz.getLuong() >= ngoc_tay_thuoc_tinh && charz.getQuantityITem(daBongToi.template.id) >= so_da_tay_thuoc_tinh) {
+                    charz.arrItem = items;
+                    charz.menuBoard.chat = String.format(mResources.SAY_INFO_TAY_ANH_SANG, ngoc_tay_thuoc_tinh, so_da_tay_thuoc_tinh);
+                    charz.menuBoard.arrMenu.add(new MenuInfo(mResources.TAY_ANH_SANG_1_LAN, -533, 1));
+                    charz.menuBoard.arrMenu.add(new MenuInfo(mResources.TAY_ANH_SANG_ALL, -533, 2));
+                    charz.menuBoard.arrMenu.add(new MenuInfo(mResources.REFUSE, 533));
+                }
+                charz.menuBoard.openUIConfirm(charz.menuBoard.npcId, null, null, -1);
+            } else {
+                charz.session.service.startOKDlg(mResources.TRANG_BI_THIEU_K_PHU_HOP);
+                return;
+            }
+            charz.menuBoard.typeInfo = 533;
+        }
+        // </editor-fold>
+
+        // </editor-fold>        
+        //Tịnh hoá tinh thể ám/quang
+        if (charz.menuBoard.typeInfo == 534) {
+            if (items.length == 1) {
+                if (items[0] != null && (items[0].template.id == id_tinh_the_hac_am || items[0].template.id == id_tinh_the_thanh_quang)) {
+                    if (charz.getEmptyBagIndex() == -1) {
+                        charz.session.service.startOKDlg(mResources.TRANG_BI_THIEU_K_PHU_HOP);
+                    } else {
+                        charz.arrItem = items;
+                        if (items[0].quantity < 4) {
+                            charz.session.service.startOKDlg(String.format(mResources.KHONG_DU_TINH_THE, items[0].template.name));
+                            return;
+                        }
+                        int soVang = 5000000;
+                        charz.resetMenu();
+                        charz.menuBoard.chat = String.format(mResources.SAY_INFO_GHEP_TINH_THE, items[0].quantity, items[0].template.name, (items[0].quantity / 4), soVang);
+                        charz.menuBoard.arrMenu.add(new MenuInfo(mResources.NANG_CAP_TINH_THE, -534, 0));
+                        charz.menuBoard.arrMenu.add(new MenuInfo(mResources.NANG_CAP_TINH_THE_LIEN_TUC, -534, 1));
+                        charz.menuBoard.openUIConfirm(charz.menuBoard.npcId, null, null, -1);
+                    }
+                }
+            } else {
+                charz.session.service.startOKDlg(mResources.TRANG_BI_THIEU_K_PHU_HOP);
+            }
+            charz.menuBoard.typeInfo = 534;
+        }
         //Lam phep nhap ngoc rong
         if (charz.menuBoard.typeInfo == 27) {
             if (items.length == 1) {
@@ -231,7 +492,6 @@ public class Combine {
                 Item bt = getItem(items, 2026);
                 Item mh = getItem(items, 934);
                 Item dxl = getItem(items, 935);
-
                 int percent = 50;
                 int numMH = 99;
                 int numDXL = 1;
@@ -532,13 +792,13 @@ public class Combine {
                         continue;
                     }
                     int id = item.template.id;
-                    if (id >= 650 && id <= 662) {
+                    if (id >= 555 && id <= 567) {
                         huyDietList.add(item);
                     }
                 }
 
                 if (huyDietList.size() < 3) {
-                    charz.session.service.startOKDlg("Cần đúng 3 món Hủy Diệt.");
+                    charz.session.service.startOKDlg("Cần đúng 3 món Thần Linh.");
                 } else if (charz.xu < 500_000_000) {
                     charz.session.service.startOKDlg("Bạn không đủ 500 triệu vàng để nâng cấp.");
                 } else if (charz.getEmptyBagCount() < 1) {
@@ -567,7 +827,7 @@ public class Combine {
                     if (item != null && item.template != null) { // Kiểm tra null trước khi dùng
                         if (item.template.id == 1988) {
                             danguctu = item;
-                        } else if (item.template.id >= 2013 && item.template.id <= 2021) {
+                        } else if (item.template.id >= 2013 && item.template.id <= 2020) {
                             chan_menh = item;
                         }
                     }
@@ -842,12 +1102,12 @@ public class Combine {
                 continue;
             }
             int id = item.template.id;
-            if (id >= 650 && id <= 662) {
+            if (id >= 555 && id <= 567) {
                 huyDietList.add(item);
             }
         }
         if (huyDietList.size() < 3) {
-            charz.session.service.startOKDlg("Cần  3 món huỷ diệt");
+            charz.session.service.startOKDlg("Cần  3 món thần linh");
             return;
         }
         if (charz.xu < 500_000_000) {
@@ -1332,6 +1592,7 @@ public class Combine {
             }
         }
     }
+
     public static void NangcCapBongTai3(Char charz) {
         if (charz.myPet != null && charz.myPetz().isHopThe > 0) {
             charz.session.service.chatTHEGIOI(mResources.EMPTY, mResources.TACH_HOP_THE, null, 0);
@@ -1442,6 +1703,7 @@ public class Combine {
             charz.session.service.startOKDlg(mResources.NANG_CAP_2);
         }
     }
+
     public static void openOptionBongTai3(Char charz) {
         if (isHaveItem(charz.arrItem, 2026) && isHaveItem(charz.arrItem, 934) && isHaveItem(charz.arrItem, 935) && charz.arrItemBag[charz.arrItem[0].indexUI] == charz.arrItem[0] && charz.arrItemBag[charz.arrItem[1].indexUI] == charz.arrItem[1] && charz.arrItemBag[charz.arrItem[2].indexUI] == charz.arrItem[2]) {
             Item bt = getItem(charz.arrItem, 2026);
@@ -1805,7 +2067,7 @@ public class Combine {
             for (Item item : charz.arrItem) {
                 if (item.template.id == 1988) {
                     Danguctu = item;
-                } else if (item.template.id >= 2013 && item.template.id <= 2021) {
+                } else if (item.template.id >= 2013 && item.template.id <= 2020) {
                     chan_menh = item;
                 }
             }
@@ -1843,14 +2105,14 @@ public class Combine {
             int capChanMenh = chanMenhMoi.template.id - 2013 + 1;
 
             Random random = new Random();
-            List<Integer> advancedOptions = List.of(227, 228, 229);
+            List<Integer> advancedOptions = List.of(50, 77, 103);
             for (ItemOption option : chan_menh.options) {
                 chanMenhMoi.options.add(new ItemOption(option.optionTemplate.id, option.param));
             }
 
             if (capChanMenh == 1) {
                 int randomOption = advancedOptions.get(random.nextInt(advancedOptions.size()));
-                chanMenhMoi.options.add(new ItemOption(randomOption, random.nextInt(7) + 1));
+                chanMenhMoi.options.add(new ItemOption(randomOption, random.nextInt(3) + 1));
 
             } else if (capChanMenh == 2) { // Cấp 3 (ID 1281)
                 ItemOption previousOption = chanMenhMoi.options.stream()
@@ -1865,7 +2127,7 @@ public class Combine {
                         .collect(Collectors.toList());
                 if (!remainingOptions.isEmpty()) {
                     int newOption = remainingOptions.get(random.nextInt(remainingOptions.size()));
-                    chanMenhMoi.options.add(new ItemOption(newOption, random.nextInt(7) + 1)); // Chỉ số từ 1 đến 7%
+                    chanMenhMoi.options.add(new ItemOption(newOption, random.nextInt(3) + 1)); // Chỉ số từ 1 đến 7%
                 }
             } else if (capChanMenh == 4) { // Cấp 5 (ID 1283)
                 List<Integer> remainingOptions = advancedOptions.stream()
@@ -1873,14 +2135,14 @@ public class Combine {
                         .collect(Collectors.toList());
                 if (!remainingOptions.isEmpty()) {
                     int newOption = remainingOptions.get(0);
-                    chanMenhMoi.options.add(new ItemOption(newOption, random.nextInt(7) + 1)); // Chỉ số từ 1 đến 7%
+                    chanMenhMoi.options.add(new ItemOption(newOption, random.nextInt(3) + 1)); // Chỉ số từ 1 đến 7%
                 }
             } else if (capChanMenh >= 5) { // Cấp 6 trở lên (ID 1284+)
                 ItemOption previousOption = chanMenhMoi.options.stream()
                         .filter(option -> advancedOptions.contains(option.optionTemplate.id))
                         .findFirst().orElse(null);
                 if (previousOption != null) {
-                    previousOption.param += 2; // Tăng thêm 2%
+                    previousOption.param += 1; // Tăng thêm 2%
                 }
             }
             charz.addItemBag(chanMenhMoi, indexUI);
@@ -1896,6 +2158,585 @@ public class Combine {
         } else {
             charz.session.service.startOKDlg("Hãy đặt đúng nguyên liệu vào ô nâng cấp.");
         }
+    }
+    static boolean isItemCanBongToiOrAnhSangHoa(Item item) {
+        for (int i = 0; i < type_item_can_bongtoi_or_anhsang_tb.size(); i++) {
+            if (type_item_can_bongtoi_or_anhsang_tb.get(i) == item.template.type) {
+                return true;
+            }
+        }
+        return false;
+    }
+    static int getItemAnhSangLevel(Item item) {
+        if (item != null && item.options.size() > 0) {
+            for (int i = 0; i < item.options.size(); i++) {
+                if (item.options.get(i).optionTemplate.id == id_option_anh_sang_level) {
+                    return item.options.get(i).param;
+                }
+            }
+        }
+        return 0;
+    }
+    static int getItemBongToiLevel(Item item) {
+        if (item != null && item.options.size() > 0) {
+            for (int i = 0; i < item.options.size(); i++) {
+                if (item.options.get(i).optionTemplate.id == id_option_bong_toi_level) {
+                    return item.options.get(i).param;
+                }
+            }
+        }
+        return 0;
+    }
+    
+  public static void bongToiHoaTB(Char charz, int index) {
+    int j = 0;
+    do {
+        if (charz.arrItem.length == 2 && charz.arrItem[0] != null && charz.arrItem[1] != null) {
+            Item trangBi;
+            Item daBongToi;
+            int currLevelTB = 0;
+
+            if (isItemCanBongToiOrAnhSangHoa(charz.arrItem[0]) && charz.arrItem[1].template.id == id_da_bong_toi) {
+                trangBi = charz.arrItem[0];
+                daBongToi = charz.arrItem[1];
+            } else if (charz.arrItem[0].template.id == id_da_bong_toi && isItemCanBongToiOrAnhSangHoa(charz.arrItem[1])) {
+                daBongToi = charz.arrItem[0];
+                trangBi = charz.arrItem[1];
+            } else {
+                charz.session.service.startOKDlg(mResources.TRANGBI_O_PHU_HOP);
+                return;
+            }
+
+            if (getItemAnhSangLevel(trangBi) > 0) {
+                charz.session.service.startOKDlg(mResources.KHONG_DUOC_BONG_TOI_HOA);
+                return;
+            }
+
+            currLevelTB = getItemBongToiLevel(trangBi) + 1;
+            if (currLevelTB >= max_level_bongtoi_anhsang_tb) {
+                charz.session.service.startOKDlg(mResources.MAX_BONG_TOI_HOA);
+                return;
+            }
+
+            int percent = percent_bongtoi_anhsang_tb[currLevelTB - 1];
+            int coin = vang_bongtoi_anhsang_tb[currLevelTB - 1];
+            int ngoc = ngoc_bongtoi_anhsang_tb[currLevelTB - 1];
+            int soluongDaBongToi = da_bongtoi_anhsang_tb[currLevelTB - 1];
+
+            // ---- CHECK ĐẦU VÀO AN TOÀN (tránh NPE)
+            if (daBongToi == null || daBongToi.template == null) {
+                charz.session.service.sendThongBao(charz, mResources.THIEU_DA_BONG_TOI_HOA);
+                break;
+            }
+
+            if (charz.xu < coin) {
+                charz.session.service.sendThongBao(charz, mResources.THIEU_VANG_BONG_TOI_HOA);
+                break;
+            } else if (ngoc > charz.getLuong()) {
+                charz.session.service.sendThongBao(charz, mResources.THIEU_NGOC_BONG_TOI_HOA);
+                break;
+            } else if (soluongDaBongToi > charz.getItemBagQuantityById(daBongToi.template.id)) {
+                charz.session.service.sendThongBao(charz, mResources.THIEU_DA_BONG_TOI_HOA);
+                break;
+            } else {
+
+                boolean b1;
+                int pP;
+
+                // ---- GET ĐỊNH HỒN THẠCH 1 LẦN để check % (chỉ dùng quantity, chưa trừ)
+                Item dinhHonThachCheck = charz.getItemBag(id_dinh_hon_thach);
+
+                if (currLevelTB >= 8) {
+                    pP = Util.gI().nextInt(750);
+                    if (dinhHonThachCheck != null && dinhHonThachCheck.quantity >= currLevelTB) {
+                        percent += 10 + currLevelTB;
+                    }
+                } else if (currLevelTB >= 7) {
+                    pP = Util.gI().nextInt(620);
+                    if (dinhHonThachCheck != null && dinhHonThachCheck.quantity >= currLevelTB) {
+                        percent += 10 + currLevelTB;
+                    }
+                } else if (currLevelTB >= 6) {
+                    pP = Util.gI().nextInt(550);
+                    if (dinhHonThachCheck != null && dinhHonThachCheck.quantity >= currLevelTB) {
+                        percent += 10 + currLevelTB;
+                    }
+                } else if (currLevelTB >= 5) {
+                    pP = Util.gI().nextInt(460);
+                    if (dinhHonThachCheck != null && dinhHonThachCheck.quantity >= currLevelTB) {
+                        percent += 10 + currLevelTB;
+                    }
+                } else if (currLevelTB >= 4) {
+                    pP = Util.gI().nextInt(380);
+                    if (dinhHonThachCheck != null && dinhHonThachCheck.quantity >= currLevelTB) {
+                        percent += 10 + currLevelTB;
+                    }
+                } else if (currLevelTB >= 3) {
+                    pP = Util.gI().nextInt(290);
+                    if (dinhHonThachCheck != null && dinhHonThachCheck.quantity >= currLevelTB) {
+                        percent += 10;
+                    }
+                } else if (currLevelTB >= 2) {
+                    pP = Util.gI().nextInt(199);
+                } else {
+                    pP = Util.gI().nextInt(Util.gI().nextInt(160));
+                }
+
+                b1 = pP < percent;
+
+                boolean b2 = false;
+                if (b1) {
+                    int idOption = option_item_bongtoi.get(Util.gI().nextInt(0, option_item_bongtoi.size() - 1));
+                    int param = Util.gI().nextInt(2, 9);
+
+                    boolean found = false;
+                    for (int i = 0; i < trangBi.options.size(); i++) {
+                        if (trangBi.options.get(i).optionTemplate.id == id_option_bong_toi_level) {
+                            trangBi.options.get(i).param++;
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        trangBi.options.add(new ItemOption(id_option_bong_toi_level, 1));
+                    }
+
+                    for (int i = 0; i < trangBi.options.size(); i++) {
+                        if (trangBi.options.get(i).optionTemplate.id == idOption) {
+                            trangBi.options.get(i).param += param;
+                            b2 = true;
+                            break;
+                        }
+                    }
+                    if (!b2) {
+                        trangBi.options.add(new ItemOption(idOption, param));
+                    }
+
+                    charz.session.service.setCombineEff(2, -1, -1, -1);
+
+                    // ---- TRỪ TIỀN
+                    charz.updateXu(-coin, 0);
+                    charz.updateLuong(-ngoc, 0);
+
+                    // ---- TRỪ ĐÁ BÓNG TỐI
+                    charz.addQuantityItemBag(daBongToi.indexUI, -soluongDaBongToi);
+
+                    // ---- TRỪ ĐỊNH HỒN THẠCH: GET LẠI NGAY TRƯỚC KHI TRỪ
+                    if (currLevelTB >= 3) {
+                        Item dhTru = charz.getItemBag(id_dinh_hon_thach);
+                        if (dhTru == null || dhTru.template == null || dhTru.quantity < currLevelTB) {
+                            charz.session.service.sendThongBao(charz, "Không đủ Định Hồn Thạch.");
+                            return;
+                        }
+                        charz.addQuantityItemBag(dhTru.indexUI, -currLevelTB);
+                    }
+
+                    charz.session.service.meLoadInfo();
+                    charz.session.service.Bag(charz.arrItemBag);
+
+                    int[] arr = new int[charz.arrItem.length];
+                    for (int i = 0; i < charz.arrItem.length; i++) {
+                        arr[i] = charz.arrItem[i].indexUI;
+                    }
+                    charz.session.service.setCombineEff(arr, -1);
+                    return;
+
+                } else {
+                    charz.session.service.setCombineEff(3, -1, -1, -1);
+
+                    // ---- TRỪ TIỀN
+                    charz.updateXu(-coin, 0);
+                    charz.updateLuong(-ngoc, 0);
+
+                    // ---- TRỪ ĐÁ BÓNG TỐI
+                    charz.addQuantityItemBag(daBongToi.indexUI, -soluongDaBongToi);
+
+                    // ---- TRỪ ĐỊNH HỒN THẠCH: GET LẠI NGAY TRƯỚC KHI TRỪ
+                    if (currLevelTB >= 3) {
+                        Item dhTru = charz.getItemBag(id_dinh_hon_thach);
+                        if (dhTru == null || dhTru.template == null || dhTru.quantity < currLevelTB) {
+                            charz.session.service.sendThongBao(charz, "Không đủ Định Hồn Thạch.");
+                            return;
+                        }
+                        charz.addQuantityItemBag(dhTru.indexUI, -currLevelTB);
+                    }
+
+                    charz.session.service.meLoadInfo();
+                    charz.session.service.Bag(charz.arrItemBag);
+
+                    int[] arr = new int[charz.arrItem.length];
+                    for (int i = 0; i < charz.arrItem.length; i++) {
+                        arr[i] = charz.arrItem[i].indexUI;
+                    }
+                    charz.session.service.setCombineEff(arr, -1);
+                }
+            } // <-- đóng else (đủ điều kiện)
+        } // <-- đóng if arrItem
+
+        j++;
+    } while (j < index);
+}
+            
+        
+    // <editor-fold defaultstate="collapsed" desc="Handler Chuyển Hoá Trang Bị (Ánh Sáng Hoá, Bóng Tối Hoá, Tẩy Thuộc Tính TB)">
+    public static void tayThuocTinhTB(Char charz, int index, int type) {
+        // index = 1: xóa 1 thuộc tính; index = 2: xóa toàn bộ
+        // type = 0: tẩy bóng tối (cần đá ánh sáng); type = 1: tẩy ánh sáng (cần đá bóng tối)
+        if (charz.arrItem.length == 2 && charz.arrItem[0] != null && charz.arrItem[1] != null) {
+            Item trangBi;
+            Item daTayThuocTinhTB;
+            int currLevelTB = 0;
+            if (type == 0) {
+                if (isItemCanBongToiOrAnhSangHoa(charz.arrItem[0]) && charz.arrItem[1].template.id == id_da_anh_sang) {
+                    trangBi = charz.arrItem[0];
+                    daTayThuocTinhTB = charz.arrItem[1];
+                } else if (charz.arrItem[0].template.id == id_da_anh_sang && isItemCanBongToiOrAnhSangHoa(charz.arrItem[1])) {
+                    daTayThuocTinhTB = charz.arrItem[0];
+                    trangBi = charz.arrItem[1];
+                } else {
+                    charz.session.service.startOKDlg(mResources.TRANGBI_O_PHU_HOP);
+                    return;
+                }
+                currLevelTB = getItemBongToiLevel(trangBi);
+            } else {
+                if (isItemCanBongToiOrAnhSangHoa(charz.arrItem[0]) && charz.arrItem[1].template.id == id_da_bong_toi) {
+                    trangBi = charz.arrItem[0];
+                    daTayThuocTinhTB = charz.arrItem[1];
+                } else if (charz.arrItem[0].template.id == id_da_bong_toi && isItemCanBongToiOrAnhSangHoa(charz.arrItem[1])) {
+                    daTayThuocTinhTB = charz.arrItem[0];
+                    trangBi = charz.arrItem[1];
+                } else {
+                    charz.session.service.startOKDlg(mResources.TRANGBI_O_PHU_HOP);
+                    return;
+                }
+                currLevelTB = getItemAnhSangLevel(trangBi);
+            }
+            int ngoc = index == 1 ? ngoc_tay_thuoc_tinh : currLevelTB * ngoc_tay_thuoc_tinh;
+            int da = index == 1 ? so_da_tay_thuoc_tinh : currLevelTB * so_da_tay_thuoc_tinh;
+            if (ngoc > charz.getLuong()) {
+                charz.session.service.sendThongBao(charz, type == 0 ? mResources.THIEU_NGOC_TAY_ANH_SANG : mResources.THIEU_NGOC_TAY_BONG_TOI);
+            } else if (da > charz.getItemBagQuantityById(daTayThuocTinhTB.template.id)) {
+                charz.session.service.sendThongBao(charz, type == 0 ? mResources.THIEU_DA_ANH_SANG : mResources.THIEU_DA_BONG_TOI);
+            } else {
+                int idLevel = type == 0 ? id_option_bong_toi_level : id_option_anh_sang_level;
+                List<Integer> listOption = type == 0 ? option_item_bongtoi : option_item_anhsang;
+
+                if (index == 1) {
+                    int param = Util.gI().nextInt(3, 9);
+                    if (currLevelTB > 1) {
+                        List<ItemOption> validOptions = new ArrayList<>();
+                        for (ItemOption o : trangBi.options) {
+                            if (listOption.contains(o.optionTemplate.id)) {
+                                validOptions.add(o);
+                            }
+                        }
+
+                        if (!validOptions.isEmpty()) {
+                            ItemOption opt = validOptions.get(Util.gI().nextInt(0, validOptions.size() - 1));
+                            opt.param -= param;
+                            if (opt.param <= 0) {
+                                trangBi.options.remove(opt);
+                            }
+                        }
+                    }
+                    for (int i = 0; i < trangBi.options.size(); i++) {
+                        ItemOption opt = trangBi.options.get(i);
+                        if (opt.optionTemplate.id == idLevel) {
+                            if (opt.param > 1) {
+                                opt.param -= 1;
+                            } else {
+                                trangBi.options.remove(i);
+                                if (type == 0) {
+                                    trangBi.options.removeIf(o -> option_item_bongtoi.contains(o.optionTemplate.id));
+                                } else {
+                                    trangBi.options.removeIf(o -> option_item_anhsang.contains(o.optionTemplate.id));
+                                }
+                            }
+                            break;
+                        }
+                    }
+
+                } else {
+                    if (type == 0) {
+                        trangBi.options.removeIf(o -> option_item_bongtoi.contains(o.optionTemplate.id));
+                    } else {
+                        trangBi.options.removeIf(o -> option_item_anhsang.contains(o.optionTemplate.id));
+                    }
+                    trangBi.options.removeIf(o -> o.optionTemplate.id == idLevel);
+
+                }
+
+                charz.session.service.setCombineEff(2, -1, -1, -1);
+
+                charz.updateLuong(-ngoc, 0);
+                charz.addQuantityItemBag(daTayThuocTinhTB.indexUI, -da);
+                charz.session.service.meLoadInfo();
+                charz.session.service.Bag(charz.arrItemBag);
+
+                int[] arr = new int[charz.arrItem.length];
+                for (int i = 0; i < charz.arrItem.length; i++) {
+                    arr[i] = charz.arrItem[i].indexUI;
+                }
+                charz.session.service.setCombineEff(arr, -1);
+            }
+
+        }
+    }
+   public static void anhSangHoaTB(Char charz, int index) {
+    int j = 0;
+    do {
+        if (charz.arrItem.length == 2 && charz.arrItem[0] != null && charz.arrItem[1] != null) {
+            Item trangBi;
+            Item daAnhSang;
+            int currLevelTB = 0;
+
+            if (isItemCanBongToiOrAnhSangHoa(charz.arrItem[0]) && charz.arrItem[1].template.id == id_da_anh_sang) {
+                trangBi = charz.arrItem[0];
+                daAnhSang = charz.arrItem[1];
+            } else if (charz.arrItem[0].template.id == id_da_anh_sang && isItemCanBongToiOrAnhSangHoa(charz.arrItem[1])) {
+                daAnhSang = charz.arrItem[0];
+                trangBi = charz.arrItem[1];
+            } else {
+                charz.session.service.startOKDlg(mResources.TRANGBI_O_PHU_HOP);
+                return;
+            }
+
+            if (getItemBongToiLevel(trangBi) > 0) {
+                charz.session.service.startOKDlg(mResources.KHONG_DUOC_ANH_SANG_HOA);
+                return;
+            }
+
+            currLevelTB = getItemAnhSangLevel(trangBi) + 1;
+            if (currLevelTB >= max_level_bongtoi_anhsang_tb) {
+                charz.session.service.startOKDlg(mResources.MAX_ANH_SANG_HOA);
+                return;
+            }
+
+            int percent = percent_bongtoi_anhsang_tb[currLevelTB - 1];
+            int coin = vang_bongtoi_anhsang_tb[currLevelTB - 1];
+            int ngoc = ngoc_bongtoi_anhsang_tb[currLevelTB - 1];
+            int soLuongDaAnhSang = da_bongtoi_anhsang_tb[currLevelTB - 1];
+
+            // an toàn tránh NPE
+            if (daAnhSang == null || daAnhSang.template == null) {
+                charz.session.service.sendThongBao(charz, mResources.THIEU_DA_ANH_SANG_HOA);
+                break;
+            }
+
+            if (charz.xu < coin) {
+                charz.session.service.sendThongBao(charz, mResources.THIEU_VANG_ANH_SANG_HOA);
+                break;
+            } else if (ngoc > charz.getLuong()) {
+                charz.session.service.sendThongBao(charz, mResources.THIEU_NGOC_ANH_SANG_HOA);
+                break;
+            } else if (soLuongDaAnhSang > charz.getItemBagQuantityById(daAnhSang.template.id)) {
+                charz.session.service.sendThongBao(charz, mResources.THIEU_DA_ANH_SANG_HOA);
+                break;
+            } else {
+
+                boolean b1;
+                int pP;
+
+                // cache để check % (tránh NPE)
+                Item dinhHonThachCheck = charz.getItemBag(id_dinh_hon_thach);
+
+                if (currLevelTB >= 8) {
+                    pP = Util.gI().nextInt(750);
+                    if (dinhHonThachCheck != null && dinhHonThachCheck.template != null && dinhHonThachCheck.quantity >= currLevelTB) {
+                        percent += 10 + currLevelTB;
+                    }
+                } else if (currLevelTB >= 7) {
+                    pP = Util.gI().nextInt(620);
+                    if (dinhHonThachCheck != null && dinhHonThachCheck.template != null && dinhHonThachCheck.quantity >= currLevelTB) {
+                        percent += 10 + currLevelTB;
+                    }
+                } else if (currLevelTB >= 6) {
+                    pP = Util.gI().nextInt(550);
+                    if (dinhHonThachCheck != null && dinhHonThachCheck.template != null && dinhHonThachCheck.quantity >= currLevelTB) {
+                        percent += 10 + currLevelTB;
+                    }
+                } else if (currLevelTB >= 5) {
+                    pP = Util.gI().nextInt(460);
+                    if (dinhHonThachCheck != null && dinhHonThachCheck.template != null && dinhHonThachCheck.quantity >= currLevelTB) {
+                        percent += 10 + currLevelTB;
+                    }
+                } else if (currLevelTB >= 4) {
+                    pP = Util.gI().nextInt(380);
+                    if (dinhHonThachCheck != null && dinhHonThachCheck.template != null && dinhHonThachCheck.quantity >= currLevelTB) {
+                        percent += 10 + currLevelTB;
+                    }
+                } else if (currLevelTB >= 3) {
+                    pP = Util.gI().nextInt(290);
+                    if (dinhHonThachCheck != null && dinhHonThachCheck.template != null && dinhHonThachCheck.quantity >= currLevelTB) {
+                        percent += 10;
+                    }
+                } else if (currLevelTB >= 2) {
+                    pP = Util.gI().nextInt(199);
+                } else {
+                    pP = Util.gI().nextInt(Util.gI().nextInt(160));
+                }
+
+                b1 = pP < percent;
+
+                boolean b2 = false;
+                if (b1) {
+                    int idOption = option_item_anhsang.get(Util.gI().nextInt(0, option_item_anhsang.size() - 1));
+                    int param = Util.gI().nextInt(2, 9);
+
+                    boolean found = false;
+                    for (int i = 0; i < trangBi.options.size(); i++) {
+                        if (trangBi.options.get(i).optionTemplate.id == id_option_anh_sang_level) {
+                            trangBi.options.get(i).param++;
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        trangBi.options.add(new ItemOption(id_option_anh_sang_level, 1));
+                    }
+
+                    for (int i = 0; i < trangBi.options.size(); i++) {
+                        if (trangBi.options.get(i).optionTemplate.id == idOption) {
+                            trangBi.options.get(i).param += param;
+                            b2 = true;
+                            break;
+                        }
+                    }
+                    if (!b2) {
+                        trangBi.options.add(new ItemOption(idOption, param));
+                    }
+
+                    charz.session.service.setCombineEff(2, -1, -1, -1);
+
+                    charz.updateXu(-coin, 0);
+                    charz.updateLuong(-ngoc, 0);
+
+                    // trừ đá ánh sáng trước
+                    charz.addQuantityItemBag(daAnhSang.indexUI, -soLuongDaAnhSang);
+
+                    // trừ định hồn thạch: GET LẠI NGAY TRƯỚC KHI TRỪ (tránh lệch index/NPE)
+                    if (currLevelTB >= 3) {
+                        Item dhTru = charz.getItemBag(id_dinh_hon_thach);
+                        if (dhTru == null || dhTru.template == null || dhTru.quantity < currLevelTB) {
+                            charz.session.service.sendThongBao(charz, "Không đủ Định Hồn Thạch.");
+                            return;
+                        }
+                        charz.addQuantityItemBag(dhTru.indexUI, -currLevelTB);
+                    }
+
+                    charz.session.service.meLoadInfo();
+                    charz.session.service.Bag(charz.arrItemBag);
+
+                    int[] arr = new int[charz.arrItem.length];
+                    for (int i = 0; i < charz.arrItem.length; i++) {
+                        arr[i] = charz.arrItem[i].indexUI;
+                    }
+                    charz.session.service.setCombineEff(arr, -1);
+                    return;
+
+                } else {
+                    charz.session.service.setCombineEff(3, -1, -1, -1);
+
+                    charz.updateXu(-coin, 0);
+                    charz.updateLuong(-ngoc, 0);
+
+                    // trừ đá ánh sáng trước
+                    charz.addQuantityItemBag(daAnhSang.indexUI, -soLuongDaAnhSang);
+
+                    // trừ định hồn thạch: GET LẠI NGAY TRƯỚC KHI TRỪ
+                    if (currLevelTB >= 3) {
+                        Item dhTru = charz.getItemBag(id_dinh_hon_thach);
+                        if (dhTru == null || dhTru.template == null || dhTru.quantity < currLevelTB) {
+                            charz.session.service.sendThongBao(charz, "Không đủ Định Hồn Thạch.");
+                            return;
+                        }
+                        charz.addQuantityItemBag(dhTru.indexUI, -currLevelTB);
+                    }
+
+                    charz.session.service.meLoadInfo();
+                    charz.session.service.Bag(charz.arrItemBag);
+
+                    int[] arr = new int[charz.arrItem.length];
+                    for (int i = 0; i < charz.arrItem.length; i++) {
+                        arr[i] = charz.arrItem[i].indexUI;
+                    }
+                    charz.session.service.setCombineEff(arr, -1);
+                }
+            }
+        }
+        j++;
+    } while (j < index);
+}
+    // </editor-fold>
+    public static void nangCapTinhTheBTAS(Char charz, int index) {
+        if (charz.arrItem[0] == null) {
+            return;
+        }
+
+        int templateId = charz.arrItem[0].template.id;
+        if (templateId != id_tinh_the_hac_am && templateId != id_tinh_the_thanh_quang) {
+            return;
+        }
+
+        int totalTinhThe = charz.arrItem[0].quantity;
+        int stonesPerCraft = 4;
+
+        int maxCrafts = totalTinhThe / stonesPerCraft;
+        if (maxCrafts <= 0) {
+            charz.session.service.startOKDlg(
+                    String.format(mResources.KHONG_DU_TINH_THE, charz.arrItem[0].template.name));
+            return;
+        }
+
+        boolean set3BT = BongToiHandler.isSet3BongToi(charz);
+        boolean set6BT = BongToiHandler.isSet6BongToi(charz);
+        boolean set3AS = AnhSangHandler.isSet3AnhSang(charz);
+        boolean set6AS = AnhSangHandler.isSet6AnhSang(charz);
+
+        int bonusPerCraft = 0;
+        int chance = 0;
+        int multiplier = 1;
+
+        if (templateId == id_tinh_the_hac_am) {
+            if (set6BT) {
+                chance = 7;
+                multiplier = 3;
+            } else if (set3BT) {
+                chance = 10;
+                multiplier = 2;
+            }
+        } else if (templateId == id_tinh_the_thanh_quang) {
+            if (set6AS) {
+                chance = 7;
+                multiplier = 3;
+            } else if (set3AS) {
+                chance = 10;
+                multiplier = 2;
+            }
+        }
+
+        Random rand = new Random();
+        int bonusStones = 0;
+
+        for (int i = 0; i < maxCrafts; i++) {
+            if (chance > 0 && Util.gI().nextInt(0, 120) < chance) {
+                bonusStones += (multiplier - 1); // bonus thêm (x2 => +1, x3 => +2)
+            }
+        }
+        charz.useItemBag(charz.arrItem[0].indexUI, maxCrafts * stonesPerCraft);
+
+        int stoneId = (templateId == id_tinh_the_hac_am) ? id_da_bong_toi : id_da_anh_sang;
+        int totalStones = maxCrafts + bonusStones;
+
+        for (int i = 0; i < totalStones; i++) {
+            charz.addItemBag(2, new Item(
+                    stoneId, false, 1, ItemOption.getOption(stoneId, -1, -1),
+                    mResources.EMPTY, mResources.EMPTY, mResources.EMPTY));
+        }
+
+        // Hiệu ứng và load lại thông tin
+        charz.session.service.setCombineEff(5, ItemTemplate.getIcon((short) templateId), -1, -1);
+        charz.session.service.Bag(charz.arrItemBag);
     }
 
 }

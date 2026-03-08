@@ -40,6 +40,18 @@ public class EffChar {
         if (this.effId == 1008) {
             return "Thần Thoại";
         }
+        if (this.effId == 1021) {
+            return "Chiến Binh Meil";
+        }
+        if (this.effId == 1007) {
+            return "Bất Phục";
+        }
+        if (this.effId == 1005) {
+            return "Top Server CBM";
+        }
+        if (this.effId == 1019) {
+            return "Fan Cứng";
+        }
         return "";
     }
     

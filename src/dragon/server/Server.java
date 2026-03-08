@@ -78,7 +78,7 @@ public class Server extends Thread {
     public int days = -1;
     public int dayWeek = -1;
     public int maxIPConnection = 5;
-    public int MoneyOpen = 1;
+    public int MoneyOpen = 10000;
     private boolean isTaskHelp;
     public boolean isMabu;
     public int tMabu;
@@ -94,7 +94,7 @@ public class Server extends Thread {
     public int timeXHGauTuongCuop = 10;//60000;
     public NewBoss MobBoss;
     public boolean daishinkan = false;
-    public int xTNSM = 1;
+    public int xTNSM = 2;
 
     public static final int SERVER_DELAY_MILISECOND = 100;
     public static final int SESSION_DELAY_MILISECOND = 35;
@@ -727,6 +727,21 @@ public class Server extends Thread {
         System.out.println("Count Thread=" + Thread.activeCount());
     }
 
+    
+    /**
+     * Boss 211 chỉ xuất hiện trong khung giờ:
+     * - Thứ 7 từ 17:00 trở đi
+     * - Chủ nhật (cả ngày) đến 23:59
+     */
+    private boolean isBoss211Window(Calendar cal) {
+        int day = cal.get(Calendar.DAY_OF_WEEK);
+        int hour = cal.get(Calendar.HOUR_OF_DAY);
+        if (day == Calendar.SATURDAY) {
+            return hour >= 17;
+        }
+        return day == Calendar.SUNDAY;
+    }
+
     public void update() {
         this.gameTick++;
         //Hours
@@ -735,6 +750,18 @@ public class Server extends Thread {
         this.hours = cal.get(Calendar.HOUR_OF_DAY);
         int dayWeek_old = this.dayWeek;
         this.dayWeek = cal.get(Calendar.DAY_OF_WEEK);
+
+
+
+        boolean boss211Window = isBoss211Window(cal);
+        // Nếu ra ngoài khung giờ cho phép, đảm bảo boss 211 không còn tồn tại
+        if (!boss211Window) {
+            for (int idx = 0; idx < Boss.gI().botId.length; idx++) {
+                if (Boss.gI().botId[idx] == 94) {
+                    this.clearBossByIndex(idx);
+                }
+            }
+        }
 
         //Uoc rong
         if (CallDragon.gI().timeWait > 0) {
@@ -831,6 +858,15 @@ public class Server extends Thread {
                     mapId = 110;
                     boss = Player.addBoss(bossId, 0, -1, -1, true, 200, 150, null, 10000, i1);
                 }
+                if (bossId == 94) {
+                    if (!boss211Window) {
+                        // Ngoài khung giờ: không tạo boss, đặt lại timer để kiểm tra lại sớm
+                        Boss.gI().botTimeHs[i1] = 60000;
+                    } else {
+                        mapId = 166;
+                        boss = Player.addBoss(bossId, 0, -1, -1, true, 200, 150, null, 10000, i1);
+                    }
+                }
                 if (bossId == 51) {
                     mapId = new int[]{3, 4, 6, 27, 28, 29}[Util.gI().nextInt(6)];
                     boss = Player.addBoss(bossId, 0, -1, -1, true, 250, 150, null, 10000, i1);
@@ -897,6 +933,21 @@ public class Server extends Thread {
                     mapId = 155;
                     boss = Player.addBoss(bossId, 0, -1, -1, true, 300, 150, null, 10000, i1);
                 }
+                if (bossId == 192) {
+                    mapId = 155;
+                    boss = Player.addBoss(bossId, 0, -1, -1, true, 300, 150, null, 10000, i1);
+                }
+                //whis
+                if (bossId == 208) {
+                    mapId = 170;
+                    boss = Player.addBoss(bossId, 0, -1, -1, true, 300, 150, null, 10000, i1);
+                }
+               
+                if (bossId == 209) {
+                    mapId = 170;
+                    boss = Player.addBoss(bossId, 0, -1, -1, true, 300, 150, null, 10000, i1);
+                }
+                
                 if (boss != null) {
                     if (boss.zoneMap == null) {
 
@@ -942,6 +993,9 @@ public class Server extends Thread {
                         if (bossId == 130) {
                             Boss.gI().bossZone[i1 + 1] = Boss.gI().bossZone[i1];
                         }
+                       if (bossId == 208) { if (i1 + 1 < Boss.gI().bossZone.length && Boss.gI().botId[i1 + 1] == 209) { Boss.gI().bossZone[i1 + 1] = Boss.gI().bossZone[i1];
+                       } 
+                       }
                         //Join Khu
                         Boss.gI().bossZone[i1].join(boss, 0, -1, -1);
                         Boss.gI().bossZone[i1] = null;
@@ -1304,7 +1358,9 @@ public class Server extends Thread {
         int num = 70;
         for (int i = 0; i < num; i++) {
             int bossNumber = i + 1;
-            Char bot = Player.addBoss(13, 0, Util.gI().nextInt(700000, 2000000), -1, true, 120, 150, null, 10000, -1);
+            int hp = i * Util.gI().nextInt(1, 20) + i + 2000;
+            
+            Char bot = Player.addBoss(13, 0, hp, -1, true, 120, 150, null, 10000, -1);
             bot.cName = String.format(mResources.ADD_FORMAT_D, bot.cName, bossNumber);
             bot.numberXH = bossNumber;
             bot.arrInMap = arrMap;
@@ -1628,14 +1684,27 @@ public class Server extends Thread {
         Map map1 = Map.getMapServer(5);
         for (int i1 = 0; i1 < map1.zones.size(); i1++) {
             ZoneMap zone1 = map1.zones.get(i1);
-            zone1.npcs.add(new Npc(zone1.npcs.size(), 1, 909, 408, 40, 4674));
+//            zone1.npcs.add(new Npc(zone1.npcs.size(), 1, 909, 408, 40, 4674));
             zone1.npcs.add(new Npc(zone1.npcs.size(), 1, 250, 288, 72, 10477));
+               // [Battle Pass] NPC Hành trình mùa – bên trái NPC Điểm online (909, 408), cải trang 1708, template 86
+            if (Npc.arrNpcTemplate != null && Npc.arrNpcTemplate.length > 86) {
+                zone1.npcs.add(new Npc(zone1.npcs.size(), 1, 330, 300, 86, 1708));
+            }
+               // [Điểm online] NPC đổi điểm thời gian – bên phải Ma bư (909+20, 408), cải trang 1746, template 84
+            if (Npc.arrNpcTemplate != null && Npc.arrNpcTemplate.length > 84) {
+                zone1.npcs.add(new Npc(zone1.npcs.size(), 1, 929, 408, 84, 1746));
+            }
+            // [Điểm danh] NPC chuỗi đăng nhập 7 ngày – bên phải Bà Hạt Mít (template 21) 40px, cải trang 1803
+            if (Npc.arrNpcTemplate != null && Npc.arrNpcTemplate.length > 85) {
+                zone1.npcs.add(new Npc(zone1.npcs.size(), 1, 1280, 408, 85, 1803));
+            }
         }
         //Hanh tinh nguc tu
         Map map2 = Map.getMapServer(166);
         for (int i1 = 0; i1 < map2.zones.size(); i1++) {
             ZoneMap zone1 = map2.zones.get(i1);
             zone1.npcs.add(new Npc(zone1.npcs.size(), 1, 570, 600, 76, 5824));
+            
         }
     }
 

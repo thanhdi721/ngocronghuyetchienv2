@@ -88,6 +88,21 @@ public class Map {
                     Npc npc = new Npc(i2, MapTemplate.arrMapTemplate[mapTemplateId].arrNPC_status[i2], MapTemplate.arrMapTemplate[mapTemplateId].arrNPC_cx[i2], MapTemplate.arrMapTemplate[mapTemplateId].arrNPC_cy[i2],  MapTemplate.arrMapTemplate[mapTemplateId].arrNPC_templateId[i2], MapTemplate.arrMapTemplate[mapTemplateId].arrNPC_avatar[i2]);
                     zone.npcs.add(npc);
                 }
+                // [Điểm online] NPC đổi điểm thời gian – đảo Kame (map 21), đứng kế NPC Ma bư (template 40) bên phải 20px
+                if (mapTemplateId == 21 && Npc.arrNpcTemplate != null && Npc.arrNpcTemplate.length > 84) {
+                    MapTemplate t = MapTemplate.arrMapTemplate[21];
+                    int x = t.pxw - 80;
+                    int y = 336;
+                    for (int idx = 0; idx < t.arrNPC_templateId.length; idx++) {
+                        if (t.arrNPC_templateId[idx] == 40) {
+                            x = t.arrNPC_cx[idx] + 20;
+                            y = t.arrNPC_cy[idx];
+                            break;
+                        }
+                    }
+                    zone.npcs.add(new Npc(zone.npcs.size(), 1, x, y, 84, 1746));
+                }
+                // [Điểm danh] NPC chuỗi 7 ngày được thêm trong Server.initNpc() cho Đảo Kame (map 5)
                 //Init ItemMap
                 Item it = null;
                 if (mapTemplateId == 85) {
@@ -188,7 +203,7 @@ public class Map {
                 } else if (this.zones.get(i).getCountPLayerNotAI() >= this.zones.get(i).maxPlayer) {
                     charz.session.service.startOKDlg(mResources.ZONE_FULL_PLAYER);
                 } else {
-                    charz.timeChangeZone = 10000;
+                    charz.timeChangeZone = 8000;
                     charz.zoneMap.exit(charz, 0);
                     this.zones.get(i).join(charz, 0, -1, -1);
                 }
@@ -341,8 +356,13 @@ public class Map {
         158,
         159,
         160,
-        161,
-        166,154
+        161,162,163,
+        166,154,
+        165,
+        167,168,
+        169,
+        170,
+        171,172,173,174,175,176
     };
     
     public static int[][][] yardartBoss = new int[][][] {

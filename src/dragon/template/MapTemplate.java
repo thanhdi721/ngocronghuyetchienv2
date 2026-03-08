@@ -9,15 +9,14 @@ import java.util.ArrayList;
 import java.util.Stack;
 import javax.imageio.ImageIO;
 
-
 /**
  *
  * @author Admin
  */
 public class MapTemplate {
-    
+
     public static MapTemplate[] arrMapTemplate;
-    
+
     public static final int T_EMPTY = 0;
     public static final int T_TOP = 2;
     public static final int T_LEFT = 4;
@@ -39,9 +38,9 @@ public class MapTemplate {
     public static final int T_NT0 = 262144;
     public static final int T_NT1 = 524288;
     public static final int T_CENTER = 1;
-    
+
     public static byte size = 24;
-    
+
     public static final byte MAP_NORMAL = 0;
     public static final int TRAIDAT_DOINUI = 0;
     public static final int TRAIDAT_RUNG = 1;
@@ -59,15 +58,15 @@ public class MapTemplate {
     public static final int TIME_ROOM = 13;
     public static final int HELL = 15;
     public static final int BEERUS = 16;
-    
-    public static int[] offlineId = new int[] {21, 22, 23, 39, 40, 41};
 
-    public static int[] highterId = new int[] {21, 22, 23, 24, 25, 26};
+    public static int[] offlineId = new int[]{21, 22, 23, 39, 40, 41};
 
-    public static int[] toOfflineId = new int[] {0, 7, 14};
-    
+    public static int[] highterId = new int[]{21, 22, 23, 24, 25, 26};
+
+    public static int[] toOfflineId = new int[]{0, 7, 14};
+
     public static int yWater = 0;
-    
+
     public int mapTemplateId;
     public int tmw;
     public int tmh;
@@ -77,7 +76,7 @@ public class MapTemplate {
     public int lastTileID = -1;
     public int[] maps;
     public int[] types;
-    
+
     public int[] iX;
     public int[] iY;
     public int[] iW;
@@ -94,7 +93,7 @@ public class MapTemplate {
     public byte planetID;
     public byte lastPlanetId = -1;
     public long timeTranMini;
-    
+
     public int[][] tileType;
     public int[][][] tileIndex;
     public int sizeMiniMap = 2;
@@ -104,7 +103,7 @@ public class MapTemplate {
     public int gssye;
     public int countx;
     public int county;
-    
+
     public String[] arrWaypoint_name;
     public int[] arrWaypoint_minX;
     public int[] arrWaypoint_minY;
@@ -115,32 +114,32 @@ public class MapTemplate {
     public int[] arrWaypoint_goMapID;
     public int[] arrWaypoint_goX;
     public int[] arrWaypoint_goY;
-    
+
     public int[] arrMob_templateId;
     public int[] arrMob_level;
     public int[] arrMob_pointx;
     public int[] arrMob_pointy;
-    
+
     public int[] arrNPC_status;
     public int[] arrNPC_cx;
     public int[] arrNPC_cy;
     public int[] arrNPC_templateId;
     public int[] arrNPC_avatar;
-    
+
     public ArrayList<Short[]> arrBgItem;
     public ArrayList<String[]> arrEffect;
-    
+
     public void setTile(int index, int[] mapsArr, int type) {
-        for (int i = 0; i < mapsArr.length; i++) { 
+        for (int i = 0; i < mapsArr.length; i++) {
             if (maps[index] == mapsArr[i]) {
                 types[index] |= type;
                 return;
             }
         }
     }
-    
+
     public short touchY(int x, int y) {
-        while(y < this.pxh) {
+        while (y < this.pxh) {
             if (this.tileTypeAt(x, y, T_TOP)) {
                 return (short) y;
             }
@@ -148,9 +147,9 @@ public class MapTemplate {
         }
         return (short) this.pxh;
     }
-    
+
     public boolean isTouchY(int x, int y) {
-        while(y < this.pxh - 24) {
+        while (y < this.pxh - 24) {
             if (this.tileTypeAt(x, y, T_TOP)) {
                 return true;
             }
@@ -158,9 +157,9 @@ public class MapTemplate {
         }
         return false;
     }
-    
+
     public boolean isBarrierY(int x, int preY, int goY) {
-        while(preY < goY) {
+        while (preY < goY) {
             if (this.tileTypeAt(x, preY, T_TOP)) {
                 return true;
             }
@@ -168,10 +167,10 @@ public class MapTemplate {
         }
         return false;
     }
-    
+
     public void loadMap(int tileId) {
-        pxh = tmh * (int)size;
-        pxw = tmw * (int)size;
+        pxh = tmh * (int) size;
+        pxw = tmw * (int) size;
         int num = tileId - 1;
         try {
             for (int i = 0; i < tmw * tmh; i++) {
@@ -183,11 +182,11 @@ public class MapTemplate {
         }
         this.drawMap();
     }
-    
+
     public boolean isInAirMap() {
         return mapTemplateId == 45 || mapTemplateId == 46 || mapTemplateId == 48;
     }
-    
+
     public boolean isDoubleMap() {
         return isMapDouble || mapTemplateId == 45 || mapTemplateId == 46 || mapTemplateId == 48 || mapTemplateId == 51 || mapTemplateId == 52 || mapTemplateId == 103 || mapTemplateId == 112 || mapTemplateId == 113 || mapTemplateId == 115 || mapTemplateId == 117 || mapTemplateId == 118 || mapTemplateId == 119 || mapTemplateId == 120 || mapTemplateId == 121 || mapTemplateId == 125 || mapTemplateId == 129 || mapTemplateId == 130;
     }
@@ -195,7 +194,7 @@ public class MapTemplate {
     public boolean isWaterEff() {
         return mapTemplateId != 54 && mapTemplateId != 55 && mapTemplateId != 56 && mapTemplateId != 57 && mapTemplateId != 138;
     }
-    
+
     public int tileAt(int x, int y) {
         int result;
         try {
@@ -205,7 +204,7 @@ public class MapTemplate {
         }
         return result;
     }
-    
+
     public int tileTypeAt(int x, int y) {
         int result;
         try {
@@ -215,70 +214,79 @@ public class MapTemplate {
         }
         return result;
     }
-    
+
     public int tileTypeAtPixel(int px, int py) {
         int result;
         try {
-            result = types[py / (int)size * tmw + px / (int)size];
+            result = types[py / (int) size * tmw + px / (int) size];
         } catch (Exception ex) {
             result = 1000;
         }
         return result;
     }
-    
+
     public boolean tileTypeAt(int px, int py, int t) {
         boolean result;
         try {
-            result = ((types[py / (int)size * tmw + px / (int)size] & t) == t);
+            result = ((types[py / (int) size * tmw + px / (int) size] & t) == t);
         } catch (Exception ex) {
             result = false;
         }
         return result;
     }
-    
+
     public void setTileTypeAtPixel(int px, int py, int t) {
-        types[py / (int)size * tmw + px / (int)size] |= t;
+        types[py / (int) size * tmw + px / (int) size] |= t;
     }
-    
+
     public void setTileTypeAt(int x, int y, int t) {
         types[y * tmw + x] = t;
     }
-    
+
     public void killTileTypeAt(int px, int py, int t) {
-        types[py / (int)size * tmw + px / (int)size] &= ~t;
+        types[py / (int) size * tmw + px / (int) size] &= ~t;
     }
-    
+
     public int tileYofPixel(int py) {
-        return py / (int)size * (int)size;
+        return py / (int) size * (int) size;
     }
-    
+
     public int tileXofPixel(int px) {
-        return px / (int)size * (int)size;
+        return px / (int) size * (int) size;
     }
-    
+
     public boolean tileTypeAt(int px, int py, int t, int kt) {
         boolean result;
         try {
-            result = ((types[py / (int)kt * tmw + px / (int)kt] & t) == t);
+            result = ((types[py / (int) kt * tmw + px / (int) kt] & t) == t);
         } catch (Exception ex) {
             result = false;
         }
         return result;
     }
-    
+
 //    int argbCollision[];
     BufferedImage imageCollision;
-    
+
     public boolean isCollisionPixel(int px, int py, int pixel) {
+        if (this.mapTemplateId >= 85 && this.mapTemplateId <= 91) {
 //        System.out.println("peixel1="+(this.argbCollision[py * this.pxw + px])+" pixel2="+(pixel));
-        return px > 0 && px < this.pxw && py > 0 && py < this.pxh && this.imageCollision.getRGB(px, py) == pixel;
+            return px > 0 && px < this.pxw && py > 0 && py < this.pxh && this.imageCollision.getRGB(px, py) == pixel;
+        } else {
+             return true;   
+        }
     }
 
     public int getCollisionPixel(int px, int py) {
-        return this.imageCollision.getRGB(px, py);
-//        return this.argbCollision[py * this.pxw + px];
+        if (this.mapTemplateId >= 85 && this.mapTemplateId <= 91) {
+//            return this.argbCollision[py * this.pxw + px];
+            return this.imageCollision.getRGB(px, py);
+        } else {
+            return 0;
+         
+        }
     }
-    
+
     public static void initCollisionPixel() {
         System.out.println("Load Collsion");
         File file = new File("res/imageCollision/"), files[] = file.listFiles();
@@ -297,10 +305,14 @@ public class MapTemplate {
             }
         }
     }
-    
+
     public void drawMap() {
-        if (this.maps.length == 0) return;
-        if (this.maps.length != -1) return;
+        if (this.maps.length == 0) {
+            return;
+        }
+        if (this.maps.length != -1) {
+            return;
+        }
 //        if (this.mapTemplateId != 166) return;
 //
         int zoom = 1;
@@ -309,19 +321,28 @@ public class MapTemplate {
             BufferedImage imgMap = new BufferedImage(this.tmw * kt, this.tmh * kt, BufferedImage.TYPE_INT_RGB);
             int x = 0;
             int y = 0;
-            int[] black = new int[kt * kt]; for (int k = 0; k < black.length; k++) black[k] = 0xff000000;
-            int[] white = new int[kt * kt]; for (int k = 0; k < white.length; k++) white[k] = 0xFFFFFFFF;
-            int[] green = new int[kt * kt]; for (int k = 0; k < green.length; k++) green[k] = 0xFF00FF00;
+            int[] black = new int[kt * kt];
+            for (int k = 0; k < black.length; k++) {
+                black[k] = 0xff000000;
+            }
+            int[] white = new int[kt * kt];
+            for (int k = 0; k < white.length; k++) {
+                white[k] = 0xFFFFFFFF;
+            }
+            int[] green = new int[kt * kt];
+            for (int k = 0; k < green.length; k++) {
+                green[k] = 0xFF00FF00;
+            }
             for (int i = 0; i < this.maps.length; i++) {
                 if (this.maps[i] != 0) {
-                    imgMap.setRGB(x * kt, y * kt, kt, kt, black, 0,kt);
+                    imgMap.setRGB(x * kt, y * kt, kt, kt, black, 0, kt);
                 } else {
-                    imgMap.setRGB(x * kt, y * kt, kt, kt, green, 0,kt);
+                    imgMap.setRGB(x * kt, y * kt, kt, kt, green, 0, kt);
                 }
 //                if (this.isWay(150, 150, x * kt, y * kt)) {
-                    if (this.types[i] == 0){
-                        imgMap.setRGB(x * kt, y * kt, kt, kt, green, 0, kt);
-                    }
+                if (this.types[i] == 0) {
+                    imgMap.setRGB(x * kt, y * kt, kt, kt, green, 0, kt);
+                }
 //                }
                 //SET XY
                 x++;
@@ -331,12 +352,12 @@ public class MapTemplate {
                 }
             }
             fill(imgMap, 120, 150, new Color(0, 255, 0), new Color(255, 255, 255));
-            ImageIO.write(imgMap, "png", new File("imgMap/"+this.mapTemplateId+ ".png"));
+            ImageIO.write(imgMap, "png", new File("imgMap/" + this.mapTemplateId + ".png"));
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
+
     public static void fill(BufferedImage image, int startX, int startY, Color targetColor, Color replacementColor) {
         int width = image.getWidth();
         int height = image.getHeight();

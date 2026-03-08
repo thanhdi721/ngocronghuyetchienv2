@@ -9,6 +9,8 @@ import dragon.object.BgItem;
 import dragon.object.Char;
 import dragon.t.Amu;
 import dragon.t.Clan;
+import dragon.t.ConstDaoLu;
+import dragon.t.DaoLu;
 import dragon.t.Player;
 import dragon.object.ClanImage;
 import dragon.object.ClanMember;
@@ -638,15 +640,33 @@ public class Service {
         try {
             msg = new Message(112);
             msg.writer().writeByte(0);
+            // Safety: tránh crash khi client gửi cgender lỗi hoặc data nội tại thiếu mốc
+            if (cgender < 0 || cgender >= Panel.gI().imgSpeacialSkill.length) {
+                cgender = 0;
+            }
             if (cspearcialSkill == -1) {
                 msg.writer().writeShort(5223);
                 msg.writer().writeUTF(Panel.gI().infoSpeacialSkillDefault);
             } else {
                 msg.writer().writeShort(Panel.gI().imgSpeacialSkill[cgender][cspearcialSkill]);
+
+                int[] next = Panel.gI().nextSpeacialSkill[cgender][cspearcialSkill];
+                int next0 = (next != null && next.length > 0) ? next[0] : 0;
+                int next1 = (next != null && next.length > 1) ? next[1] : next0;
+
                 if (cgender == 0 && cspearcialSkill == 2) {
-                    msg.writer().writeUTF(String.format(Panel.gI().infoSpeacialSkill[cgender][cspearcialSkill], String.format(Panel.gI().numP, paramSpearcialSkill), String.format(Panel.gI().numP, paramSpearcialSkill), String.format(Panel.gI().numTo2, Panel.gI().nextSpeacialSkill[cgender][cspearcialSkill][0], Panel.gI().nextSpeacialSkill[cgender][cspearcialSkill][1])));
+                    msg.writer().writeUTF(String.format(
+                            Panel.gI().infoSpeacialSkill[cgender][cspearcialSkill],
+                            String.format(Panel.gI().numP, paramSpearcialSkill),
+                            String.format(Panel.gI().numP, paramSpearcialSkill),
+                            String.format(Panel.gI().numTo2, next0, next1)
+                    ));
                 } else {
-                    msg.writer().writeUTF(String.format(Panel.gI().infoSpeacialSkill[cgender][cspearcialSkill], String.format(Panel.gI().numP, paramSpearcialSkill), String.format(Panel.gI().numTo2, Panel.gI().nextSpeacialSkill[cgender][cspearcialSkill][0], Panel.gI().nextSpeacialSkill[cgender][cspearcialSkill][1])));
+                    msg.writer().writeUTF(String.format(
+                            Panel.gI().infoSpeacialSkill[cgender][cspearcialSkill],
+                            String.format(Panel.gI().numP, paramSpearcialSkill),
+                            String.format(Panel.gI().numTo2, next0, next1)
+                    ));
                 }
             }
             this.session.sendMessage(msg);
@@ -666,6 +686,10 @@ public class Service {
         try {
             msg = new Message(112);
             msg.writer().writeByte(1);
+            // Safety: tránh crash khi client gửi cgender lỗi hoặc data nội tại thiếu mốc
+            if (cgender < 0 || cgender >= Panel.gI().imgSpeacialSkill.length) {
+                cgender = 0;
+            }
             msg.writer().writeByte(Panel.gI().speacialTab.length);
             for (i = 0; i < Panel.gI().speacialTab.length; i++) {
                 msg.writer().writeUTF(Panel.gI().speacialTab[i]);
@@ -673,10 +697,24 @@ public class Service {
                     msg.writer().writeByte(Panel.gI().imgSpeacialSkill[cgender].length);
                     for (j = 0; j < Panel.gI().imgSpeacialSkill[cgender].length; j++) {
                         msg.writer().writeShort(Panel.gI().imgSpeacialSkill[cgender][j]);
+
+                        int[] next = Panel.gI().nextSpeacialSkill[cgender][j];
+                        int next0 = (next != null && next.length > 0) ? next[0] : 0;
+                        int next1 = (next != null && next.length > 1) ? next[1] : next0;
+
                         if (cgender == 0 && j == 2) {
-                            msg.writer().writeUTF(String.format(Panel.gI().infoSpeacialSkill[cgender][j], String.format(Panel.gI().numTo, Panel.gI().nextSpeacialSkill[cgender][j][0], Panel.gI().nextSpeacialSkill[cgender][j][1]), String.format(Panel.gI().numTo, Panel.gI().nextSpeacialSkill[cgender][j][0], Panel.gI().nextSpeacialSkill[cgender][j][1]), mResources.EMPTY));
+                            msg.writer().writeUTF(String.format(
+                                    Panel.gI().infoSpeacialSkill[cgender][j],
+                                    String.format(Panel.gI().numTo, next0, next1),
+                                    String.format(Panel.gI().numTo, next0, next1),
+                                    mResources.EMPTY
+                            ));
                         } else {
-                            msg.writer().writeUTF(String.format(Panel.gI().infoSpeacialSkill[cgender][j], String.format(Panel.gI().numTo, Panel.gI().nextSpeacialSkill[cgender][j][0], Panel.gI().nextSpeacialSkill[cgender][j][1]), mResources.EMPTY));
+                            msg.writer().writeUTF(String.format(
+                                    Panel.gI().infoSpeacialSkill[cgender][j],
+                                    String.format(Panel.gI().numTo, next0, next1),
+                                    mResources.EMPTY
+                            ));
                         }
                     }
                 } else {
@@ -692,6 +730,7 @@ public class Service {
             }
         }
     }
+
 
     public void mapClear() {
         Message msg = null;
@@ -3234,7 +3273,7 @@ public class Service {
             msg.writer().writeShort(petz.cStamina);
             msg.writer().writeShort(petz.cMaxStamina);
             msg.writer().writeByte(petz.cCriticalFull);
-            msg.writer().writeShort(petz.cDefull);
+            msg.writer().writeInt(petz.cDefull);
             msg.writer().writeByte(4);
             for (j = 0; j < petz.skills.size(); j++) {
                 msg.writer().writeShort(petz.skills.get(j).skillId);
@@ -5849,6 +5888,21 @@ public class Service {
             }
         }
     }
+        public void danhhieu(int charID, int id, int second) {
+        Message msg = null;
+        try {
+            msg = new Message(24);
+            msg.writer().writeByte(2);
+            msg.writer().writeInt(charID);
+            msg.writer().writeByte(second);
+            msg.writer().writeShort(id);
+            this.session.sendMessage(msg);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (msg != null) msg.cleanup();
+        }
+    }
 
 //    public void removeEffect(int id) {
 //        Message msg = null;
@@ -5876,4 +5930,34 @@ public class Service {
 //                msg.cleanup();
 //        }
 //    }
+
+    // [ĐẠO LỮ] Hiển thị thông tin Đạo Lữ qua server message
+    public void infoDaoLu() {
+        Char me = this.session.myCharz();
+        if (me == null) return;
+        DaoLu dl = me.myDaoLu;
+        if (dl == null) {
+            this.addInfo("[Đạo Lữ] Bạn chưa có Đạo Lữ.\nHãy tìm NPC Ông Nội để chiêu mộ.\nHoặc dùng item Hồn Đạo Lữ (ID 2070).");
+            return;
+        }
+        try {
+            int totalBuff = dl.getTotalBuffPercent();
+            String info = "=== THÔNG TIN ĐẠO LỮ ===\n"
+                    + "Tên: " + dl.nameDaoLu + "\n"
+                    + "Phẩm: " + ConstDaoLu.getTenPham(dl.typeDaoLu) + "\n"
+                    + "Cảnh Giới: " + ConstDaoLu.getFullCapBac(dl.pointCapCanhGioi, dl.pointCapTinh) + "\n"
+                    + "Tu Vi: " + dl.pointTuVi + "/" + ConstDaoLu.MAX_TU_VI + "\n"
+                    + "Trạng Thái: " + dl.getTextStatusInfo() + "\n"
+                    + "------------------\n"
+                    + "HP: " + dl.charDaoLu.cHPGoc + " | KI: " + dl.charDaoLu.cMPGoc + "\n"
+                    + "Dame: " + dl.charDaoLu.cDamGoc + " | Def: " + dl.charDaoLu.cDefGoc + "\n"
+                    + "Sức Mạnh: " + dl.charDaoLu.cPower + "\n"
+                    + "Buff cho chủ: +" + totalBuff + "% HP/KI/SD\n"
+                    + "Head: " + dl.charDaoLu.head + " Body: " + dl.charDaoLu.body + " Leg: " + dl.charDaoLu.leg;
+            this.addInfo(info);
+        } catch (Exception e) {
+            this.addInfo("[Đạo Lữ] Lỗi đọc dữ liệu: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 }

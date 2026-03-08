@@ -1018,9 +1018,9 @@ public class Mob2 {
                     }
                 }
             }
-            if (player != null && player.isFullTBHD && player.myObj().nManhAo < 40) {
+            if (player != null && player.isFullTBHD && player.myObj().nManhAo < 500) {
                 //Manh ao
-                if (Util.gI().nextInt(1000) < 5) {
+                if (Util.gI().nextInt(1500) < 5) {
                     for (i = 0; i < 1; i++) {
                         int toX = Util.gI().nextInt(mob.pointx - 24, mob.pointx + 24);
                         int toY = zone.mapTemplate.touchY(toX, mob.pointy);
@@ -1031,9 +1031,9 @@ public class Mob2 {
                     }
                 }
             }
-            if (player != null && player.isFullTBHD && player.myObj().nManhQuan < 40) {
+            if (player != null && player.isFullTBHD && player.myObj().nManhQuan < 500) {
                 //Manh quan
-                if (Util.gI().nextInt(1000) < 5) {
+                if (Util.gI().nextInt(1500) < 5) {
                     for (i = 0; i < 1; i++) {
                         int toX = Util.gI().nextInt(mob.pointx - 24, mob.pointx + 24);
                         int toY = zone.mapTemplate.touchY(toX, mob.pointy);
@@ -1044,55 +1044,42 @@ public class Mob2 {
                     }
                 }
             }
-            if (player != null && player.isFullTBHD && player.myObj().nManhAo < 40) {
-                //Manh ao
-                if (Util.gI().nextInt(1000) < 5) {
+            if (player != null && player.isFullTBHD && player.myObj().nManhGiay < 500) {
+                //Manh giay
+                if (Util.gI().nextInt(1500) < 5) {
                     for (i = 0; i < 1; i++) {
                         int toX = Util.gI().nextInt(mob.pointx - 24, mob.pointx + 24);
                         int toY = zone.mapTemplate.touchY(toX, mob.pointy);
                         ItemMap itemMap = zone.addItemMap(charMaxDam, new Item(1068, false, 1, ItemOption.getOption(1068, 0, 0), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
                         itemMap.isPickItemNotMe = true;
                         itemMaps.add(itemMap);
-                        player.myObj().nManhAo++;
+                        player.myObj().nManhGiay++;
                     }
                 }
             }
-            if (player != null && player.isFullTBHD && player.myObj().nManhAo < 40) {
-                //Manh ao
-                if (Util.gI().nextInt(1000) < 5) {
+            if (player != null && player.isFullTBHD && player.myObj().nManhNhan < 500) {
+                //Manh nhan
+                if (Util.gI().nextInt(1500) < 5) {
                     for (i = 0; i < 1; i++) {
                         int toX = Util.gI().nextInt(mob.pointx - 24, mob.pointx + 24);
                         int toY = zone.mapTemplate.touchY(toX, mob.pointy);
                         ItemMap itemMap = zone.addItemMap(charMaxDam, new Item(1069, false, 1, ItemOption.getOption(1069, 0, 0), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
                         itemMap.isPickItemNotMe = true;
                         itemMaps.add(itemMap);
-                        player.myObj().nManhAo++;
+                        player.myObj().nManhNhan++;
                     }
                 }
             }
-            if (player != null && player.isFullTBHD && player.myObj().nManhAo < 40) {
-                //Manh ao
-                if (Util.gI().nextInt(1000) < 5) {
+            if (player != null && player.isFullTBHD && player.myObj().nManhGang < 500) {
+                //Manh gang
+                if (Util.gI().nextInt(1500) < 5) {
                     for (i = 0; i < 1; i++) {
                         int toX = Util.gI().nextInt(mob.pointx - 24, mob.pointx + 24);
                         int toY = zone.mapTemplate.touchY(toX, mob.pointy);
                         ItemMap itemMap = zone.addItemMap(charMaxDam, new Item(1070, false, 1, ItemOption.getOption(1070, 0, 0), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
                         itemMap.isPickItemNotMe = true;
                         itemMaps.add(itemMap);
-                        player.myObj().nManhAo++;
-                    }
-                }
-            }
-            if (player != null && player.isFullTBHD && player.myObj().nManhAo < 40) {
-                //Manh ao
-                if (Util.gI().nextInt(1000) < 5) {
-                    for (i = 0; i < 1; i++) {
-                        int toX = Util.gI().nextInt(mob.pointx - 24, mob.pointx + 24);
-                        int toY = zone.mapTemplate.touchY(toX, mob.pointy);
-                        ItemMap itemMap = zone.addItemMap(charMaxDam, new Item(1071, false, 1, ItemOption.getOption(1071, 0, 0), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
-                        itemMap.isPickItemNotMe = true;
-                        itemMaps.add(itemMap);
-                        player.myObj().nManhAo++;
+                        player.myObj().nManhGang++;
                     }
                 }
             }
@@ -1146,7 +1133,6 @@ public class Mob2 {
             }
 
         }
-
         //Socola
         if (mob.changBody) {
             if (mob.smallBody == 4133) {
@@ -1155,6 +1141,67 @@ public class Mob2 {
             }
             mob.clearBody();
             zone.changeMobBody(0, mob.mobId, 0);
+        }
+        if (zone.map.isMapThucVat()) {
+            //Roi gold
+            if (Util.gI().nextInt(100) < 30) {
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(mob.pointx - 24, mob.pointx + 24);
+                    int toY = zone.mapTemplate.touchY(toX, mob.pointy);
+                    int coin = 500 * Util.gI().nextInt(1, 20);
+                    if (player != null) {
+                        if (player.coinMob_percent > 0) {
+                            coin = coin + (coin * player.coinMob_percent / 100);
+                        }
+                        //Noi tai
+                        if (player.cgender == 0 && player.cspeacialSkill == 7) {
+                            coin = coin + (coin * player.paramSpeacialSkill / 100);
+                        }
+                        if (player.cgender == 1 && player.cspeacialSkill == 8) {
+                            coin = coin + (coin * player.paramSpeacialSkill / 100);
+                        }
+                        if (player.cgender == 2 && player.cspeacialSkill == 7) {
+                            coin = coin + (coin * player.paramSpeacialSkill / 100);
+                        }
+                    }
+                    if (coin > 30000) {
+                        coin = 30000;
+                    }
+                    ItemMap itemMap = zone.addItemMap(charMaxDam, new Item(190, false, coin, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
+            }
+            //Ngoc rong 7 sao
+            if (Util.gI().nextInt(500) <= 100) {
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(mob.pointx - 24, mob.pointx + 24);
+                    int toY = zone.mapTemplate.touchY(toX, mob.pointy);
+                    ItemMap itemMap = zone.addItemMap(charMaxDam, new Item(20, false, 1, ItemOption.getOption(20, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
+            }
+            //Manh da vun
+            if (Util.gI().nextInt(100) <= 30) {
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(mob.pointx - 24, mob.pointx + 24);
+                    int toY = zone.mapTemplate.touchY(toX, mob.pointy);
+                    ItemMap itemMap = zone.addItemMap(charMaxDam, new Item(225, false, 1, ItemOption.getOption(225, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
+            }
+            if (player != null && player.cPower >= 40000000000L && player.myObj().nTrangsach < 1000) {
+                //Sach Cu
+                if (Util.gI().nextInt(100) < 100) {
+                    for (i = 0; i < 1; i++) {
+                        int toX = Util.gI().nextInt(mob.pointx - 24, mob.pointx + 24);
+                        int toY = zone.mapTemplate.touchY(toX, mob.pointy);
+                        ItemMap itemMap = zone.addItemMap(charMaxDam, new Item(1281, false, 5, ItemOption.getOption(1281, 0, 0), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                        itemMap.isPickItemNotMe = true;
+                        itemMaps.add(itemMap);
+                        player.myObj().nTrangsach++;
+                    }
+                }
+            }
         }
 
     }

@@ -638,6 +638,41 @@ public class ZoneMap {
     }
 
     public void chat(Char charz, String text) {
+        // [ĐẠO LỮ] Chat command dl hoặc daolu để mở menu Đạo Lữ
+        // [FIX] Gọi thẳng MenuBoard.openDaoLuMenu() để dùng chung code với NPC menu
+        // Tránh lỗi npcId=-1 khiến client không gửi callback đúng
+        if (text != null) {
+            String lc = text.trim().toLowerCase();
+            if (lc.equals("dl") || lc.equals("daolu")) {
+                if (charz.session != null && charz.menuBoard != null) {
+                    charz.menuBoard.openDaoLuMenu();
+                }
+                return;
+            }
+        }
+        // [ĐẠO LỮ] Admin: chat "dldao" để nhận full bộ item Đạo Lữ
+        if (text != null && "dldao".equals(text.trim().toLowerCase()) && charz.session != null && charz.session.isAdmin > 0) {
+            try {
+                // Kiểm tra item template đã tồn tại trong database chưa
+                if (dragon.template.ItemTemplate.get((short) 2070) == null) {
+                    charz.session.service.addInfo("[Admin] LỖI: Item template 2070-2081 chưa có trong database!\nChạy SQL: INSERT INTO itemtemplate ... từ file nro_daolu.sql\nSau đó restart server.");
+                    return;
+                }
+                // Hồn Đạo Lữ x5
+                charz.addItemBag(-1, new Item(2070, false, 5, ItemOption.getOption(2070, 0, 0), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY));
+                // 10 loại Đan Dược x1000 mỗi loại
+                for (int danId = 2071; danId <= 2080; danId++) {
+                    charz.addItemBag(-1, new Item(danId, false, 1000, ItemOption.getOption(danId, 0, 0), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY));
+                }
+                // Mảnh Đà Xá x4
+                charz.addItemBag(-1, new Item(2081, false, 4, ItemOption.getOption(2081, 0, 0), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY));
+                charz.session.service.addInfo("[Admin] Đã thêm full bộ item Đạo Lữ!");
+            } catch (Exception e) {
+                charz.session.service.addInfo("[Admin] Lỗi: " + e.getMessage());
+                e.printStackTrace();
+            }
+            return;
+        }
         if ("dongb".equals(text) && charz.session != null && charz.session.isAdmin > 0) {
             charz.sendFreeze(20);
             return;
@@ -743,6 +778,11 @@ public class ZoneMap {
         if ("a".equals(text) && charz.session != null && charz.session.isAdmin > 0) {
             charz.session.service.top3(Server.gI().playerCls);
         }
+        if (text.startsWith("danhhieu") && charz.session != null && charz.session.isAdmin > 0) {
+            String arr[] = text.replaceAll("danhhieu ", "").split(" ");
+            charz.session.service.danhhieu(charz.charID, Integer.parseInt(arr[0]), Integer.parseInt(arr[1]));
+            return;
+        }
         if ("nrsd".equals(text) && charz.session != null && charz.session.isAdmin > 0) {
             BlackBall.gI().openBlackBall();
         }
@@ -753,9 +793,9 @@ public class ZoneMap {
             charz.resetSkill();
         }
 
-        if (text.startsWith("m") && charz.session != null && charz.session.isAdmin > 0) {
+        if (text.startsWith("map") && charz.session != null && charz.session.isAdmin > 0) {
             try {
-                int mapId = Integer.parseInt(text.replace("m", "").trim());
+                int mapId = Integer.parseInt(text.replace("map", "").trim());
                 Map map = Map.getMapServer(mapId);
                 if (map != null) {
                     ZoneMap zone = map.getZone(charz);

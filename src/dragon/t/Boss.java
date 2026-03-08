@@ -52,7 +52,11 @@ public class Boss {
         130,
         131,
         158,
-        159
+        159,
+        192,
+        208,
+        209,
+        94
     };
 
     public int[] botSetTime = new int[]{
@@ -89,7 +93,11 @@ public class Boss {
         900000,
         900000,
         900000,
-        900000
+        900000,
+        900000,
+        900000,
+        900000,
+        14400000,
     };
 
     public int[] botTimeHs = new int[]{
@@ -126,10 +134,18 @@ public class Boss {
         2100,
         2100,
         480000,
-        480000
+        480000,
+        2100,
+        2100,
+        2100,
+        600000
     };
 
     public ZoneMap[] bossZone = new ZoneMap[]{
+        null,
+        null,
+        null,
+        null,
         null,
         null,
         null,
@@ -423,7 +439,7 @@ public class Boss {
             //Zamas
             case 0: {
                 //Ngoc rong 3 sao
-                if (Util.gI().nextInt(100) <= 30) {
+                if (Util.gI().nextInt(100) <= 10) {
                     for (i = 0; i < 1; i++) {
                         int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
                         int toY = zone.mapTemplate.touchY(toX, boss.cy);
@@ -431,19 +447,26 @@ public class Boss {
                         itemMaps.add(itemMap);
                     }
                 }
-                if (Util.gI().nextInt(100) <= 30) {
-                    for (i = 0; i < 1; i++) {
-                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
-                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
-                        ItemMap itemMap = zone.addItemMap(charId, new Item(1981, false, 1, ItemOption.getOption(1981, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
-                        itemMaps.add(itemMap);
-                    }
-                }
+//                if (Util.gI().nextInt(100) <= 1) {
+//                    for (i = 0; i < 1; i++) {
+//                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+//                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+//                        ItemMap itemMap = zone.addItemMap(charId, new Item(1981, false, 1, ItemOption.getOption(1981, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+//                        itemMaps.add(itemMap);
+//                    }
+//                }
                 // bi kip tuyet ki
                 for (i = 0; i < 1; i++) {
                     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
                     int toY = zone.mapTemplate.touchY(toX, boss.cy);
-                    ItemMap itemMap = zone.addItemMap(charId, new Item(1229, false, 10, ItemOption.getOption(1229, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(1229, false, 5, ItemOption.getOption(1229, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
+                // Roi Thoi Vàng
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(457, false, Util.gI().nextInt(1, 3), ItemOption.getOption(457, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
                     itemMaps.add(itemMap);
                 }
                 //Roi moeny
@@ -454,7 +477,7 @@ public class Boss {
 //                    itemMaps.add(itemMap);
 //                }
                 //trang bi ao than linh
-                if (Util.gI().nextInt(100) <= 10) {
+                if (Util.gI().nextInt(100) <= 5) {
                     for (i = 0; i < 1; i++) {
                         short[] arrItem = new short[]{555, 557, 559, 563, 565, 567};
                         int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
@@ -469,7 +492,7 @@ public class Boss {
                     }
                 }
                 //trang bi gang than linh
-                if (Util.gI().nextInt(100) <= 5) {
+                if (Util.gI().nextInt(100) <= 2) {
                     for (i = 0; i < 1; i++) {
                         short[] arrItem = new short[]{562, 564, 566};
                         int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
@@ -484,7 +507,7 @@ public class Boss {
                     }
                 }
                 //trang bi than linh (quan tl)
-                if (Util.gI().nextInt(100) <= 30) {
+                if (Util.gI().nextInt(100) <= 10) {
                     for (i = 0; i < 1; i++) {
                         short[] arrItem = new short[]{556, 558, 560};
                         int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
@@ -499,7 +522,7 @@ public class Boss {
                     }
                 }
                 //trang bi nhan than linh
-                if (Util.gI().nextInt(100) <= 30) {
+                if (Util.gI().nextInt(100) <= 5) {
                     for (i = 0; i < 1; i++) {
                         short[] arrItem = new short[]{561};
                         int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
@@ -521,7 +544,7 @@ public class Boss {
 //                    itemMaps.add(itemMap);
 //                }
                 //Manh the than linh
-                if (Util.gI().nextInt(100) <= 20) {
+                if (Util.gI().nextInt(100) <= 30) {
                     for (i = 0; i < 1; i++) {
                         int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
                         int toY = zone.mapTemplate.touchY(toX, boss.cy);
@@ -537,6 +560,13 @@ public class Boss {
             }
             //Coller
             case 1: {
+                // Roi Thoi Vàng
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(457, false, Util.gI().nextInt(1, 3), ItemOption.getOption(457, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
                 // bi kip tuyet ki
                 for (i = 0; i < 1; i++) {
                     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
@@ -545,7 +575,7 @@ public class Boss {
                     itemMaps.add(itemMap);
                 }
                 //trang bi co sao
-                if (Util.gI().nextInt(1000) <= 45) {
+                if (Util.gI().nextInt(1000) <= 35) {
                     for (i = 0; i < 1; i++) {
                         short[] arrItem = new short[]{241, 253, 265, 277, 233, 245, 257, 269, 237, 249, 261, 273, 281};
                         int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
@@ -576,7 +606,7 @@ public class Boss {
                     }
                 }
                 //trang bi gang than linh
-                if (Util.gI().nextInt(200) <= 10) {
+                if (Util.gI().nextInt(200) <= 5) {
                     for (i = 0; i < 1; i++) {
                         short[] arrItem = new short[]{562, 564, 566};
                         int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
@@ -606,7 +636,7 @@ public class Boss {
                     }
                 }
                 //trang bi nhan than linh
-                if (Util.gI().nextInt(100) <= 10) {
+                if (Util.gI().nextInt(100) <= 5) {
                     for (i = 0; i < 1; i++) {
                         short[] arrItem = new short[]{561};
                         int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
@@ -628,7 +658,7 @@ public class Boss {
 //                    itemMaps.add(itemMap);
 //                }
                 //Ngoc rong 3 sao
-                if (Util.gI().nextInt(100) <= 10) {
+                if (Util.gI().nextInt(100) <= 20) {
                     for (i = 0; i < 1; i++) {
                         int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
                         int toY = zone.mapTemplate.touchY(toX, boss.cy);
@@ -637,7 +667,7 @@ public class Boss {
                     }
                 }
                 //Manh the than linh
-                if (Util.gI().nextInt(100) <= 40) {
+                if (Util.gI().nextInt(100) <= 30) {
                     for (i = 0; i < 1; i++) {
                         int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
                         int toY = zone.mapTemplate.touchY(toX, boss.cy);
@@ -653,11 +683,18 @@ public class Boss {
             }
             //Coller 2
             case 2: {
+                // Roi Thoi Vàng
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(457, false, Util.gI().nextInt(1, 3), ItemOption.getOption(457, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
                 // bi kip tuyet ki
                 for (i = 0; i < 1; i++) {
                     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
                     int toY = zone.mapTemplate.touchY(toX, boss.cy);
-                    ItemMap itemMap = zone.addItemMap(charId, new Item(1229, false, 10, ItemOption.getOption(1229, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(1229, false, 5, ItemOption.getOption(1229, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
                     itemMaps.add(itemMap);
                 }
                 //Trang bi co sao
@@ -668,7 +705,7 @@ public class Boss {
                         int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
                         int toY = zone.mapTemplate.touchY(toX, boss.cy);
                         Item it_2 = new Item(templateId, false, 1, ItemOption.getOption(templateId, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
-                        it_2.options.add(new ItemOption(107, Util.gI().nextInt(1, 6)));
+                        it_2.options.add(new ItemOption(107, Util.gI().nextInt(1, 5)));
                         if (Util.gI().nextInt(100) < 50) {
                             it_2.options.add(new ItemOption(Util.gI().nextInt(86, 87), 0));
                         }
@@ -677,256 +714,7 @@ public class Boss {
                     }
                 }
                 //trang bi ao than linh
-                if (Util.gI().nextInt(100) <= 50) {
-                    for (i = 0; i < 1; i++) {
-                        short[] arrItem = new short[]{555, 557, 559, 563, 565, 567};
-                        int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
-                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
-                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
-                        Item it = new Item(templateId, false, 1, ItemOption.getOption(templateId, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
-                        if (Util.gI().nextInt(100) < 50) {
-                            it.options.add(new ItemOption(Util.gI().nextInt(86, 87), 0));
-                        }
-                        ItemMap itemMap = zone.addItemMap(charId, it, toX, toY, 0, -1);
-                        itemMaps.add(itemMap);
-                    }
-                }
-                //trang bi gang than linh
-                if (Util.gI().nextInt(300) <= 30) {
-                    for (i = 0; i < 1; i++) {
-                        short[] arrItem = new short[]{562, 564, 566};
-                        int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
-                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
-                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
-                        Item it = new Item(templateId, false, 1, ItemOption.getOption(templateId, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
-                        if (Util.gI().nextInt(100) < 80) {
-                            it.options.add(new ItemOption(Util.gI().nextInt(86, 87), 0));
-                        }
-                        ItemMap itemMap = zone.addItemMap(charId, it, toX, toY, 0, -1);
-                        itemMaps.add(itemMap);
-                    }
-                }
-                //trang bi than linh (quan tl)
-                if (Util.gI().nextInt(500) <= 50) {
-                    for (i = 0; i < 1; i++) {
-                        short[] arrItem = new short[]{556, 558, 560};
-                        int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
-                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
-                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
-                        Item it = new Item(templateId, false, 1, ItemOption.getOption(templateId, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
-                        if (Util.gI().nextInt(100) < 80) {
-                            it.options.add(new ItemOption(Util.gI().nextInt(86, 87), 0));
-                        }
-                        ItemMap itemMap = zone.addItemMap(charId, it, toX, toY, 0, -1);
-                        itemMaps.add(itemMap);
-                    }
-                }
-                //trang bi nhan than linh
-                if (Util.gI().nextInt(500) <= 60) {
-                    for (i = 0; i < 1; i++) {
-                        short[] arrItem = new short[]{561};
-                        int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
-                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
-                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
-                        Item it = new Item(templateId, false, 1, ItemOption.getOption(templateId, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
-                        if (Util.gI().nextInt(100) < 50) {
-                            it.options.add(new ItemOption(Util.gI().nextInt(86, 87), 0));
-                        }
-                        ItemMap itemMap = zone.addItemMap(charId, it, toX, toY, 0, -1);
-                        itemMaps.add(itemMap);
-                    }
-                }
-                //Roi gold
-//                for (i = 0; i < 5; i++) {
-//                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
-//                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
-//                    ItemMap itemMap = zone.addItemMap(-1, new Item(190, false, 5000000, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
-//                    itemMaps.add(itemMap);
-//                }
-                //Ngoc rong 3 sao
-                if (Util.gI().nextInt(100) <= 30) {
-                    for (i = 0; i < 1; i++) {
-                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
-                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
-                        ItemMap itemMap = zone.addItemMap(charId, new Item(16, false, 1, ItemOption.getOption(16, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
-                        itemMaps.add(itemMap);
-                    }
-                }
-                //Manh the than linh
-                if (Util.gI().nextInt(100) <= 50) {
-                    for (i = 0; i < 1; i++) {
-                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
-                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
-                        short num123 = new short[]{712, 713, 714, 715, 716}[Util.gI().nextInt(5)];
-                        ItemMap itemMap = zone.addItemMap(charId, new Item(num123, false, 5, ItemOption.getOption(num123, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
-                        itemMaps.add(itemMap);
-                    }
-                }
-                if (player != null) {
-                    Server.gI().chatVip(String.format(mResources.ATT_DIE_BOSS, player.cName, boss.cName));
-                }
-                break;
-            }
-            //Fide vang
-            case 3: {
-                // bi kip tuyet ki
-                for (i = 0; i < 1; i++) {
-                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
-                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
-                    ItemMap itemMap = zone.addItemMap(charId, new Item(1229, false, 10, ItemOption.getOption(1229, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
-                    itemMaps.add(itemMap);
-                }
-                //CT FIDE GOLD
-                for (i = 0; i < 1; i++) {
-                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
-                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
-                    ItemMap itemMap = zone.addItemMap(charId, new Item(629, false, 1, ItemOption.getOption(629, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
-                    if (Util.gI().nextInt(100) < 98) {
-                        itemMap.item.options.add(new ItemOption(93, Util.gI().nextInt(3, 7)));
-                    }
-                    itemMaps.add(itemMap);
-                }
-                //Manh the than linh
                 if (Util.gI().nextInt(100) <= 10) {
-                    for (i = 0; i < 1; i++) {
-                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
-                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
-                        short num124 = new short[]{712, 713, 714, 715, 716}[Util.gI().nextInt(5)];
-                        ItemMap itemMap = zone.addItemMap(charId, new Item(num124, false, 5, ItemOption.getOption(num124, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
-                        itemMaps.add(itemMap);
-                    }
-                }
-                if (player != null) {
-                    Server.gI().chatVip(String.format(mResources.ATT_DIE_BOSS, player.cName, boss.cName));
-                }
-                break;
-            }
-            //Black Goku
-            case 4: {
-                // bi kip tuyet ki
-                for (i = 0; i < 1; i++) {
-                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
-                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
-                    ItemMap itemMap = zone.addItemMap(charId, new Item(1229, false, 10, ItemOption.getOption(1229, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
-                    itemMaps.add(itemMap);
-                }
-                //Ngoc rong 3 sao
-                if (Util.gI().nextInt(100) <= 30) {
-                    for (i = 0; i < 1; i++) {
-                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
-                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
-                        ItemMap itemMap = zone.addItemMap(charId, new Item(16, false, 1, ItemOption.getOption(16, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
-                        itemMaps.add(itemMap);
-                    }
-                }
-                //trang bi ao than linh
-                if (Util.gI().nextInt(100) <= 50) {
-                    for (i = 0; i < 1; i++) {
-                        short[] arrItem = new short[]{555, 557, 559, 563, 565, 567};
-                        int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
-                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
-                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
-                        Item it = new Item(templateId, false, 1, ItemOption.getOption(templateId, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
-                        if (Util.gI().nextInt(100) < 50) {
-                            it.options.add(new ItemOption(Util.gI().nextInt(86, 87), 0));
-                        }
-                        ItemMap itemMap = zone.addItemMap(charId, it, toX, toY, 0, -1);
-                        itemMaps.add(itemMap);
-                    }
-                }
-                //trang bi gang than linh
-                if (Util.gI().nextInt(300) <= 50) {
-                    for (i = 0; i < 1; i++) {
-                        short[] arrItem = new short[]{562, 564, 566};
-                        int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
-                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
-                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
-                        Item it = new Item(templateId, false, 1, ItemOption.getOption(templateId, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
-                        if (Util.gI().nextInt(100) < 80) {
-                            it.options.add(new ItemOption(Util.gI().nextInt(86, 87), 0));
-                        }
-                        ItemMap itemMap = zone.addItemMap(charId, it, toX, toY, 0, -1);
-                        itemMaps.add(itemMap);
-                    }
-                }
-                //trang bi than linh (quan tl)
-                if (Util.gI().nextInt(100) <= 30) {
-                    for (i = 0; i < 1; i++) {
-                        short[] arrItem = new short[]{556, 558, 560};
-                        int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
-                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
-                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
-                        Item it = new Item(templateId, false, 1, ItemOption.getOption(templateId, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
-                        if (Util.gI().nextInt(100) < 80) {
-                            it.options.add(new ItemOption(Util.gI().nextInt(86, 87), 0));
-                        }
-                        ItemMap itemMap = zone.addItemMap(charId, it, toX, toY, 0, -1);
-                        itemMaps.add(itemMap);
-                    }
-                }
-                //trang bi nhan than linh
-                if (Util.gI().nextInt(100) <= 10) {
-                    for (i = 0; i < 1; i++) {
-                        short[] arrItem = new short[]{561};
-                        int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
-                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
-                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
-                        Item it = new Item(templateId, false, 1, ItemOption.getOption(templateId, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
-                        if (Util.gI().nextInt(100) < 50) {
-                            it.options.add(new ItemOption(Util.gI().nextInt(86, 87), 0));
-                        }
-                        ItemMap itemMap = zone.addItemMap(charId, it, toX, toY, 0, -1);
-                        itemMaps.add(itemMap);
-                    }
-                }
-                //Roi moeny
-//                for (i = 0; i < 20; i++) {
-//                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
-//                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
-//                    ItemMap itemMap = zone.addItemMap(-1, new Item(861, false, 10, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
-//                    itemMaps.add(itemMap);
-//                }
-//                //Roi gold
-//                for (i = 0; i < 5; i++) {
-//                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
-//                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
-//                    ItemMap itemMap = zone.addItemMap(-1, new Item(190, false, 3000000, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
-//                    itemMaps.add(itemMap);
-//                }
-                //Manh the than linh
-                if (Util.gI().nextInt(100) <= 45) {
-                    for (i = 0; i < 1; i++) {
-                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
-                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
-                        short num125 = new short[]{712, 713, 714, 715, 716}[Util.gI().nextInt(5)];
-                        ItemMap itemMap = zone.addItemMap(charId, new Item(num125, false, 5, ItemOption.getOption(num125, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
-                        itemMaps.add(itemMap);
-                    }
-                }
-                if (player != null) {
-                    Server.gI().chatVip(String.format(mResources.ATT_DIE_BOSS, player.cName, boss.cName));
-                }
-                break;
-            }
-            //Super Black Goku
-            case 5: {   // bi kip tuyet ki
-                for (i = 0; i < 1; i++) {
-                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
-                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
-                    ItemMap itemMap = zone.addItemMap(charId, new Item(1229, false, 10, ItemOption.getOption(1229, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
-                    itemMaps.add(itemMap);
-                }
-                //Ngoc rong 2 sao
-                if (Util.gI().nextInt(100) <= 5) {
-                    for (i = 0; i < 1; i++) {
-                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
-                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
-                        ItemMap itemMap = zone.addItemMap(charId, new Item(15, false, 1, ItemOption.getOption(15, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
-                        itemMaps.add(itemMap);
-                    }
-                }
-                //trang bi ao than linh
-                if (Util.gI().nextInt(100) <= 5) {
                     for (i = 0; i < 1; i++) {
                         short[] arrItem = new short[]{555, 557, 559, 563, 565, 567};
                         int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
@@ -956,7 +744,7 @@ public class Boss {
                     }
                 }
                 //trang bi than linh (quan tl)
-                if (Util.gI().nextInt(300) <= 2) {
+                if (Util.gI().nextInt(500) <= 10) {
                     for (i = 0; i < 1; i++) {
                         short[] arrItem = new short[]{556, 558, 560};
                         int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
@@ -971,7 +759,278 @@ public class Boss {
                     }
                 }
                 //trang bi nhan than linh
-                if (Util.gI().nextInt(300) <= 1) {
+                if (Util.gI().nextInt(500) <= 5) {
+                    for (i = 0; i < 1; i++) {
+                        short[] arrItem = new short[]{561};
+                        int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
+                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                        Item it = new Item(templateId, false, 1, ItemOption.getOption(templateId, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
+                        if (Util.gI().nextInt(100) < 50) {
+                            it.options.add(new ItemOption(Util.gI().nextInt(86, 87), 0));
+                        }
+                        ItemMap itemMap = zone.addItemMap(charId, it, toX, toY, 0, -1);
+                        itemMaps.add(itemMap);
+                    }
+                }
+                //Roi gold
+//                for (i = 0; i < 5; i++) {
+//                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+//                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+//                    ItemMap itemMap = zone.addItemMap(-1, new Item(190, false, 5000000, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+//                    itemMaps.add(itemMap);
+//                }
+                //Ngoc rong 3 sao
+                if (Util.gI().nextInt(100) <= 30) {
+                    for (i = 0; i < 1; i++) {
+                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                        ItemMap itemMap = zone.addItemMap(charId, new Item(16, false, 1, ItemOption.getOption(16, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                        itemMaps.add(itemMap);
+                    }
+                }
+                //Manh the than linh
+                if (Util.gI().nextInt(100) <= 40) {
+                    for (i = 0; i < 1; i++) {
+                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                        short num123 = new short[]{712, 713, 714, 715, 716}[Util.gI().nextInt(5)];
+                        ItemMap itemMap = zone.addItemMap(charId, new Item(num123, false, 5, ItemOption.getOption(num123, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                        itemMaps.add(itemMap);
+                    }
+                }
+                if (player != null) {
+                    Server.gI().chatVip(String.format(mResources.ATT_DIE_BOSS, player.cName, boss.cName));
+                }
+                break;
+            }
+            //Fide vang
+            case 3: {
+                // Roi Thoi Vàng
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(457, false, Util.gI().nextInt(1, 3), ItemOption.getOption(457, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
+                // bi kip tuyet ki
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(1229, false, 5, ItemOption.getOption(1229, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
+                //CT FIDE GOLD
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(629, false, 1, ItemOption.getOption(629, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    if (Util.gI().nextInt(100) < 98) {
+                        itemMap.item.options.add(new ItemOption(93, Util.gI().nextInt(3, 7)));
+                    }
+                    itemMaps.add(itemMap);
+                }
+                //Manh the than linh
+                if (Util.gI().nextInt(100) <= 40) {
+                    for (i = 0; i < 1; i++) {
+                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                        short num124 = new short[]{712, 713, 714, 715, 716}[Util.gI().nextInt(5)];
+                        ItemMap itemMap = zone.addItemMap(charId, new Item(num124, false, 5, ItemOption.getOption(num124, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                        itemMaps.add(itemMap);
+                    }
+                }
+                if (player != null) {
+                    Server.gI().chatVip(String.format(mResources.ATT_DIE_BOSS, player.cName, boss.cName));
+                }
+                break;
+            }
+            //Black Goku
+            case 4: {
+                // Roi Thoi Vàng
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(457, false, Util.gI().nextInt(1, 3), ItemOption.getOption(457, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
+                // bi kip tuyet ki
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(1229, false, 5, ItemOption.getOption(1229, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
+                //Ngoc rong 3 sao
+                if (Util.gI().nextInt(100) <= 30) {
+                    for (i = 0; i < 1; i++) {
+                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                        ItemMap itemMap = zone.addItemMap(charId, new Item(16, false, 1, ItemOption.getOption(16, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                        itemMaps.add(itemMap);
+                    }
+                }
+                //trang bi ao than linh
+                if (Util.gI().nextInt(100) <= 10) {
+                    for (i = 0; i < 1; i++) {
+                        short[] arrItem = new short[]{555, 557, 559, 563, 565, 567};
+                        int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
+                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                        Item it = new Item(templateId, false, 1, ItemOption.getOption(templateId, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
+                        if (Util.gI().nextInt(100) < 50) {
+                            it.options.add(new ItemOption(Util.gI().nextInt(86, 87), 0));
+                        }
+                        ItemMap itemMap = zone.addItemMap(charId, it, toX, toY, 0, -1);
+                        itemMaps.add(itemMap);
+                    }
+                }
+                //trang bi gang than linh
+                if (Util.gI().nextInt(300) <= 5) {
+                    for (i = 0; i < 1; i++) {
+                        short[] arrItem = new short[]{562, 564, 566};
+                        int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
+                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                        Item it = new Item(templateId, false, 1, ItemOption.getOption(templateId, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
+                        if (Util.gI().nextInt(100) < 80) {
+                            it.options.add(new ItemOption(Util.gI().nextInt(86, 87), 0));
+                        }
+                        ItemMap itemMap = zone.addItemMap(charId, it, toX, toY, 0, -1);
+                        itemMaps.add(itemMap);
+                    }
+                }
+                //trang bi than linh (quan tl)
+                if (Util.gI().nextInt(100) <= 10) {
+                    for (i = 0; i < 1; i++) {
+                        short[] arrItem = new short[]{556, 558, 560};
+                        int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
+                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                        Item it = new Item(templateId, false, 1, ItemOption.getOption(templateId, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
+                        if (Util.gI().nextInt(100) < 80) {
+                            it.options.add(new ItemOption(Util.gI().nextInt(86, 87), 0));
+                        }
+                        ItemMap itemMap = zone.addItemMap(charId, it, toX, toY, 0, -1);
+                        itemMaps.add(itemMap);
+                    }
+                }
+                //trang bi nhan than linh
+                if (Util.gI().nextInt(100) <= 5) {
+                    for (i = 0; i < 1; i++) {
+                        short[] arrItem = new short[]{561};
+                        int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
+                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                        Item it = new Item(templateId, false, 1, ItemOption.getOption(templateId, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
+                        if (Util.gI().nextInt(100) < 50) {
+                            it.options.add(new ItemOption(Util.gI().nextInt(86, 87), 0));
+                        }
+                        ItemMap itemMap = zone.addItemMap(charId, it, toX, toY, 0, -1);
+                        itemMaps.add(itemMap);
+                    }
+                }
+                //Roi moeny
+//                for (i = 0; i < 20; i++) {
+//                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+//                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+//                    ItemMap itemMap = zone.addItemMap(-1, new Item(861, false, 10, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+//                    itemMaps.add(itemMap);
+//                }
+//                //Roi gold
+//                for (i = 0; i < 5; i++) {
+//                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+//                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+//                    ItemMap itemMap = zone.addItemMap(-1, new Item(190, false, 3000000, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+//                    itemMaps.add(itemMap);
+//                }
+                //Manh the than linh
+                if (Util.gI().nextInt(100) <= 50) {
+                    for (i = 0; i < 1; i++) {
+                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                        short num125 = new short[]{712, 713, 714, 715, 716}[Util.gI().nextInt(5)];
+                        ItemMap itemMap = zone.addItemMap(charId, new Item(num125, false, 5, ItemOption.getOption(num125, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                        itemMaps.add(itemMap);
+                    }
+                }
+                if (player != null) {
+                    Server.gI().chatVip(String.format(mResources.ATT_DIE_BOSS, player.cName, boss.cName));
+                }
+                break;
+            }
+            //Super Black Goku
+            case 5: {
+                // Roi Thoi Vàng
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(457, false, Util.gI().nextInt(1, 3), ItemOption.getOption(1229, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
+                // bi kip tuyet ki
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(1229, false, 5, ItemOption.getOption(457, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
+                //Ngoc rong 2 sao
+                if (Util.gI().nextInt(100) <= 2) {
+                    for (i = 0; i < 1; i++) {
+                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                        ItemMap itemMap = zone.addItemMap(charId, new Item(15, false, 1, ItemOption.getOption(15, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                        itemMaps.add(itemMap);
+                    }
+                }
+                //trang bi ao than linh
+                if (Util.gI().nextInt(100) <= 10) {
+                    for (i = 0; i < 1; i++) {
+                        short[] arrItem = new short[]{555, 557, 559, 563, 565, 567};
+                        int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
+                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                        Item it = new Item(templateId, false, 1, ItemOption.getOption(templateId, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
+                        if (Util.gI().nextInt(100) < 50) {
+                            it.options.add(new ItemOption(Util.gI().nextInt(86, 87), 0));
+                        }
+                        ItemMap itemMap = zone.addItemMap(charId, it, toX, toY, 0, -1);
+                        itemMaps.add(itemMap);
+                    }
+                }
+                //trang bi gang than linh
+                if (Util.gI().nextInt(300) <= 5) {
+                    for (i = 0; i < 1; i++) {
+                        short[] arrItem = new short[]{562, 564, 566};
+                        int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
+                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                        Item it = new Item(templateId, false, 1, ItemOption.getOption(templateId, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
+                        if (Util.gI().nextInt(100) < 80) {
+                            it.options.add(new ItemOption(Util.gI().nextInt(86, 87), 0));
+                        }
+                        ItemMap itemMap = zone.addItemMap(charId, it, toX, toY, 0, -1);
+                        itemMaps.add(itemMap);
+                    }
+                }
+                //trang bi than linh (quan tl)
+                if (Util.gI().nextInt(300) <= 10) {
+                    for (i = 0; i < 1; i++) {
+                        short[] arrItem = new short[]{556, 558, 560};
+                        int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
+                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                        Item it = new Item(templateId, false, 1, ItemOption.getOption(templateId, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
+                        if (Util.gI().nextInt(100) < 80) {
+                            it.options.add(new ItemOption(Util.gI().nextInt(86, 87), 0));
+                        }
+                        ItemMap itemMap = zone.addItemMap(charId, it, toX, toY, 0, -1);
+                        itemMaps.add(itemMap);
+                    }
+                }
+                //trang bi nhan than linh
+                if (Util.gI().nextInt(300) <= 5) {
                     for (i = 0; i < 1; i++) {
                         short[] arrItem = new short[]{561};
                         int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
@@ -1000,7 +1059,7 @@ public class Boss {
 //                    itemMaps.add(itemMap);
 //                }
                 //Manh the than linh
-                if (Util.gI().nextInt(100) <= 40) {
+                if (Util.gI().nextInt(100) <= 50) {
                     for (i = 0; i < 1; i++) {
                         int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
                         int toY = zone.mapTemplate.touchY(toX, boss.cy);
@@ -1010,7 +1069,7 @@ public class Boss {
                     }
                 }
                 //nhan thoi khong sai lech
-                {
+                if (Util.gI().nextInt(100) <= 20) {
                     for (i = 0; i < 1; i++) {
                         int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
                         int toY = zone.mapTemplate.touchY(toX, boss.cy);
@@ -1087,22 +1146,21 @@ public class Boss {
             //Super Broly
             case 14: {
                 if (player != null) {
-                    if (Util.gI().nextInt(100) <= 70) {
+                    if (Util.gI().nextInt(100) <= 100) {
                         for (i = 0; i < 1; i++) {
                             int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
                             int toY = zone.mapTemplate.touchY(toX, boss.cy);
                             ItemMap itemMap = zone.addItemMap(charId, new Item(1975, false, 1, ItemOption.getOption(1975, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
                             itemMaps.add(itemMap);
                         }
-                    } 
-//                    else if (Util.gI().nextInt(100) <= 50) {
-//                        for (i = 0; i < 1; i++) {
-//                            int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
-//                            int toY = zone.mapTemplate.touchY(toX, boss.cy);
-//                            ItemMap itemMap = zone.addItemMap(charId, new Item(1904, false, 5, ItemOption.getOption(1904, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
-//                            itemMaps.add(itemMap);
-//                        }
-//                    } 
+                    } //                    else if (Util.gI().nextInt(100) <= 50) {
+                    //                        for (i = 0; i < 1; i++) {
+                    //                            int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    //                            int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    //                            ItemMap itemMap = zone.addItemMap(charId, new Item(1904, false, 5, ItemOption.getOption(1904, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    //                            itemMaps.add(itemMap);
+                    //                        }
+                    //                    } 
                     else {
                         for (i = 0; i < 1; i++) {
                             int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
@@ -1130,11 +1188,18 @@ public class Boss {
             }
             //Xen hoan thien
             case 23: {
+                // Roi Thoi Vàng
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(457, false, Util.gI().nextInt(1, 3), ItemOption.getOption(457, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
                 // bi kip tuyet ki
                 for (i = 0; i < 1; i++) {
                     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
                     int toY = zone.mapTemplate.touchY(toX, boss.cy);
-                    ItemMap itemMap = zone.addItemMap(charId, new Item(1229, false, 10, ItemOption.getOption(1229, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(1229, false, 5, ItemOption.getOption(1229, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
                     itemMaps.add(itemMap);
                 }
                 //Ngoc rong 3 sao
@@ -1163,7 +1228,7 @@ public class Boss {
 //                    itemMaps.add(itemMap);
 //                }
                 //Manh the than linh
-                if (Util.gI().nextInt(100) <= 30) {
+                if (Util.gI().nextInt(100) <= 40) {
                     for (i = 0; i < 1; i++) {
                         int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
                         int toY = zone.mapTemplate.touchY(toX, boss.cy);
@@ -1179,15 +1244,22 @@ public class Boss {
             }
             //Sieu bo hung
             case 24: {
+                // Roi Thoi Vàng
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(457, false, Util.gI().nextInt(1, 3), ItemOption.getOption(457, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
                 // bi kip tuyet ki
                 for (i = 0; i < 1; i++) {
                     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
                     int toY = zone.mapTemplate.touchY(toX, boss.cy);
-                    ItemMap itemMap = zone.addItemMap(charId, new Item(1229, false, 10, ItemOption.getOption(1229, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(1229, false, 5, ItemOption.getOption(1229, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
                     itemMaps.add(itemMap);
                 }
                 //Ngoc rong 2 sao
-                if (Util.gI().nextInt(100) <= 5) {
+                if (Util.gI().nextInt(100) <= 1) {
                     for (i = 0; i < 1; i++) {
                         int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
                         int toY = zone.mapTemplate.touchY(toX, boss.cy);
@@ -1205,7 +1277,7 @@ public class Boss {
                     }
                 }
                 //trang bi ao than linh
-                if (Util.gI().nextInt(100) <= 5) {
+                if (Util.gI().nextInt(100) <= 10) {
                     for (i = 0; i < 1; i++) {
                         short[] arrItem = new short[]{555, 557, 559, 563, 565, 567};
                         int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
@@ -1220,7 +1292,7 @@ public class Boss {
                     }
                 }
                 //trang bi gang than linh
-                if (Util.gI().nextInt(100) <= 2) {
+                if (Util.gI().nextInt(100) <= 5) {
                     for (i = 0; i < 1; i++) {
                         short[] arrItem = new short[]{562, 564, 566};
                         int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
@@ -1235,7 +1307,7 @@ public class Boss {
                     }
                 }
                 //trang bi than linh (quan tl)
-                if (Util.gI().nextInt(300) <= 3) {
+                if (Util.gI().nextInt(300) <= 10) {
                     for (i = 0; i < 1; i++) {
                         short[] arrItem = new short[]{556, 558, 560};
                         int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
@@ -1250,7 +1322,7 @@ public class Boss {
                     }
                 }
                 //trang bi nhan than linh
-                if (Util.gI().nextInt(200) <= 1) {
+                if (Util.gI().nextInt(200) <= 5) {
                     for (i = 0; i < 1; i++) {
                         short[] arrItem = new short[]{561};
                         int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
@@ -1648,6 +1720,20 @@ public class Boss {
             }
             //Bujin Tieu Doi Bojack
             case 47: {
+                // Roi Thoi Vàng
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(457, false, Util.gI().nextInt(1, 3), ItemOption.getOption(457, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
+                 // Roi luc bao
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(220, false, Util.gI().nextInt(3, 10), ItemOption.getOption(220, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
                 //Roi gold
                 for (i = 0; i < 10; i++) {
                     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
@@ -1669,6 +1755,20 @@ public class Boss {
             }
             //Kogu Tieu Doi Bojack
             case 48: {
+                // Roi Thoi Vàng
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(457, false, Util.gI().nextInt(1, 3), ItemOption.getOption(457, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
+                 // Roi saphia
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(221, false, Util.gI().nextInt(4, 10), ItemOption.getOption(221, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
                 //Roi gold
                 for (i = 0; i < 10; i++) {
                     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
@@ -1690,6 +1790,13 @@ public class Boss {
             }
             //Zangya Tieu Doi Bojack
             case 49: {
+                // Roi Thoi Vàng
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(457, false, Util.gI().nextInt(1, 3), ItemOption.getOption(457, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
                 //Roi gold
                 for (i = 0; i < 10; i++) {
                     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
@@ -1697,13 +1804,21 @@ public class Boss {
                     ItemMap itemMap = zone.addItemMap(-1, new Item(190, false, 1000000, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
                     itemMaps.add(itemMap);
                 }
-                //Roi moeny
-                for (i = 0; i < 10; i++) {
+                 // Roi ruby
+                for (i = 0; i < 1; i++) {
                     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
                     int toY = zone.mapTemplate.touchY(toX, boss.cy);
-                    ItemMap itemMap = zone.addItemMap(-1, new Item(77, false, 2, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(222, false, Util.gI().nextInt(4, 10), ItemOption.getOption(222, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
                     itemMaps.add(itemMap);
                 }
+                
+                //Roi moeny
+                // for (i = 0; i < 10; i++) {
+                //     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                //     int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                //     ItemMap itemMap = zone.addItemMap(-1, new Item(77, false, 2, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                //     itemMaps.add(itemMap);
+                // }
                 if (player != null) {
                     Server.gI().chatVip(String.format(mResources.ATT_DIE_BOSS, player.cName, boss.cName));
                 }
@@ -1711,6 +1826,13 @@ public class Boss {
             }
             //Bido Tieu Doi Bojack
             case 50: {
+                // Roi Thoi Vàng
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(457, false, Util.gI().nextInt(1, 3), ItemOption.getOption(457, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
                 //Roi gold
                 for (i = 0; i < 10; i++) {
                     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
@@ -1719,12 +1841,12 @@ public class Boss {
                     itemMaps.add(itemMap);
                 }
                 //Roi moeny
-                for (i = 0; i < 10; i++) {
-                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
-                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
-                    ItemMap itemMap = zone.addItemMap(-1, new Item(77, false, 5, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
-                    itemMaps.add(itemMap);
-                }
+                // for (i = 0; i < 10; i++) {
+                //     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                //     int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                //     ItemMap itemMap = zone.addItemMap(-1, new Item(77, false, 5, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                //     itemMaps.add(itemMap);
+                // }
                 if (player != null) {
                     Server.gI().chatVip(String.format(mResources.ATT_DIE_BOSS, player.cName, boss.cName));
                 }
@@ -1732,6 +1854,20 @@ public class Boss {
             }
             //Bojack Tieu Doi Bojack
             case 51: {
+                // Roi Thoi Vàng
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(457, false, Util.gI().nextInt(1, 3), ItemOption.getOption(457, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
+                 // Roi titan
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(223, false, Util.gI().nextInt(4, 10), ItemOption.getOption(223, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
                 //Roi gold
                 for (i = 0; i < 10; i++) {
                     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
@@ -1740,12 +1876,12 @@ public class Boss {
                     itemMaps.add(itemMap);
                 }
                 //Roi moeny
-                for (i = 0; i < 10; i++) {
-                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
-                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
-                    ItemMap itemMap = zone.addItemMap(-1, new Item(77, false, 5, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
-                    itemMaps.add(itemMap);
-                }
+                // for (i = 0; i < 10; i++) {
+                //     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                //     int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                //     ItemMap itemMap = zone.addItemMap(-1, new Item(77, false, 5, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                //     itemMaps.add(itemMap);
+                // }
                 //CT BOJECK
                 for (i = 0; i < 1; i++) {
                     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
@@ -1760,6 +1896,20 @@ public class Boss {
             }
             //Super Bojack Tieu Doi Bojack
             case 52: {
+                // Roi Thoi Vàng
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(457, false, Util.gI().nextInt(1, 3), ItemOption.getOption(457, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
+                 // Roi thanh anh tim
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(224, false, Util.gI().nextInt(4, 10), ItemOption.getOption(224, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
                 // bi kip tuyet ki
                 for (i = 0; i < 1; i++) {
                     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
@@ -1775,12 +1925,12 @@ public class Boss {
                     itemMaps.add(itemMap);
                 }
                 //Roi moeny
-                for (i = 0; i < 10; i++) {
-                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
-                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
-                    ItemMap itemMap = zone.addItemMap(-1, new Item(77, false, 5, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
-                    itemMaps.add(itemMap);
-                }
+                // for (i = 0; i < 10; i++) {
+                //     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                //     int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                //     ItemMap itemMap = zone.addItemMap(-1, new Item(77, false, 5, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                //     itemMaps.add(itemMap);
+                // }
                 //CT SUPER BOJECK
                 for (i = 0; i < 1; i++) {
                     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
@@ -1794,7 +1944,15 @@ public class Boss {
                 break;
             }
             //Poc
-            case 71: {   // bi kip tuyet ki
+            case 71: {
+                // Roi Thoi Vàng
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(457, false, Util.gI().nextInt(1, 3), ItemOption.getOption(457, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
+                // bi kip tuyet ki
                 for (i = 0; i < 1; i++) {
                     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
                     int toY = zone.mapTemplate.touchY(toX, boss.cy);
@@ -1812,7 +1970,7 @@ public class Boss {
                         if (Util.gI().nextInt(100) < 80) {
                             it_35.options.add(new ItemOption(Util.gI().nextInt(86, 87), 0));
                         }
-                        it_35.options.add(new ItemOption(107, Util.gI().nextInt(1, 4)));
+                        it_35.options.add(new ItemOption(107, Util.gI().nextInt(1, 3)));
                         ItemMap itemMap = zone.addItemMap(charId, it_35, toX, toY, 0, -1);
                         itemMaps.add(itemMap);
                     }
@@ -1840,6 +1998,13 @@ public class Boss {
             }
             //Pic
             case 72: {
+                // Roi Thoi Vàng
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(457, false, Util.gI().nextInt(1, 3), ItemOption.getOption(457, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
                 // bi kip tuyet ki
                 for (i = 0; i < 1; i++) {
                     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
@@ -1858,7 +2023,7 @@ public class Boss {
                         if (Util.gI().nextInt(100) < 80) {
                             it_36.options.add(new ItemOption(Util.gI().nextInt(86, 87), 0));
                         }
-                        it_36.options.add(new ItemOption(107, Util.gI().nextInt(1, 4)));
+                        it_36.options.add(new ItemOption(107, Util.gI().nextInt(1, 3)));
                         ItemMap itemMap = zone.addItemMap(charId, it_36, toX, toY, 0, -1);
                         itemMaps.add(itemMap);
                     }
@@ -1886,6 +2051,13 @@ public class Boss {
             }
             //KigKong
             case 73: {
+                // Roi Thoi Vàng
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(457, false, Util.gI().nextInt(1, 3), ItemOption.getOption(457, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
                 // bi kip tuyet ki
                 for (i = 0; i < 1; i++) {
                     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
@@ -1904,7 +2076,7 @@ public class Boss {
                         if (Util.gI().nextInt(100) < 80) {
                             it_37.options.add(new ItemOption(Util.gI().nextInt(86, 87), 0));
                         }
-                        it_37.options.add(new ItemOption(107, Util.gI().nextInt(1, 4)));
+                        it_37.options.add(new ItemOption(107, Util.gI().nextInt(1, 3)));
                         ItemMap itemMap = zone.addItemMap(charId, it_37, toX, toY, 0, -1);
                         itemMaps.add(itemMap);
                     }
@@ -1932,6 +2104,13 @@ public class Boss {
             }
             //Xen bo hung
             case 74: {
+                // Roi Thoi Vàng
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(457, false, Util.gI().nextInt(1, 3), ItemOption.getOption(457, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
                 // bi kip tuyet ki
                 for (i = 0; i < 1; i++) {
                     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
@@ -1940,7 +2119,7 @@ public class Boss {
                     itemMaps.add(itemMap);
                 }
                 //Trang bi co sao
-                if (Util.gI().nextInt(100) <= 40) {
+                if (Util.gI().nextInt(100) <= 30) {
                     for (i = 0; i < 1; i++) {
                         short[] arrItem = new short[]{241, 253, 265, 277, 233, 245, 257, 269, 237, 249, 261, 273, 281};
                         int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
@@ -1950,13 +2129,13 @@ public class Boss {
                         if (Util.gI().nextInt(100) < 80) {
                             it_38.options.add(new ItemOption(Util.gI().nextInt(86, 87), 0));
                         }
-                        it_38.options.add(new ItemOption(107, Util.gI().nextInt(1, 4)));
+                        it_38.options.add(new ItemOption(107, Util.gI().nextInt(1, 3)));
                         ItemMap itemMap = zone.addItemMap(charId, it_38, toX, toY, 0, -1);
                         itemMaps.add(itemMap);
                     }
                 }
                 //Ngoc rong 3 sao
-                if (Util.gI().nextInt(100) <= 10) {
+                if (Util.gI().nextInt(100) <= 5) {
                     for (i = 0; i < 1; i++) {
                         int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
                         int toY = zone.mapTemplate.touchY(toX, boss.cy);
@@ -1978,6 +2157,13 @@ public class Boss {
             }
             //Xen bo hung
             case 75: {
+                // Roi Thoi Vàng
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(457, false, Util.gI().nextInt(1, 3), ItemOption.getOption(457, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
                 // bi kip tuyet ki
                 for (i = 0; i < 1; i++) {
                     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
@@ -1996,13 +2182,13 @@ public class Boss {
                         if (Util.gI().nextInt(100) < 80) {
                             it_39.options.add(new ItemOption(Util.gI().nextInt(86, 87), 0));
                         }
-                        it_39.options.add(new ItemOption(107, Util.gI().nextInt(1, 4)));
+                        it_39.options.add(new ItemOption(107, Util.gI().nextInt(1, 3)));
                         ItemMap itemMap = zone.addItemMap(charId, it_39, toX, toY, 0, -1);
                         itemMaps.add(itemMap);
                     }
                 }
                 //Ngoc rong 3 sao
-                if (Util.gI().nextInt(100) <= 10) {
+                if (Util.gI().nextInt(100) <= 5) {
                     for (i = 0; i < 1; i++) {
                         int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
                         int toY = zone.mapTemplate.touchY(toX, boss.cy);
@@ -2024,6 +2210,13 @@ public class Boss {
             }
             //Xen hoan thien
             case 76: {
+                // Roi Thoi Vàng
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(457, false, Util.gI().nextInt(1, 3), ItemOption.getOption(457, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
                 // bi kip tuyet ki
                 for (i = 0; i < 1; i++) {
                     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
@@ -2039,13 +2232,13 @@ public class Boss {
                         int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
                         int toY = zone.mapTemplate.touchY(toX, boss.cy);
                         Item it = new Item(templateId, false, 1, ItemOption.getOption(templateId, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
-                        it.options.add(new ItemOption(107, Util.gI().nextInt(1, 4)));
+                        it.options.add(new ItemOption(107, Util.gI().nextInt(1, 3)));
                         ItemMap itemMap = zone.addItemMap(charId, it, toX, toY, 0, -1);
                         itemMaps.add(itemMap);
                     }
                 }
                 //Ngoc rong 3 sao
-                if (Util.gI().nextInt(100) <= 10) {
+                if (Util.gI().nextInt(100) <= 5) {
                     for (i = 0; i < 1; i++) {
                         int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
                         int toY = zone.mapTemplate.touchY(toX, boss.cy);
@@ -2118,13 +2311,13 @@ public class Boss {
                         if (Util.gI().nextInt(100) < 80) {
                             it_40.options.add(new ItemOption(Util.gI().nextInt(86, 87), 0));
                         }
-                        it_40.options.add(new ItemOption(107, Util.gI().nextInt(1, 5)));
+                        it_40.options.add(new ItemOption(107, Util.gI().nextInt(1, 4)));
                         ItemMap itemMap = zone.addItemMap(-1, it_40, toX, toY, 0, -1);
                         itemMaps.add(itemMap);
                     }
                 }
                 //Manh the than linh
-                if (Util.gI().nextInt(100) <= 50) {
+                if (Util.gI().nextInt(100) <= 40) {
                     for (i = 0; i < 1; i++) {
                         int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
                         int toY = zone.mapTemplate.touchY(toX, boss.cy);
@@ -2232,7 +2425,7 @@ public class Boss {
                     }
                 }
                 //Manh the than linh
-                if (Util.gI().nextInt(100) <= 30) {
+                if (Util.gI().nextInt(100) <= 20) {
                     for (i = 0; i < 1; i++) {
                         int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
                         int toY = zone.mapTemplate.touchY(toX, boss.cy);
@@ -2249,7 +2442,7 @@ public class Boss {
                 for (i = 0; i < 1; i++) {
                     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
                     int toY = zone.mapTemplate.touchY(toX, boss.cy);
-                    ItemMap itemMap = zone.addItemMap(charId, new Item(1229, false, 10, ItemOption.getOption(1229, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(1229, false, 5, ItemOption.getOption(1229, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
                     itemMaps.add(itemMap);
                 }
                 //trang bi than linh (quan tl)
@@ -2273,7 +2466,7 @@ public class Boss {
                         int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
                         int toY = zone.mapTemplate.touchY(toX, boss.cy);
                         short id_466 = new short[]{712, 713, 714, 715, 716}[Util.gI().nextInt(5)];
-                        ItemMap itemMap = zone.addItemMap(charId, new Item(id_466, false, 20, ItemOption.getOption(id_466, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                        ItemMap itemMap = zone.addItemMap(charId, new Item(id_466, false, 5, ItemOption.getOption(id_466, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
                         itemMaps.add(itemMap);
                     }
                 }
@@ -2285,7 +2478,7 @@ public class Boss {
                 for (i = 0; i < 1; i++) {
                     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
                     int toY = zone.mapTemplate.touchY(toX, boss.cy);
-                    ItemMap itemMap = zone.addItemMap(charId, new Item(1229, false, 10, ItemOption.getOption(1229, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(1229, false, 5, ItemOption.getOption(1229, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
                     itemMaps.add(itemMap);
                 }                    //trang bi than linh (quan tl)
                 if (Util.gI().nextInt(100) <= 10) {
@@ -2303,7 +2496,7 @@ public class Boss {
                     }
                 }
                 //Manh the than linh
-                if (Util.gI().nextInt(100) <= 40) {
+                if (Util.gI().nextInt(100) <= 20) {
                     for (i = 0; i < 1; i++) {
                         int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
                         int toY = zone.mapTemplate.touchY(toX, boss.cy);
@@ -2320,7 +2513,7 @@ public class Boss {
                 for (i = 0; i < 1; i++) {
                     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
                     int toY = zone.mapTemplate.touchY(toX, boss.cy);
-                    ItemMap itemMap = zone.addItemMap(charId, new Item(1229, false, 20, ItemOption.getOption(1229, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(1229, false, 5, ItemOption.getOption(1229, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
                     itemMaps.add(itemMap);
                 }
                 //trang bi than linh (quan tl)
@@ -2339,12 +2532,12 @@ public class Boss {
                     }
                 }
                 //Manh the than linh
-                if (Util.gI().nextInt(100) <= 30) {
+                if (Util.gI().nextInt(100) <= 20) {
                     for (i = 0; i < 1; i++) {
                         int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
                         int toY = zone.mapTemplate.touchY(toX, boss.cy);
                         short id_469 = new short[]{712, 713, 714, 715, 716}[Util.gI().nextInt(5)];
-                        ItemMap itemMap = zone.addItemMap(charId, new Item(id_469, false, 10, ItemOption.getOption(id_469, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                        ItemMap itemMap = zone.addItemMap(charId, new Item(id_469, false, 5, ItemOption.getOption(id_469, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
                         itemMaps.add(itemMap);
                     }
                 }
@@ -2364,7 +2557,7 @@ public class Boss {
                     dpercent = dpercent / (zone.map.khobau.level / 10);
                 }
                 //Manh the than linh
-                if (Util.gI().nextInt(dpercent) <= 10) {
+                if (Util.gI().nextInt(dpercent) <= 5) {
                     for (i = 0; i < 1; i++) {
                         int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
                         int toY = zone.mapTemplate.touchY(toX, boss.cy);
@@ -2436,6 +2629,13 @@ public class Boss {
             }
             //So 4 Tieu Doi Sat Thu
             case 110: {
+                // Roi Thoi Vàng
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(457, false, Util.gI().nextInt(1, 3), ItemOption.getOption(457, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
                 //Roi gold
                 for (i = 0; i < 10; i++) {
                     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
@@ -2444,12 +2644,12 @@ public class Boss {
                     itemMaps.add(itemMap);
                 }
                 //Roi moeny
-                for (i = 0; i < 10; i++) {
-                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
-                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
-                    ItemMap itemMap = zone.addItemMap(-1, new Item(77, false, 3, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
-                    itemMaps.add(itemMap);
-                }
+                // for (i = 0; i < 10; i++) {
+                //     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                //     int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                //     ItemMap itemMap = zone.addItemMap(-1, new Item(77, false, 3, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                //     itemMaps.add(itemMap);
+                // }
                 //CT So 4
                 for (i = 0; i < 1; i++) {
                     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
@@ -2473,6 +2673,13 @@ public class Boss {
             }
             //So 3 Tieu Doi Sat Thu
             case 111: {
+                // Roi Thoi Vàng
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(457, false, Util.gI().nextInt(1, 3), ItemOption.getOption(457, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
                 //Roi gold
                 for (i = 0; i < 10; i++) {
                     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
@@ -2481,12 +2688,12 @@ public class Boss {
                     itemMaps.add(itemMap);
                 }
                 //Roi moeny
-                for (i = 0; i < 10; i++) {
-                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
-                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
-                    ItemMap itemMap = zone.addItemMap(-1, new Item(77, false, 3, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
-                    itemMaps.add(itemMap);
-                }
+                // for (i = 0; i < 10; i++) {
+                //     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                //     int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                //     ItemMap itemMap = zone.addItemMap(-1, new Item(77, false, 3, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                //     itemMaps.add(itemMap);
+                // }
                 //CT So 3
                 for (i = 0; i < 1; i++) {
                     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
@@ -2510,6 +2717,13 @@ public class Boss {
             }
             //So 2 Tieu Doi Sat Thu
             case 112: {
+                // Roi Thoi Vàng
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(457, false, Util.gI().nextInt(1, 3), ItemOption.getOption(457, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
                 //Roi gold
                 for (i = 0; i < 10; i++) {
                     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
@@ -2518,12 +2732,12 @@ public class Boss {
                     itemMaps.add(itemMap);
                 }
                 //Roi moeny
-                for (i = 0; i < 10; i++) {
-                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
-                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
-                    ItemMap itemMap = zone.addItemMap(-1, new Item(77, false, 5, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
-                    itemMaps.add(itemMap);
-                }
+                // for (i = 0; i < 10; i++) {
+                //     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                //     int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                //     ItemMap itemMap = zone.addItemMap(-1, new Item(77, false, 5, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                //     itemMaps.add(itemMap);
+                // }
                 //CT So 2
                 for (i = 0; i < 1; i++) {
                     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
@@ -2547,6 +2761,13 @@ public class Boss {
             }
             //So 1 Tieu Doi Sat Thu
             case 113: {
+                // Roi Thoi Vàng
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(457, false, Util.gI().nextInt(1, 3), ItemOption.getOption(457, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
                 //Roi gold
                 for (i = 0; i < 10; i++) {
                     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
@@ -2555,12 +2776,12 @@ public class Boss {
                     itemMaps.add(itemMap);
                 }
                 //Roi moeny
-                for (i = 0; i < 10; i++) {
-                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
-                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
-                    ItemMap itemMap = zone.addItemMap(-1, new Item(77, false, 5, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
-                    itemMaps.add(itemMap);
-                }
+                // for (i = 0; i < 10; i++) {
+                //     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                //     int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                //     ItemMap itemMap = zone.addItemMap(-1, new Item(77, false, 5, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                //     itemMaps.add(itemMap);
+                // }
                 //CT So 1
                 for (i = 0; i < 1; i++) {
                     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
@@ -2584,6 +2805,13 @@ public class Boss {
             }
             //TDT
             case 114: {
+                // Roi Thoi Vàng
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(457, false, Util.gI().nextInt(1, 3), ItemOption.getOption(457, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
                 //Roi gold
                 for (i = 0; i < 10; i++) {
                     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
@@ -2592,12 +2820,12 @@ public class Boss {
                     itemMaps.add(itemMap);
                 }
                 //Roi moeny
-                for (i = 0; i < 10; i++) {
-                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
-                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
-                    ItemMap itemMap = zone.addItemMap(-1, new Item(77, false, 5, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
-                    itemMaps.add(itemMap);
-                }
+                // for (i = 0; i < 10; i++) {
+                //     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                //     int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                //     ItemMap itemMap = zone.addItemMap(-1, new Item(77, false, 5, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                //     itemMaps.add(itemMap);
+                // }
                 //CT TDT
                 for (i = 0; i < 1; i++) {
                     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
@@ -2660,16 +2888,30 @@ public class Boss {
                     itemMaps.add(itemMap);
                 }
                 //Roi moeny
-                for (i = 0; i < 5; i++) {
-                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
-                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
-                    ItemMap itemMap = zone.addItemMap(-1, new Item(861, false, 1, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
-                    itemMaps.add(itemMap);
-                }
+                // for (i = 0; i < 5; i++) {
+                //     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                //     int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                //     ItemMap itemMap = zone.addItemMap(-1, new Item(861, false, 1, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                //     itemMaps.add(itemMap);
+                // }
                 break;
             }
             //Cooler Gold 
             case 119: {
+                // Roi Thoi Vàng
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(457, false, Util.gI().nextInt(1, 3), ItemOption.getOption(457, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
+                //da ngu sac
+//                for (i = 0; i < 1; i++) {
+//                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+//                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+//                    ItemMap itemMap = zone.addItemMap(-1, new Item(674, false, 5, ItemOption.getOption(674, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+//                    itemMaps.add(itemMap);
+//                }
                 // bi kip tuyet ki
                 for (i = 0; i < 1; i++) {
                     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
@@ -2678,7 +2920,7 @@ public class Boss {
                     itemMaps.add(itemMap);
                 }
                 //Ngoc rong 3 sao
-                if (Util.gI().nextInt(100) <= 40) {
+                if (Util.gI().nextInt(100) <= 20) {
                     for (i = 0; i < 1; i++) {
                         int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
                         int toY = zone.mapTemplate.touchY(toX, boss.cy);
@@ -2687,7 +2929,7 @@ public class Boss {
                     }
                 }
                 //Manh the than linh
-                if (Util.gI().nextInt(100) <= 40) {
+                if (Util.gI().nextInt(100) <= 35) {
                     for (i = 0; i < 1; i++) {
                         int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
                         int toY = zone.mapTemplate.touchY(toX, boss.cy);
@@ -2697,7 +2939,7 @@ public class Boss {
                     }
                 }
                 //trang bi ao than linh
-                if (Util.gI().nextInt(100) <= 3) {
+                if (Util.gI().nextInt(100) <= 10) {
                     for (i = 0; i < 1; i++) {
                         short[] arrItem = new short[]{555, 557, 559, 563, 565, 567};
                         int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
@@ -2712,7 +2954,7 @@ public class Boss {
                     }
                 }
                 //trang bi gang than linh
-                if (Util.gI().nextInt(100) <= 2) {
+                if (Util.gI().nextInt(100) <= 5) {
                     for (i = 0; i < 1; i++) {
                         short[] arrItem = new short[]{562, 564, 566};
                         int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
@@ -2727,7 +2969,7 @@ public class Boss {
                     }
                 }
                 //trang bi than linh (quan tl)
-                if (Util.gI().nextInt(400) <= 1) {
+                if (Util.gI().nextInt(400) <= 10) {
                     for (i = 0; i < 1; i++) {
                         short[] arrItem = new short[]{556, 558, 560};
                         int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
@@ -2742,7 +2984,7 @@ public class Boss {
                     }
                 }
                 //trang bi nhan than linh
-                if (Util.gI().nextInt(400) <= 1) {
+                if (Util.gI().nextInt(400) <= 5) {
                     for (i = 0; i < 1; i++) {
                         short[] arrItem = new short[]{561};
                         int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
@@ -2777,6 +3019,20 @@ public class Boss {
             }
             //King cold
             case 120: {
+                // Roi Thoi Vàng
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(457, false, Util.gI().nextInt(1, 3), ItemOption.getOption(457, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
+                //da ngu sac
+//                for (i = 0; i < 1; i++) {
+//                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+//                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+//                    ItemMap itemMap = zone.addItemMap(-1, new Item(674, false, 5, ItemOption.getOption(674, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+//                    itemMaps.add(itemMap);
+//                }
                 // bi kip tuyet ki
                 for (i = 0; i < 1; i++) {
                     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
@@ -2785,7 +3041,7 @@ public class Boss {
                     itemMaps.add(itemMap);
                 }
                 //Ngoc rong 3 sao
-                if (Util.gI().nextInt(100) <= 40) {
+                if (Util.gI().nextInt(100) <= 20) {
                     for (i = 0; i < 1; i++) {
                         int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
                         int toY = zone.mapTemplate.touchY(toX, boss.cy);
@@ -2794,17 +3050,17 @@ public class Boss {
                     }
                 }
                 //Manh the than linh
-                if (Util.gI().nextInt(100) <= 45) {
+                if (Util.gI().nextInt(100) <= 30) {
                     for (i = 0; i < 1; i++) {
                         int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
                         int toY = zone.mapTemplate.touchY(toX, boss.cy);
                         short id_459 = new short[]{712, 713, 714, 715, 716}[Util.gI().nextInt(5)];
-                        ItemMap itemMap = zone.addItemMap(charId, new Item(id_459, false, 10, ItemOption.getOption(id_459, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                        ItemMap itemMap = zone.addItemMap(charId, new Item(id_459, false, 5, ItemOption.getOption(id_459, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
                         itemMaps.add(itemMap);
                     }
                 }
                 //trang bi ao than linh
-                if (Util.gI().nextInt(100) <= 5) {
+                if (Util.gI().nextInt(100) <= 10) {
                     for (i = 0; i < 1; i++) {
                         short[] arrItem = new short[]{555, 557, 559, 563, 565, 567};
                         int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
@@ -2819,7 +3075,7 @@ public class Boss {
                     }
                 }
                 //trang bi gang than linh
-                if (Util.gI().nextInt(100) <= 2) {
+                if (Util.gI().nextInt(100) <= 5) {
                     for (i = 0; i < 1; i++) {
                         short[] arrItem = new short[]{562, 564, 566};
                         int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
@@ -2834,7 +3090,7 @@ public class Boss {
                     }
                 }
                 //trang bi than linh (quan tl)
-                if (Util.gI().nextInt(300) <= 1) {
+                if (Util.gI().nextInt(300) <= 10) {
                     for (i = 0; i < 1; i++) {
                         short[] arrItem = new short[]{556, 558, 560};
                         int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
@@ -2849,7 +3105,7 @@ public class Boss {
                     }
                 }
                 //trang bi nhan than linh
-                if (Util.gI().nextInt(300) <= 1) {
+                if (Util.gI().nextInt(300) <= 10) {
                     for (i = 0; i < 1; i++) {
                         short[] arrItem = new short[]{561};
                         int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
@@ -2931,12 +3187,12 @@ public class Boss {
                     itemMaps.add(itemMap);
                 }
                 //Roi moeny
-                for (i = 0; i < 10; i++) {
-                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
-                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
-                    ItemMap itemMap = zone.addItemMap(-1, new Item(861, false, 1, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
-                    itemMaps.add(itemMap);
-                }
+                // for (i = 0; i < 10; i++) {
+                //     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                //     int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                //     ItemMap itemMap = zone.addItemMap(-1, new Item(861, false, 1, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                //     itemMaps.add(itemMap);
+                // }
                 break;
             }
             //Nhan ban
@@ -2947,12 +3203,12 @@ public class Boss {
                     player.myObj().isWinClone = true;
                 }
                 //Roi moeny
-                for (i = 0; i < 1; i++) {
-                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
-                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
-                    ItemMap itemMap = zone.addItemMap(charId, new Item(638, false, 1, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
-                    itemMaps.add(itemMap);
-                }
+                // for (i = 0; i < 1; i++) {
+                //     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                //     int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                //     ItemMap itemMap = zone.addItemMap(charId, new Item(638, false, 1, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                //     itemMaps.add(itemMap);
+                // }
                 if (player != null) {
                     Server.gI().chatVip(String.format(mResources.ATT_DIE_BOSS, player.cName, boss.cName));
                 }
@@ -2962,6 +3218,13 @@ public class Boss {
             case 130: {
 
                 boss.timeClear = 1;
+                // Roi Thoi Vàng
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(457, false, Util.gI().nextInt(1, 3), ItemOption.getOption(457, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
                 // bi kip tuyet ki
                 for (i = 0; i < 1; i++) {
                     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
@@ -2970,7 +3233,7 @@ public class Boss {
                     itemMaps.add(itemMap);
                 }
                 //Ngoc rong 3 sao
-                if (Util.gI().nextInt(100) <= 20) {
+                if (Util.gI().nextInt(100) <= 10) {
                     for (i = 0; i < 1; i++) {
                         int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
                         int toY = zone.mapTemplate.touchY(toX, boss.cy);
@@ -2988,7 +3251,7 @@ public class Boss {
                     }
                 }
                 //Manh the than linh
-                if (Util.gI().nextInt(100) <= 40) {
+                if (Util.gI().nextInt(100) <= 20) {
                     for (i = 0; i < 1; i++) {
                         int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
                         int toY = zone.mapTemplate.touchY(toX, boss.cy);
@@ -3018,15 +3281,21 @@ public class Boss {
                     ItemMap itemMap = zone.addItemMap(-1, new Item(701, false, 5, ItemOption.getOption(701, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
                     itemMaps.add(itemMap);
                 }
-                if (Util.gI().nextInt(100) <= 100) {
-                    //da ngu sac
-                    for (i = 0; i < 1; i++) {
-                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
-                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
-                        ItemMap itemMap = zone.addItemMap(-1, new Item(1904, false, 5, ItemOption.getOption(1904, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
-                        itemMaps.add(itemMap);
-                    }
+                //da nguyen an
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(-1, new Item(1904, false, 5, ItemOption.getOption(1904, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
                 }
+                //da ngu sac
+//                for (i = 0; i < 1; i++) {
+//                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+//                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+//                    ItemMap itemMap = zone.addItemMap(-1, new Item(674, false, 5, ItemOption.getOption(674, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+//                    itemMaps.add(itemMap);
+//                }
+
                 if (player != null) {
                     Server.gI().chatVip(String.format(mResources.ATT_DIE_BOSS, player.cName, boss.cName));
                 }
@@ -3035,6 +3304,20 @@ public class Boss {
             //Oren
             case 131: {
                 boss.timeClear = 1;
+                // Roi Thoi Vàng
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(457, false, Util.gI().nextInt(1, 3), ItemOption.getOption(457, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
+                //da ngu sac
+//                for (i = 0; i < 1; i++) {
+//                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+//                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+//                    ItemMap itemMap = zone.addItemMap(-1, new Item(674, false, 5, ItemOption.getOption(674, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+//                    itemMaps.add(itemMap);
+//                }
                 // bi kip tuyet ki
                 for (i = 0; i < 1; i++) {
                     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
@@ -3043,7 +3326,7 @@ public class Boss {
                     itemMaps.add(itemMap);
                 }
                 //Ngoc rong 3 sao
-                if (Util.gI().nextInt(100) <= 20) {
+                if (Util.gI().nextInt(100) <= 10) {
                     for (i = 0; i < 1; i++) {
                         int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
                         int toY = zone.mapTemplate.touchY(toX, boss.cy);
@@ -3070,7 +3353,7 @@ public class Boss {
                     }
                 }
                 //Manh the than linh
-                if (Util.gI().nextInt(100) <= 10) {
+                if (Util.gI().nextInt(100) <= 5) {
                     for (i = 0; i < 1; i++) {
                         int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
                         int toY = zone.mapTemplate.touchY(toX, boss.cy);
@@ -3117,6 +3400,13 @@ public class Boss {
             //Kamioren
             case 132: {
                 boss.timeClear = 1;
+                // Roi Thoi Vàng
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(457, false, Util.gI().nextInt(1, 3), ItemOption.getOption(457, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
                 // bi kip tuyet ki
                 for (i = 0; i < 1; i++) {
                     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
@@ -3124,17 +3414,17 @@ public class Boss {
                     ItemMap itemMap = zone.addItemMap(charId, new Item(1229, false, 5, ItemOption.getOption(1229, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
                     itemMaps.add(itemMap);
                 }
-//                if (Util.gI().nextInt(100) <= 100) {
-//                    //da ngu sac
-//                    for (i = 0; i < 1; i++) {
-//                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
-//                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
-//                        ItemMap itemMap = zone.addItemMap(-1, new Item(674, false, 5, ItemOption.getOption(700, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
-//                        itemMaps.add(itemMap);
-//                    }
+
+                //da ngu sac
+//                for (i = 0; i < 1; i++) {
+//                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+//                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+//                    ItemMap itemMap = zone.addItemMap(-1, new Item(674, false, 5, ItemOption.getOption(674, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+//                    itemMaps.add(itemMap);
 //                }
+
                 //Ngoc rong 3 sao
-                if (Util.gI().nextInt(100) <= 30) {
+                if (Util.gI().nextInt(100) <= 10) {
                     for (i = 0; i < 1; i++) {
                         int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
                         int toY = zone.mapTemplate.touchY(toX, boss.cy);
@@ -3143,7 +3433,7 @@ public class Boss {
                     }
                 }
                 //trang bi ao than linh
-                if (Util.gI().nextInt(100) <= 1) {
+                if (Util.gI().nextInt(100) <= 10) {
                     for (i = 0; i < 1; i++) {
                         short[] arrItem = new short[]{555, 557, 559, 563, 565, 567};
                         int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
@@ -3188,7 +3478,7 @@ public class Boss {
                     }
                 }
                 //Manh the than linh
-                if (Util.gI().nextInt(100) <= 10) {
+                if (Util.gI().nextInt(100) <= 30) {
                     for (i = 0; i < 1; i++) {
                         int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
                         int toY = zone.mapTemplate.touchY(toX, boss.cy);
@@ -3472,7 +3762,7 @@ public class Boss {
             }
             //cumber
             case 158: {
-               
+
                 //hong ngoc
                 for (i = 0; i < 10; i++) {
                     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
@@ -3481,7 +3771,7 @@ public class Boss {
                     itemMaps.add(itemMap);
                 }
                 //Ngoc rong 3 sao
-                if (Util.gI().nextInt(100) <= 40) {
+                if (Util.gI().nextInt(100) <= 20) {
                     for (i = 0; i < 1; i++) {
                         int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
                         int toY = zone.mapTemplate.touchY(toX, boss.cy);
@@ -3490,7 +3780,7 @@ public class Boss {
                     }
                 }
                 //trang bi ao than linh
-                if (Util.gI().nextInt(100) <= 10) {
+                if (Util.gI().nextInt(100) <= 5) {
                     for (i = 0; i < 1; i++) {
                         short[] arrItem = new short[]{555, 557, 559, 563, 565, 567};
                         int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
@@ -3535,7 +3825,7 @@ public class Boss {
                     }
                 }
                 //Manh the than linh
-                if (Util.gI().nextInt(100) <= 40) {
+                if (Util.gI().nextInt(100) <= 20) {
                     for (i = 0; i < 1; i++) {
                         int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
                         int toY = zone.mapTemplate.touchY(toX, boss.cy);
@@ -3553,15 +3843,15 @@ public class Boss {
                         itemMaps.add(itemMap);
                     }
                 }
-                if (Util.gI().nextInt(100) <= 100) {
-                    //da ngu sac
-                    for (i = 0; i < 1; i++) {
-                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
-                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
-                        ItemMap itemMap = zone.addItemMap(-1, new Item(674, false, 5, ItemOption.getOption(700, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
-                        itemMaps.add(itemMap);
-                    }
-                }
+//                if (Util.gI().nextInt(100) <= 100) {
+//                    //da ngu sac
+//                    for (i = 0; i < 1; i++) {
+//                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+//                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+//                        ItemMap itemMap = zone.addItemMap(-1, new Item(674, false, 5, ItemOption.getOption(700, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+//                        itemMaps.add(itemMap);
+//                    }
+//                }
                 //Da nguc tu
                 for (i = 0; i < 5; i++) {
                     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
@@ -3574,6 +3864,559 @@ public class Boss {
                 }
                 break;
             }
+            //baby
+            case 192: {
+                // Roi Thoi Vàng
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(457, false, Util.gI().nextInt(1, 3), ItemOption.getOption(457, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
+                // bi kip tuyet ki
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(1229, false, 5, ItemOption.getOption(1229, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
+                //trang bi co sao
+                if (Util.gI().nextInt(1000) <= 45) {
+                    for (i = 0; i < 1; i++) {
+                        short[] arrItem = new short[]{241, 253, 265, 277, 233, 245, 257, 269, 237, 249, 261, 273, 281};
+                        int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
+                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                        Item it_1 = new Item(templateId, false, 1, ItemOption.getOption(templateId, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
+                        it_1.options.add(new ItemOption(107, Util.gI().nextInt(1, 4)));
+                        if (Util.gI().nextInt(100) < 50) {
+                            it_1.options.add(new ItemOption(Util.gI().nextInt(86, 87), 0));
+                        }
+                        ItemMap itemMap = zone.addItemMap(charId, it_1, toX, toY, 0, -1);
+                        itemMaps.add(itemMap);
+                    }
+                }
+                //trang bi ao than linh
+                if (Util.gI().nextInt(100) <= 5) {
+                    for (i = 0; i < 1; i++) {
+                        short[] arrItem = new short[]{555, 557, 559, 563, 565, 567};
+                        int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
+                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                        Item it = new Item(templateId, false, 1, ItemOption.getOption(templateId, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
+                        if (Util.gI().nextInt(100) < 50) {
+                            it.options.add(new ItemOption(Util.gI().nextInt(86, 87), 0));
+                        }
+                        ItemMap itemMap = zone.addItemMap(charId, it, toX, toY, 0, -1);
+                        itemMaps.add(itemMap);
+                    }
+                }
+                //trang bi gang than linh
+                if (Util.gI().nextInt(200) <= 2) {
+                    for (i = 0; i < 1; i++) {
+                        short[] arrItem = new short[]{562, 564, 566};
+                        int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
+                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                        Item it = new Item(templateId, false, 1, ItemOption.getOption(templateId, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
+                        if (Util.gI().nextInt(100) < 80) {
+                            it.options.add(new ItemOption(Util.gI().nextInt(86, 87), 0));
+                        }
+                        ItemMap itemMap = zone.addItemMap(charId, it, toX, toY, 0, -1);
+                        itemMaps.add(itemMap);
+                    }
+                }
+                //trang bi than linh (quan tl)
+                if (Util.gI().nextInt(150) <= 10) {
+                    for (i = 0; i < 1; i++) {
+                        short[] arrItem = new short[]{556, 558, 560};
+                        int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
+                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                        Item it = new Item(templateId, false, 1, ItemOption.getOption(templateId, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
+                        if (Util.gI().nextInt(100) < 80) {
+                            it.options.add(new ItemOption(Util.gI().nextInt(86, 87), 0));
+                        }
+                        ItemMap itemMap = zone.addItemMap(charId, it, toX, toY, 0, -1);
+                        itemMaps.add(itemMap);
+                    }
+                }
+                //trang bi nhan than linh
+                if (Util.gI().nextInt(100) <= 10) {
+                    for (i = 0; i < 1; i++) {
+                        short[] arrItem = new short[]{561};
+                        int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
+                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                        Item it = new Item(templateId, false, 1, ItemOption.getOption(templateId, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
+                        if (Util.gI().nextInt(100) < 50) {
+                            it.options.add(new ItemOption(Util.gI().nextInt(86, 87), 0));
+                        }
+                        ItemMap itemMap = zone.addItemMap(charId, it, toX, toY, 0, -1);
+                        itemMaps.add(itemMap);
+                    }
+                }
+                //Roi gold
+//                for (i = 0; i < 5; i++) {
+//                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+//                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+//                    ItemMap itemMap = zone.addItemMap(-1, new Item(190, false, 2000000, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+//                    itemMaps.add(itemMap);
+//                }
+                //Ngoc rong 3 sao
+                if (Util.gI().nextInt(100) <= 10) {
+                    for (i = 0; i < 1; i++) {
+                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                        ItemMap itemMap = zone.addItemMap(charId, new Item(16, false, 1, ItemOption.getOption(16, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                        itemMaps.add(itemMap);
+                    }
+                }
+                //Manh the than linh
+                if (Util.gI().nextInt(100) <= 30) {
+                    for (i = 0; i < 1; i++) {
+                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                        short id_456 = new short[]{712, 713, 714, 715, 716}[Util.gI().nextInt(5)];
+                        ItemMap itemMap = zone.addItemMap(charId, new Item(id_456, false, 5, ItemOption.getOption(id_456, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                        itemMaps.add(itemMap);
+                    }
+                }
+                if (player != null) {
+                    Server.gI().chatVip(String.format(mResources.ATT_DIE_BOSS, player.cName, boss.cName));
+                }
+                break;
+            }
+            //cadic
+            case 193: {
+                // Roi Thoi Vàng
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(457, false, Util.gI().nextInt(1, 3), ItemOption.getOption(457, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
+                // bi kip tuyet ki
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(1229, false, 5, ItemOption.getOption(1229, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
+                //trang bi co sao
+                if (Util.gI().nextInt(1000) <= 25) {
+                    for (i = 0; i < 1; i++) {
+                        short[] arrItem = new short[]{241, 253, 265, 277, 233, 245, 257, 269, 237, 249, 261, 273, 281};
+                        int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
+                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                        Item it_1 = new Item(templateId, false, 1, ItemOption.getOption(templateId, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
+                        it_1.options.add(new ItemOption(107, Util.gI().nextInt(1, 4)));
+                        if (Util.gI().nextInt(100) < 50) {
+                            it_1.options.add(new ItemOption(Util.gI().nextInt(86, 87), 0));
+                        }
+                        ItemMap itemMap = zone.addItemMap(charId, it_1, toX, toY, 0, -1);
+                        itemMaps.add(itemMap);
+                    }
+                }
+                //trang bi ao than linh
+                if (Util.gI().nextInt(100) <= 5) {
+                    for (i = 0; i < 1; i++) {
+                        short[] arrItem = new short[]{555, 557, 559, 563, 565, 567};
+                        int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
+                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                        Item it = new Item(templateId, false, 1, ItemOption.getOption(templateId, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
+                        if (Util.gI().nextInt(100) < 50) {
+                            it.options.add(new ItemOption(Util.gI().nextInt(86, 87), 0));
+                        }
+                        ItemMap itemMap = zone.addItemMap(charId, it, toX, toY, 0, -1);
+                        itemMaps.add(itemMap);
+                    }
+                }
+                //trang bi gang than linh
+                if (Util.gI().nextInt(200) <= 5) {
+                    for (i = 0; i < 1; i++) {
+                        short[] arrItem = new short[]{562, 564, 566};
+                        int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
+                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                        Item it = new Item(templateId, false, 1, ItemOption.getOption(templateId, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
+                        if (Util.gI().nextInt(100) < 80) {
+                            it.options.add(new ItemOption(Util.gI().nextInt(86, 87), 0));
+                        }
+                        ItemMap itemMap = zone.addItemMap(charId, it, toX, toY, 0, -1);
+                        itemMaps.add(itemMap);
+                    }
+                }
+                //trang bi than linh (quan tl)
+                if (Util.gI().nextInt(150) <= 10) {
+                    for (i = 0; i < 1; i++) {
+                        short[] arrItem = new short[]{556, 558, 560};
+                        int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
+                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                        Item it = new Item(templateId, false, 1, ItemOption.getOption(templateId, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
+                        if (Util.gI().nextInt(100) < 80) {
+                            it.options.add(new ItemOption(Util.gI().nextInt(86, 87), 0));
+                        }
+                        ItemMap itemMap = zone.addItemMap(charId, it, toX, toY, 0, -1);
+                        itemMaps.add(itemMap);
+                    }
+                }
+                //trang bi nhan than linh
+                if (Util.gI().nextInt(100) <= 5) {
+                    for (i = 0; i < 1; i++) {
+                        short[] arrItem = new short[]{561};
+                        int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
+                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                        Item it = new Item(templateId, false, 1, ItemOption.getOption(templateId, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
+                        if (Util.gI().nextInt(100) < 50) {
+                            it.options.add(new ItemOption(Util.gI().nextInt(86, 87), 0));
+                        }
+                        ItemMap itemMap = zone.addItemMap(charId, it, toX, toY, 0, -1);
+                        itemMaps.add(itemMap);
+                    }
+                }
+                //Roi gold
+//                for (i = 0; i < 5; i++) {
+//                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+//                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+//                    ItemMap itemMap = zone.addItemMap(-1, new Item(190, false, 2000000, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+//                    itemMaps.add(itemMap);
+//                }
+                //Ngoc rong 3 sao
+                if (Util.gI().nextInt(100) <= 10) {
+                    for (i = 0; i < 1; i++) {
+                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                        ItemMap itemMap = zone.addItemMap(charId, new Item(16, false, 1, ItemOption.getOption(16, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                        itemMaps.add(itemMap);
+                    }
+                }
+                //Manh the than linh
+                if (Util.gI().nextInt(100) <= 30) {
+                    for (i = 0; i < 1; i++) {
+                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                        short id_456 = new short[]{712, 713, 714, 715, 716}[Util.gI().nextInt(5)];
+                        ItemMap itemMap = zone.addItemMap(charId, new Item(id_456, false, 5, ItemOption.getOption(id_456, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                        itemMaps.add(itemMap);
+                    }
+                }
+                if (player != null) {
+                    Server.gI().chatVip(String.format(mResources.ATT_DIE_BOSS, player.cName, boss.cName));
+                }
+                break;
+            }
+            //khi long vang
+            case 194: {
+                // Roi Thoi Vàng
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(457, false, Util.gI().nextInt(1, 3), ItemOption.getOption(457, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
+                // bi kip tuyet ki
+                for (i = 0; i < 1; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(1229, false, 5, ItemOption.getOption(1229, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
+                //trang bi co sao
+                if (Util.gI().nextInt(1000) <= 45) {
+                    for (i = 0; i < 1; i++) {
+                        short[] arrItem = new short[]{241, 253, 265, 277, 233, 245, 257, 269, 237, 249, 261, 273, 281};
+                        int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
+                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                        Item it_1 = new Item(templateId, false, 1, ItemOption.getOption(templateId, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
+                        it_1.options.add(new ItemOption(107, Util.gI().nextInt(1, 4)));
+                        if (Util.gI().nextInt(100) < 50) {
+                            it_1.options.add(new ItemOption(Util.gI().nextInt(86, 87), 0));
+                        }
+                        ItemMap itemMap = zone.addItemMap(charId, it_1, toX, toY, 0, -1);
+                        itemMaps.add(itemMap);
+                    }
+                }
+                //trang bi ao than linh
+                if (Util.gI().nextInt(100) <= 10) {
+                    for (i = 0; i < 1; i++) {
+                        short[] arrItem = new short[]{555, 557, 559, 563, 565, 567};
+                        int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
+                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                        Item it = new Item(templateId, false, 1, ItemOption.getOption(templateId, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
+                        if (Util.gI().nextInt(100) < 50) {
+                            it.options.add(new ItemOption(Util.gI().nextInt(86, 87), 0));
+                        }
+                        ItemMap itemMap = zone.addItemMap(charId, it, toX, toY, 0, -1);
+                        itemMaps.add(itemMap);
+                    }
+                }
+                //trang bi gang than linh
+                if (Util.gI().nextInt(200) <= 10) {
+                    for (i = 0; i < 1; i++) {
+                        short[] arrItem = new short[]{562, 564, 566};
+                        int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
+                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                        Item it = new Item(templateId, false, 1, ItemOption.getOption(templateId, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
+                        if (Util.gI().nextInt(100) < 80) {
+                            it.options.add(new ItemOption(Util.gI().nextInt(86, 87), 0));
+                        }
+                        ItemMap itemMap = zone.addItemMap(charId, it, toX, toY, 0, -1);
+                        itemMaps.add(itemMap);
+                    }
+                }
+                //trang bi than linh (quan tl)
+                if (Util.gI().nextInt(150) <= 10) {
+                    for (i = 0; i < 1; i++) {
+                        short[] arrItem = new short[]{556, 558, 560};
+                        int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
+                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                        Item it = new Item(templateId, false, 1, ItemOption.getOption(templateId, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
+                        if (Util.gI().nextInt(100) < 80) {
+                            it.options.add(new ItemOption(Util.gI().nextInt(86, 87), 0));
+                        }
+                        ItemMap itemMap = zone.addItemMap(charId, it, toX, toY, 0, -1);
+                        itemMaps.add(itemMap);
+                    }
+                }
+                //trang bi nhan than linh
+                if (Util.gI().nextInt(100) <= 10) {
+                    for (i = 0; i < 1; i++) {
+                        short[] arrItem = new short[]{561};
+                        int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
+                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                        Item it = new Item(templateId, false, 1, ItemOption.getOption(templateId, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
+                        if (Util.gI().nextInt(100) < 50) {
+                            it.options.add(new ItemOption(Util.gI().nextInt(86, 87), 0));
+                        }
+                        ItemMap itemMap = zone.addItemMap(charId, it, toX, toY, 0, -1);
+                        itemMaps.add(itemMap);
+                    }
+                }
+                //Roi gold
+//                for (i = 0; i < 5; i++) {
+//                    int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+//                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+//                    ItemMap itemMap = zone.addItemMap(-1, new Item(190, false, 2000000, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+//                    itemMaps.add(itemMap);
+//                }
+                //Ngoc rong 3 sao
+                if (Util.gI().nextInt(100) <= 20) {
+                    for (i = 0; i < 1; i++) {
+                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                        ItemMap itemMap = zone.addItemMap(charId, new Item(16, false, 1, ItemOption.getOption(16, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                        itemMaps.add(itemMap);
+                    }
+                }
+                //Manh the than linh
+                if (Util.gI().nextInt(100) <= 30) {
+                    for (i = 0; i < 1; i++) {
+                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                        short id_456 = new short[]{712, 713, 714, 715, 716}[Util.gI().nextInt(5)];
+                        ItemMap itemMap = zone.addItemMap(charId, new Item(id_456, false, 5, ItemOption.getOption(id_456, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                        itemMaps.add(itemMap);
+                    }
+                }
+                if (player != null) {
+                    Server.gI().chatVip(String.format(mResources.ATT_DIE_BOSS, player.cName, boss.cName));
+                }
+                break;
+            }
+            
+            //Berus
+            case 208:
+            {   
+                // bi kip tuyet ki
+                for ( i = 0; i < 5; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 100, boss.cx + 100);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(1229, false, 10, ItemOption.getOption(1229, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
+                //Ngoc rong 3 sao
+                if (Util.gI().nextInt(100) <= 10) {
+                    for ( i = 0; i < 1; i++) {
+                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                        Item it = new Item(16, false, 1, ItemOption.getOption(16, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
+                        it.options.add(new ItemOption(30, 0));
+                        ItemMap itemMap = zone.addItemMap(charId, it, toX, toY, 0, -1);
+                        itemMaps.add(itemMap);
+                    }
+                }
+                //Trang bi co sao
+                if (Util.gI().nextInt(100) <= 40) {
+                    for ( i = 0; i < 1; i++) {
+                        short[] arrItem = new short[]{241, 253, 265, 277, 233, 245, 257, 269, 237, 249, 261, 273, 281};
+                        int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
+                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                        Item it = new Item(templateId, false, 1, ItemOption.getOption(templateId, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
+                        it.options.add(new ItemOption(107, Util.gI().nextInt(1, 4)));
+                        ItemMap itemMap = zone.addItemMap(charId, it, toX, toY, 0, -1);
+                        itemMaps.add(itemMap);
+                    }
+                }
+                //sach cu
+                for ( i = 0; i < 5; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 100, boss.cx + 100);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(charId, new Item(1281, false, 2, ItemOption.getOption(1281, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
+                if (player != null) {
+                    Server.gI().chatVip(String.format(mResources.ATT_DIE_BOSS, player.cName, boss.cName));
+                }
+                break;
+            }
+            //Whis
+            case 209:
+            {   
+                // bi kip tuyet ki
+                for ( i = 0; i < 5; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 150, boss.cx + 150);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(-1, new Item(1229, false, 10, ItemOption.getOption(1229, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
+                //Ngoc rong 3 sao
+                if (Util.gI().nextInt(100) <= 15) {
+                    for ( i = 0; i < 1; i++) {
+                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                        Item it = new Item(16, false, 1, ItemOption.getOption(16, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
+                        it.options.add(new ItemOption(30, 0));
+                        ItemMap itemMap = zone.addItemMap(charId, it, toX, toY, 0, -1);
+                        itemMaps.add(itemMap);
+                    }
+                }
+                //Trang bi co sao
+                if (Util.gI().nextInt(100) <= 50) {
+                    for ( i = 0; i < 1; i++) {
+                        short[] arrItem = new short[]{241, 253, 265, 277, 233, 245, 257, 269, 237, 249, 261, 273, 281};
+                        int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
+                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                        Item it = new Item(templateId, false, 1, ItemOption.getOption(templateId, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
+                        it.options.add(new ItemOption(107, Util.gI().nextInt(1, 4)));
+                        ItemMap itemMap = zone.addItemMap(charId, it, toX, toY, 0, -1);
+                        itemMaps.add(itemMap);
+                    }
+                }
+                //sach cu
+                for ( i = 0; i < 5; i++) {
+                    int toX = Util.gI().nextInt(boss.cx - 150, boss.cx + 150);
+                    int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                    ItemMap itemMap = zone.addItemMap(-1, new Item(1281, false, 5, ItemOption.getOption(1281, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+                    itemMaps.add(itemMap);
+                }
+                // item 2
+                if (Util.gI().nextInt(100) <= 10) {
+                    for ( i = 0; i < 2; i++) {
+                        short[] arrItem = new short[]{1150, 1151, 1152, 1153, 1154};
+                        int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
+                        int toX = Util.gI().nextInt(boss.cx - 80, boss.cx + 80);
+                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                        Item it = new Item(templateId, false, 1, ItemOption.getOption(templateId, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
+                        ItemMap itemMap = zone.addItemMap(charId, it, toX, toY, 0, -1);
+                        itemMaps.add(itemMap);
+                    }
+                }
+                //trang bi ao than linh va ao
+                 if (Util.gI().nextInt(150) <= 1) {
+                    for ( i = 0; i < 1; i++) {
+                        short[] arrItem = new short[]{555, 557, 559, 563, 565, 567};
+                        int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
+                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                        Item it = new Item(templateId, false, 1, ItemOption.getOption(templateId, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
+                        //Add % param
+                        if (Util.gI().nextInt(100) < 80) {
+                            it.options.add(new ItemOption(86, 0));
+                        }
+                        int percent = Util.gI().nextInt(1, 15);
+                        for (int j = 0; j < it.options.size(); j++) {
+                            ItemOption option = it.options.get(j);
+                            if (option.optionTemplate.id == 0 || option.optionTemplate.id == 6 ||
+                                    option.optionTemplate.id == 7 || option.optionTemplate.id == 14 ||
+                                    option.optionTemplate.id == 22 || option.optionTemplate.id == 23 ||
+                                    option.optionTemplate.id == 27 || option.optionTemplate.id == 28 ||
+                                    option.optionTemplate.id == 47) {
+                                option.param += option.param * percent / 100L;
+                            }
+                        }
+                        it.options.add(new ItemOption(207, percent));
+                        
+                        ItemMap itemMap = zone.addItemMap(charId, it, toX, toY, 0, -1);
+                        itemMaps.add(itemMap);
+                    }
+                }
+ 
+                //trang bi gang than linh
+                if (Util.gI().nextInt(200) <= 1) {
+                    for ( i = 0; i < 1; i++) {
+                        short[] arrItem = new short[]{562, 564, 566};
+                        int templateId = arrItem[Util.gI().nextInt(arrItem.length)];
+                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+                        Item it = new Item(templateId, false, 1, ItemOption.getOption(templateId, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
+                        if (Util.gI().nextInt(100) < 50) {
+                            it.options.add(new ItemOption(86,0));
+                        }
+                        int percent = Util.gI().nextInt(1, 15);
+                        for (int j = 0; j < it.options.size(); j++) {
+                            ItemOption option = it.options.get(j);
+                            if (option.optionTemplate.id == 0 || option.optionTemplate.id == 6 ||
+                                    option.optionTemplate.id == 7 || option.optionTemplate.id == 14 ||
+                                    option.optionTemplate.id == 22 || option.optionTemplate.id == 23 ||
+                                    option.optionTemplate.id == 27 || option.optionTemplate.id == 28 ||
+                                    option.optionTemplate.id == 47) {
+                                option.param += option.param * percent / 100L;
+                            }
+                        }
+                        it.options.add(new ItemOption(207, percent));
+                        ItemMap itemMap = zone.addItemMap(charId, it, toX, toY, 0, -1);
+                        itemMaps.add(itemMap);
+                    }
+                }
+                if (player != null) {
+                    Server.gI().chatVip(String.format(mResources.ATT_DIE_BOSS, player.cName, boss.cName));
+                }
+                break;
+            }
+           case 94: {
+      int amount = 100;
+    int maxX = zone.mapTemplate.pxw; // chiều rộng map theo pixel
+
+    for (i = 0; i < amount; i++) {
+        int toX = Util.gI().nextInt(0, maxX);
+        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+
+        Item it = new Item(2050, false, 1,
+                ItemOption.getOption(2050, 0, -1),
+                mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
+
+        // -1 => ai cũng nhặt được (không khóa theo người kill)
+        ItemMap itemMap = zone.addItemMap(-1, it, toX, toY, 0, -1);
+        itemMaps.add(itemMap);
+    }
+
+    if (player != null) {
+        Server.gI().chatVip(String.format(mResources.ATT_DIE_BOSS, player.cName, boss.cName));
+    }
+    break;
+}
             case 159: {
                 //Wua tai day
                 //hong ngoc
@@ -3583,15 +4426,15 @@ public class Boss {
                     ItemMap itemMap = zone.addItemMap(-1, new Item(861, false, 2, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
                     itemMaps.add(itemMap);
                 }
-                if (Util.gI().nextInt(100) <= 70) {
-                    //da ngu sac
-                    for (i = 0; i < 1; i++) {
-                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
-                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
-                        ItemMap itemMap = zone.addItemMap(-1, new Item(674, false, 5, ItemOption.getOption(700, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
-                        itemMaps.add(itemMap);
-                    }
-                }
+//                if (Util.gI().nextInt(100) <= 70) {
+//                    //da ngu sac
+//                    for (i = 0; i < 1; i++) {
+//                        int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);
+//                        int toY = zone.mapTemplate.touchY(toX, boss.cy);
+//                        ItemMap itemMap = zone.addItemMap(-1, new Item(674, false, 5, ItemOption.getOption(700, 0, -1), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY), toX, toY, 0, -1);
+//                        itemMaps.add(itemMap);
+//                    }
+//                }
                 //Da nguc tu
                 for (i = 0; i < 5; i++) {
                     int toX = Util.gI().nextInt(boss.cx - 50, boss.cx + 50);

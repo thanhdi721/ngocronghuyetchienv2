@@ -261,7 +261,7 @@ public class Session_ME implements ISession {
             } else {
                 dos.writeByte(cmd);
             }
-            if (cmd == -32 || cmd == -66 || cmd == 11 || cmd == -67 || cmd == -74 || cmd == -87 || cmd == 66) {
+            if (cmd == -32 || cmd == -66 || cmd == 11 || cmd == -67 || cmd == -74 || cmd == -87 || cmd == 66 || cmd == -28) {
                 byte num = writeKey((byte) (size));
                 dos.writeByte(num - 128);
                 byte num2 = writeKey((byte) (size >> 8));
@@ -397,7 +397,19 @@ public class Session_ME implements ISession {
     public Char myCharz() {
         return this.myChar;
     }
-    
+
+    /** [Điểm danh] Lưu chuỗi đăng nhập 7 ngày ra DB ngay sau khi nhận quà. */
+    public void saveLoginStreak() {
+        if (this.myChar == null) return;
+        try {
+            MySQL mySQL1 = MySQL.createData2();
+            mySQL1.getConnection().prepareStatement(String.format(mResources.UPSERT_LOGIN_STREAK, this.myCharz().playerId, dragon.u.Util.gI().stringSQL(this.myCharz().loginStreakLastDate), this.myCharz().loginStreakDays)).executeUpdate();
+            mySQL1.close();
+        } catch (Exception e) {
+            // ignore
+        }
+    }
+
     private void saveData() {
         if (this.userId != -1) {
             Memory.get(this.userId).lastlogout = (int) (System.currentTimeMillis() / 1000L);
@@ -617,8 +629,16 @@ public class Session_ME implements ISession {
                             strSQL.addSet("isCan", this.myCharz().isCan);
                             strSQL.addSet("yesterday", this.myCharz().yesterday);
                             strSQL.addSet("timeReceiveNamek", this.myCharz().timeReceiveNamek);
+                            strSQL.addSet("todayOnlineMinutes", this.myCharz().todayOnlineMinutes);
+                            strSQL.addSet("todayClaimedBoxes", this.myCharz().todayClaimedBoxes);
+                            strSQL.addSet("onlinePoints", this.myCharz().onlinePoints);
+                            strSQL.addSet("lastOnlineDate", Util.gI().stringSQL(this.myCharz().lastOnlineDate));
                             
                             mySQL1.getConnection().prepareStatement(strSQL.toSQL()).executeUpdate();
+                            // [Điểm danh] Lưu chuỗi đăng nhập 7 ngày
+                            try {
+                                mySQL1.getConnection().prepareStatement(String.format(mResources.UPSERT_LOGIN_STREAK, this.myCharz().playerId, Util.gI().stringSQL(this.myCharz().loginStreakLastDate), this.myCharz().loginStreakDays)).executeUpdate();
+                            } catch (Exception e) { /* ignore */ }
                             //Dua hau
                             mySQL3.getConnection().prepareStatement(String.format(mResources.UPDATE_DUAHAUS, Util.gI().stringSQL(duahaus.toJSONString()), this.myCharz().playerId)).executeUpdate();
                             //arrItemBag
@@ -683,12 +703,85 @@ public class Session_ME implements ISession {
                                         this.myCharz().myPet.isMabu,
                                         this.myCharz().myPet.isBlack,
                                         this.myCharz().myPet.levelpet,
+                                        this.myCharz().myPet.iscellnhi,
                                         this.myCharz().playerId
                                 )).executeUpdate();
                             } else {
                                 mySQL3.getConnection().prepareStatement(String.format(mResources.UPDATE_PETZS2, this.myCharz().playerId)).executeUpdate();
                             }
-                            
+
+                            // [ĐẠO LỮ] Save dữ liệu Đạo Lữ vào bảng daolus
+                            // [FIX CRITICAL] Bọc toàn bộ trong try-catch riêng
+                            // Nếu DaoLu save lỗi → KHÔNG được rollback toàn bộ transaction
+                            try {
+                                // Đảm bảo row daolus tồn tại (cho player cũ chưa có row)
+                                mySQL3.getConnection().prepareStatement(
+                                        "INSERT IGNORE INTO `daolus` (`playerId`) VALUES ('" + this.myCharz().playerId + "')"
+                                ).executeUpdate();
+
+                                if (this.myCharz().myDaoLu != null) {
+                                    dragon.t.DaoLu dl = this.myCharz().myDaoLu;
+                                    // Serialize arrItemBody của Đạo Lữ
+                                    JSONArray dlItemBody = new JSONArray();
+                                    if (dl.charDaoLu.arrItemBody != null) {
+                                        for (int i = 0; i < dl.charDaoLu.arrItemBody.length; i++) {
+                                            Item item5 = dl.charDaoLu.arrItemBody[i];
+                                            if (item5 != null) {
+                                                dlItemBody.add((JSONArray) JSONValue.parseWithException(item5.toString()));
+                                            }
+                                        }
+                                    }
+                                    // Serialize skills của Đạo Lữ
+                                    JSONArray dlSkills = new JSONArray();
+                                    if (dl.charDaoLu.skills != null) {
+                                        for (int i = 0; i < dl.charDaoLu.skills.size(); i++) {
+                                            if (dl.charDaoLu.skills.get(i) != null && dl.charDaoLu.skills.get(i).template != null) {
+                                                JSONArray sk = new JSONArray();
+                                                sk.add(dl.charDaoLu.skills.get(i).skillId);
+                                                sk.add(dl.charDaoLu.skills.get(i).lastTimeUseThisSkill);
+                                                if (dl.charDaoLu.skills.get(i).template.type == 4) {
+                                                    sk.add(dl.charDaoLu.skills.get(i).curExp);
+                                                }
+                                                dlSkills.add(sk);
+                                            }
+                                        }
+                                    }
+                                    // Execute UPDATE_DAOLUS
+                                    mySQL3.getConnection().prepareStatement(String.format(
+                                            mResources.UPDATE_DAOLUS,
+                                            Util.gI().stringSQL(dl.nameDaoLu),
+                                            dl.typeDaoLu,
+                                            dl.charDaoLu.cgender,
+                                            dl.status,
+                                            dl.pointTuVi,
+                                            dl.pointCapTinh,
+                                            dl.pointCapCanhGioi,
+                                            dl.timeThangCap,
+                                            dl.isTransform,
+                                            dl.isMacDo,
+                                            dl.var2,
+                                            dl.charDaoLu.cPower,
+                                            dl.charDaoLu.cPowerLimit,
+                                            dl.charDaoLu.cHPGoc,
+                                            dl.charDaoLu.cMPGoc,
+                                            dl.charDaoLu.cDamGoc,
+                                            dl.charDaoLu.cDefGoc,
+                                            dl.charDaoLu.cCriticalGoc,
+                                            dl.charDaoLu.cTiemNang,
+                                            dl.charDaoLu.cHP,
+                                            dl.charDaoLu.cMP,
+                                            dl.charDaoLu.cStamina,
+                                            dl.charDaoLu.cMaxStamina,
+                                            Util.gI().stringSQL(dlItemBody.toJSONString()),
+                                            Util.gI().stringSQL(dlSkills.toJSONString()),
+                                            this.myCharz().playerId
+                                    )).executeUpdate();
+                                }
+                            } catch (Exception eDaoLuSave) {
+                                // DaoLu save lỗi → bỏ qua, KHÔNG rollback transaction chính
+                                System.out.println("[DaoLu] Save lỗi (bỏ qua, không ảnh hưởng data chính): " + eDaoLuSave.getMessage());
+                            }
+
                             //WRITE arrTask
                             JSONArray arrTask = new JSONArray();
                             for (int i = 0; i < this.myCharz().arrTask.size(); i++) {

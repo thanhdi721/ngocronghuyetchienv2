@@ -26,7 +26,7 @@ public class ServerActivity {
     
     private final int WIDTH = 700;
     private final int HEIGHT = 500;
-    private final String NAME = "NroZenoV2 by Nguyen Gay";
+    private final String NAME = "Chiến Binh Meil";
     
     public JFrame mainFrame;
     private final ArrayList<JLabel> TEXTS =  new ArrayList<>();

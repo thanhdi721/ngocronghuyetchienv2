@@ -2558,6 +2558,293 @@ public class CaiTrang {
                 item.legTemp = 1626;
                 item.bagTemp = -1;
                 break;
+            case 2032://CT Goku SSJ 4 Red
+                item.headTemp = 1678;
+                item.bodyTemp = 1681;
+                item.legTemp = 1682;
+                item.bagTemp = -1;
+                break;
+                case 1809:
+    item.headTemp = 1717;
+    item.bodyTemp = 1718;
+    item.legTemp = 1719;
+    item.bagTemp = -1;
+    break;
+
+case 1810:
+    item.headTemp = 1720;
+    item.bodyTemp = 1721;
+    item.legTemp = 1722;
+    item.bagTemp = -1;
+    break;
+
+case 1811:
+    item.headTemp = 1723;
+    item.bodyTemp = 1724;
+    item.legTemp = 1725;
+    item.bagTemp = -1;
+    break;
+
+case 1812:
+    item.headTemp = 1726;
+    item.bodyTemp = 1727;
+    item.legTemp = 1728;
+    item.bagTemp = -1;
+    break;
+
+case 1813:
+    item.headTemp = 1729;
+    item.bodyTemp = 1730;
+    item.legTemp = 1731;
+    item.bagTemp = -1;
+    break;
+
+case 1814:
+    item.headTemp = 1732;
+    item.bodyTemp = 1733;
+    item.legTemp = 1734;
+    item.bagTemp = -1;
+    break;
+
+case 1815:
+    item.headTemp = 1735;
+    item.bodyTemp = 1736;
+    item.legTemp = 1737;
+    item.bagTemp = -1;
+    break;
+
+case 1816:
+    item.headTemp = 1738;
+    item.bodyTemp = 1739;
+    item.legTemp = 1740;
+    item.bagTemp = -1;
+    break;
+
+case 1817:
+    item.headTemp = 1741;
+    item.bodyTemp = 1747;
+    item.legTemp = 1748;
+    item.bagTemp = -1;
+    break;
+
+case 1818:
+    item.headTemp = 1749;
+    item.bodyTemp = 1750;
+    item.legTemp = 1751;
+    item.bagTemp = -1;
+    break;
+
+case 1819:
+    item.headTemp = 1752;
+    item.bodyTemp = 1753;
+    item.legTemp = 1754;
+    item.bagTemp = -1;
+    break;
+
+case 1820:
+    item.headTemp = 1755;
+    item.bodyTemp = 1756;
+    item.legTemp = 1757;
+    item.bagTemp = -1;
+    break;
+
+case 1821:
+    item.headTemp = 1758;
+    item.bodyTemp = 1759;
+    item.legTemp = 1760;
+    item.bagTemp = -1;
+    break;
+
+case 1822:
+    item.headTemp = 1761;
+    item.bodyTemp = 1762;
+    item.legTemp = 1763;
+    item.bagTemp = -1;
+    break;
+
+case 1823:
+    item.headTemp = 1764;
+    item.bodyTemp = 1765;
+    item.legTemp = 1766;
+    item.bagTemp = -1;
+    break;
+
+case 1824:
+    item.headTemp = 1767;
+    item.bodyTemp = 1768;
+    item.legTemp = 1769;
+    item.bagTemp = -1;
+    break;
+
+case 1825:
+    item.headTemp = 1770;
+    item.bodyTemp = 1771;
+    item.legTemp = 1772;
+    item.bagTemp = -1;
+    break;
+
+case 1826:
+    item.headTemp = 1773;
+    item.bodyTemp = 1774;
+    item.legTemp = 1775;
+    item.bagTemp = -1;
+    break;
+
+case 1827:
+    item.headTemp = 1776;
+    item.bodyTemp = 1777;
+    item.legTemp = 1778;
+    item.bagTemp = -1;
+    break;
+
+case 1828:
+    item.headTemp = 1779;
+    item.bodyTemp = 1780;
+    item.legTemp = 1781;
+    item.bagTemp = -1;
+    break;
+
+case 1829:
+    item.headTemp = 1782;
+    item.bodyTemp = 1783;
+    item.legTemp = 1784;
+    item.bagTemp = -1;
+    break;
+
+case 1830:
+    item.headTemp = 1785;
+    item.bodyTemp = 1786;
+    item.legTemp = 1787;
+    item.bagTemp = -1;
+    break;
+
+case 1831:
+    item.headTemp = 1788;
+    item.bodyTemp = 1789;
+    item.legTemp = 1790;
+    item.bagTemp = -1;
+    break;
+
+case 1832:
+    item.headTemp = 1791;
+    item.bodyTemp = 1792;
+    item.legTemp = 1793;
+    item.bagTemp = -1;
+    break;
+
+case 1833:
+    item.headTemp = 1794;
+    item.bodyTemp = 1795;
+    item.legTemp = 1796;
+    item.bagTemp = -1;
+    break;
+
+case 1834:
+    item.headTemp = 1797;
+    item.bodyTemp = 1798;
+    item.legTemp = 1799;
+    item.bagTemp = -1;
+    break;
+
+case 1835:
+    item.headTemp = 1800;
+    item.bodyTemp = 1801;
+    item.legTemp = 1802;
+    item.bagTemp = -1;
+    break;
+
+case 1836:
+    item.headTemp = 1803;
+    item.bodyTemp = 1804;
+    item.legTemp = 1805;
+    item.bagTemp = -1;
+    break;
+
+case 1837:
+    item.headTemp = 1806;
+    item.bodyTemp = 1807;
+    item.legTemp = 1808;
+    item.bagTemp = -1;
+    break;
+
+case 1838:
+    item.headTemp = 1809;
+    item.bodyTemp = 1810;
+    item.legTemp = 1811;
+    item.bagTemp = -1;
+    break;
+
+case 1839:
+    item.headTemp = 1812;
+    item.bodyTemp = 1813;
+    item.legTemp = 1814;
+    item.bagTemp = -1;
+    break;
+
+case 1840:
+    item.headTemp = 1815;
+    item.bodyTemp = 1816;
+    item.legTemp = 1817;
+    item.bagTemp = -1;
+    break;
+
+case 1841:
+    item.headTemp = 1818;
+    item.bodyTemp = 1819;
+    item.legTemp = 1820;
+    item.bagTemp = -1;
+    break;
+
+case 1842:
+    item.headTemp = 1821;
+    item.bodyTemp = 1822;
+    item.legTemp = 1823;
+    item.bagTemp = -1;
+    break;
+
+case 1843:
+    item.headTemp = 1824;
+    item.bodyTemp = 1825;
+    item.legTemp = 1826;
+    item.bagTemp = -1;
+    break;
+
+case 1844:
+    item.headTemp = 1827;
+    item.bodyTemp = 1828;
+    item.legTemp = 1829;
+    item.bagTemp = -1;
+    break;
+            case 2033:
+                item.headTemp = 1683;
+                item.bodyTemp = 1684;
+                item.legTemp = 1685;
+                item.bagTemp = -1;
+                break;
+            case 2034:
+                item.headTemp = 1686;
+                item.bodyTemp = 1687;
+                item.legTemp = 1688;
+                item.bagTemp = -1;
+                break;
+            case 2035:
+                item.headTemp = 1689;
+                item.bodyTemp = 1692;
+                item.legTemp = 1693;
+                item.bagTemp = -1;
+                break;
+            case 2041:
+                item.headTemp = 1697;
+                item.bodyTemp = 1700;
+                item.legTemp = 1701;
+                item.bagTemp = -1;
+                break;
+            case 2046:
+                item.headTemp = 1702;
+                item.bodyTemp = 1703;
+                item.legTemp = 1704;
+                item.bagTemp = -1;
+                break;
         }
     }
 

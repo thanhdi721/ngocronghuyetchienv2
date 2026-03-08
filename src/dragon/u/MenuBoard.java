@@ -28,7 +28,10 @@ import dragon.t.Money;
 import dragon.t.NpcTask;
 import dragon.t.Player;
 import dragon.t.Rank;
+import dragon.t.SeasonPass;
 import dragon.t.Shop;
+import dragon.t.DaoLu;
+import dragon.t.ConstDaoLu;
 import dragon.template.ItemTemplate;
 import dragon.v.EffChar;
 import dragon.v.Flag;
@@ -40,6 +43,9 @@ import dragon.v.RequestItem;
 import dragon.v.RoadSnake;
 import java.util.List;
 import java.util.Random;
+import dragon.server.MySQL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  *
@@ -48,7 +54,9 @@ import java.util.Random;
 public class MenuBoard {
 
     private final Session_ME session;
-
+     
+    private static final int[] GACHA_IDS = { 2045, 1901, 1902, 1903 };
+    private static final int[] GACHA_PERCENTS = { 15, 35, 35, 15};
     public ArrayList<MenuInfo> arrMenu;
     public int select;
     public int typeInfo;
@@ -120,6 +128,7 @@ public class MenuBoard {
                     }
                     this.arrMenu.add(new MenuInfo(mResources.NHAN_NGOC_FREE, 397));
                     this.arrMenu.add(new MenuInfo(mResources.DANH_HIEU, 198));
+//                    this.arrMenu.add(new MenuInfo(mResources.CHANGE_DH_FREE, 520));
                     if (Dragon.isEvent_VIP) {
                         this.arrMenu.add(new MenuInfo(mResources.EVENT_VIP, 367));
                     }
@@ -128,6 +137,9 @@ public class MenuBoard {
                     }
                     this.arrMenu.add(new MenuInfo(mResources.MAILBOX1, 331));
                     // this.arrMenu.add(new MenuInfo(mResources.NAP_THE, 204));
+//                    this.arrMenu.add(new MenuInfo("Map Chân Mệnh",527));
+                    // [ĐẠO LỮ] Thêm option Đạo Lữ vào menu NPC Ông Nội
+                    this.arrMenu.add(new MenuInfo("Đạo Lữ", 2070));
                     this.arrMenu.add(new MenuInfo(mResources.REFUSE, 0));
                     this.openUIConfirm(npcId, null, null, -1);
                     break;
@@ -394,9 +406,7 @@ public class MenuBoard {
                         }
                         this.arrMenu.add(new MenuInfo(mResources.TALK, 43));
                         this.arrMenu.add(new MenuInfo(mResources.IDOL_DUOIBIEN, 44));
-                        this.arrMenu.add(new MenuInfo(
-                                String.format(mResources.DOI_TICH_LUY, (int) this.session.myCharz().valueById(10), 50),
-                                50));
+                        this.arrMenu.add(new MenuInfo(String.format(mResources.DOI_TICH_LUY, (int) this.session.myCharz().valueById(10), 50), 50));
                         if (Dragon.isEvent_TetNguyenDan) {
                             this.arrMenu.add(new MenuInfo(mResources.EVENT_TETNGUYENDAN, 54));
                         }
@@ -530,11 +540,13 @@ public class MenuBoard {
                         this.chat = mResources.SAY_BA_HAT_MIT;
                         this.arrMenu.add(new MenuInfo(mResources.EPSAO_TRANGBI, 1));
                         this.arrMenu.add(new MenuInfo(mResources.PHALEHOA_TRANGBI, 2));
-//                        this.arrMenu.add(new MenuInfo(mResources.NANG_SET_KICH_HOAT, 358));
-                        this.arrMenu.add(new MenuInfo(mResources.NANG_SET_KICH_HOAT, 505));
+                      this.arrMenu.add(new MenuInfo(mResources.TBANHSANG,528));
+                 //       this.arrMenu.add(new MenuInfo(mResources.NANG_SET_KICH_HOAT, 357));
+                       this.arrMenu.add(new MenuInfo(mResources.NANG_SET_KICH_HOAT, 505));
                         this.arrMenu.add(new MenuInfo(mResources.NANG_CAP_DE_TU, 360));
                         this.arrMenu.add(new MenuInfo(mResources.DOI_CHAN_THIEN_TU, 512));
                         this.arrMenu.add(new MenuInfo(mResources.NANG_CAP_THIEN_TU, 515));
+                      //  this.arrMenu.add(new MenuInfo(mResources.MUA_VIP,998));
                         this.openUIConfirm(npcId, null, null, -1);
                     }
                     if (this.session.myCharz().mapTemplateId == 42 || this.session.myCharz().mapTemplateId == 43
@@ -542,6 +554,7 @@ public class MenuBoard {
                             | this.session.myCharz().mapTemplateId == 84) {
                         this.session.myCharz().resetMenu();
                         this.chat = mResources.SAY_BA_HAT_MIT;
+                        this.arrMenu.add(new MenuInfo(mResources.SACH_TUYET_KY1, 460));
                         this.arrMenu.add(new MenuInfo(mResources.SHOP_BUA, 3));
                         this.arrMenu.add(new MenuInfo(mResources.UPGRADE_ITEM, 4));
 //                        if (this.session.myCharz().getBongTai() != null
@@ -556,7 +569,9 @@ public class MenuBoard {
                             this.arrMenu.add(new MenuInfo(mResources.UPDATE_BT3, 518));
                         } else if (this.session.myCharz().getBongTai() != null && this.session.myCharz().getBongTai().template.id == 2026) {
                             this.arrMenu.add(new MenuInfo(mResources.UPDATE_BT4, 523));
+
                         } else {
+//                            this.arrMenu.add(new MenuInfo(mResources.UPDATE_BT4, 523));
                             this.arrMenu.add(new MenuInfo(mResources.UPDATE_BT2, 6));
                         }
                         this.arrMenu.add(new MenuInfo(mResources.NHAP_DA, 7));
@@ -696,9 +711,9 @@ public class MenuBoard {
                     if (this.session.myCharz().mapTemplateId == 84) {
                         this.session.myCharz().resetMenu();
                         this.chat = mResources.SAY_SHOP_KY_GUI_1;
-                        this.arrMenu.add(new MenuInfo(mResources.HDT, 236));
-                        this.arrMenu.add(new MenuInfo(mResources.SHOP_KY_GUI, 237));
-                        this.arrMenu.add(new MenuInfo(mResources.SHOP_KY_GUI_2, 238));
+//                        this.arrMenu.add(new MenuInfo(mResources.HDT, 236));
+//                        this.arrMenu.add(new MenuInfo(mResources.SHOP_KY_GUI, 237));
+//                        this.arrMenu.add(new MenuInfo(mResources.SHOP_KY_GUI_2, 238));
                         this.arrMenu.add(new MenuInfo(mResources.REFUSE, 0));
                         this.openUIConfirm(npcId, null, null, -1);
                     }
@@ -833,7 +848,10 @@ public class MenuBoard {
                             this.arrMenu.add(new MenuInfo(mResources.REBUY_ITEM, 181));
                         }
                         this.arrMenu.add(new MenuInfo(mResources.CUAHANG_DACBIET, 361));
-
+                        this.arrMenu.add(new MenuInfo(mResources.TRANG_BI, 185));
+                        this.arrMenu.add(new MenuInfo(mResources.THINH_HANH, 186));
+                        this.arrMenu.add(new MenuInfo(mResources.DANH_HIEU1, 525));
+                        this.arrMenu.add(new MenuInfo(mResources.SHOP_VIP, 526));
                         this.arrMenu.add(new MenuInfo(mResources.SHOP_HEAD, 183));
                         this.openUIConfirm(npcId, null, null, -1);
                     }
@@ -841,14 +859,17 @@ public class MenuBoard {
                 }
                 // Mabu map
                 case 40: {
-                    if (this.session.myCharz().mapTemplateId == 5) {
+                   if (this.session.myCharz().mapTemplateId == 5) {
                         this.session.myCharz().resetMenu();
                         this.chat = mResources.SAY_MABU_MAP;
                         this.arrMenu.add(new MenuInfo(mResources.SHOP, 184));
                         this.arrMenu.add(new MenuInfo(mResources.TRANG_BI, 185));
                         this.arrMenu.add(new MenuInfo(mResources.THINH_HANH, 186));
+                        this.arrMenu.add(new MenuInfo(mResources.DANH_HIEU1, 525));
+                        this.arrMenu.add(new MenuInfo(mResources.SHOP_VIP, 526));
+                         this.arrMenu.add(new MenuInfo("Gacha", 550));
                         this.openUIConfirm(npcId, null, null, -1);
-                    }
+                   }
                     break;
                 }
                 // Trung thu
@@ -947,6 +968,7 @@ public class MenuBoard {
                         this.chat = mResources.SAY_OSIN;
 //                        this.arrMenu.add(new MenuInfo(mResources.SHOP_2, 264));
                         this.arrMenu.add(new MenuInfo(mResources.GO_NGUC_TU, 265));
+                        this.arrMenu.add(new MenuInfo(mResources.GO_BILL_2,2484));
                         this.arrMenu.add(new MenuInfo(mResources.REFUSE, 0));
                         this.openUIConfirm(npcId, null, null, -1);
                     }
@@ -1144,21 +1166,21 @@ public class MenuBoard {
                     break;
                 }
                 //Ly Tieu Nuong
-                case 54:
-                    if (this.session.myCharz().isCan()) {
-                        if (this.session.myCharz().mapTemplateId == 5) {
-                            this.session.myCharz().resetMenu();
-                            this.chat = "Mini Game\n";
-//                            this.arrMenu.add(new MenuInfo("Kéo\nBúa\nBao", 405));
-                            //this.arrMenu.add(new MenuInfo("Vòng Quay\nMay Mắn", 421));
-                            this.arrMenu.add(new MenuInfo("Chọn ai đây", 175));
-                            this.arrMenu.add(new MenuInfo("Từ chối", 0));
-                            this.openUIConfirm(npcId, null, null, -1);
-                        }
-                        break;
-                    } else {
-                        this.session.myCharz().addInfo1("Tài khoản cần phải mở thành viên để sử dụng tính năng này.");
-                    }
+//                case 54:
+//                    if (this.session.myCharz().isCan()) {
+//                        if (this.session.myCharz().mapTemplateId == 5) {
+//                            this.session.myCharz().resetMenu();
+//                            this.chat = "Mini Game\n";
+////                            this.arrMenu.add(new MenuInfo("Kéo\nBúa\nBao", 405));
+//                            //this.arrMenu.add(new MenuInfo("Vòng Quay\nMay Mắn", 421));
+//                            this.arrMenu.add(new MenuInfo("Chọn ai đây", 175));
+//                            this.arrMenu.add(new MenuInfo("Từ chối", 0));
+//                            this.openUIConfirm(npcId, null, null, -1);
+//                        }
+//                        break;
+//                    } else {
+//                        this.session.myCharz().addInfo1("Tài khoản cần phải mở thành viên để sử dụng tính năng này.");
+//                    }
                 // Bill
                 case 55: {
                     if (this.session.myCharz().mapTemplateId == 48) {
@@ -1455,6 +1477,126 @@ public class MenuBoard {
 //                    }
 //                    break;
 //                }
+
+                // NPC Trai Đẹp - Bán Đan Đạo Lữ + Hồn Đạo Lữ (Làng Kakarot)
+                case 83: {
+                    this.session.myCharz().resetMenu();
+                    this.chat = "Trai đẹp đây! Bạn muốn mua gì?";
+                    this.arrMenu.add(new MenuInfo("Đan Đạo Lữ", 2090));
+                    this.arrMenu.add(new MenuInfo("Mua Hồn Đạo Lữ\n100,000 VND", 2091));
+                    this.arrMenu.add(new MenuInfo("Đóng", 0));
+                    this.openUIConfirm(npcId, null, null, -1);
+                    break;
+                }
+                case 84: {
+                    // NPC Điểm online: thể lệ + số điểm + đổi quà (tất cả đồ khóa giao dịch - ItemOption 30)
+                    this.session.myCharz().resetMenu();
+                    int diem = this.session.myCharz().onlinePoints;
+                    this.chat = "|7|=== THỂ LỆ ĐỔI ĐIỂM ONLINE ===\n"
+                            + "|0|Mỗi 15 phút online = 1 điểm (tối đa 8 lần/ngày).\n"
+                            + "|0|Điểm reset theo ngày. Đổi quà tại đây.\n"
+                            + "|6|--------------------------------\n"
+                            + "|2|Số điểm hiện có: " + diem + " điểm\n"
+                            + "|6|--------------------------------\n"
+                            + "|0|Chọn đổi điểm nhận quà bên dưới:";
+                    this.arrMenu.add(new MenuInfo("Đổi 4 điểm - 10 thỏi vàng", 2092));
+                    this.arrMenu.add(new MenuInfo("Đổi 5 điểm - 1 trứng đệ vip", 2093));
+                    this.arrMenu.add(new MenuInfo("Đổi 8 điểm - 1 gói túi mù", 2094));
+                    this.arrMenu.add(new MenuInfo("Đóng", 0));
+                    this.openUIConfirm(npcId, null, null, -1);
+                    break;
+                }
+                case 85: {
+                    // NPC Điểm Danh (Đảo Kame): chuỗi 7 ngày, quà theo bảng; đủ 7 ngày hoặc đứt chuỗi thì reset về 1
+                    if (this.session.myCharz().mapTemplateId != 5) {
+                        this.session.myCharz().goManorClan();
+                        break;
+                    }
+                    this.session.myCharz().resetMenu();
+                    int streak = this.session.myCharz().loginStreakDays;
+                    String lastDate = this.session.myCharz().loginStreakLastDate;
+                    this.chat = "|7|=== ĐIỂM DANH HÀNG NGÀY ===\n"
+                            + "|0|Ngày 1: Bình tiềm năng x3,x5 mỗi loại x2 + Trứng đệ tử VIP\n"
+                            + "|0|Ngày 2: Bình tiềm năng x3,x5,x7 mỗi x2 + 20 Thỏi vàng\n"
+                            + "|0|Ngày 3: Cuồng nộ, Bổ huyết, Giáp sên, Bổ khí mỗi x30\n"
+                            + "|0|Ngày 4: Cuồng nộ/Bổ huyết/Bổ khí/Giáp sên cấp 2 mỗi x20\n"
+                            + "|0|Ngày 5: Đá nâng cấp mỗi loại x50\n"
+                            + "|0|Ngày 6: 100 Đá ngục tù + 100 Thỏi vàng\n"
+                            + "|0|Ngày 7: 3 Bánh chưng, 3 Bánh tét, 2 bộ Ngọc rồng băng\n"
+                            + "|0|Tất cả quà khóa giao dịch. Lỡ 1 ngày = reset về ngày 1.\n"
+                            + "|6|--------------------------------\n"
+                            + "|2|Bạn đang điểm danh ngày: " + streak + " / 7\n"
+                            + (lastDate != null && !lastDate.isEmpty() ? "|0|Nhận quà gần nhất: " + lastDate + "\n" : "|0|Chưa nhận quà lần nào.\n")
+                            + "|6|--------------------------------\n"
+                            + "|0|Chọn bên dưới (cần đủ ô trống hành trang):";
+                    this.arrMenu.add(new MenuInfo("Nhận quà điểm danh hôm nay", 2095));
+                    this.arrMenu.add(new MenuInfo("Đóng", 0));
+                    this.openUIConfirm(npcId, null, null, npc.avatar);
+                    break;
+                }
+                case 86: {
+                    // NPC Hành trình mùa (Battle Pass) – tiến độ, nhận quà, mua Pro/Master
+                    if (this.session.myCharz().mapTemplateId != 5) {
+                        this.session.myCharz().goManorClan();
+                        break;
+                    }
+                    this.session.myCharz().resetMenu();
+                    String seasonId = SeasonPass.getCurrentSeasonId();
+                    SeasonPass.SeasonPassData d = SeasonPass.gI().getOrCreate(this.session.myCharz().playerId, seasonId);
+                    int maxLv = SeasonPass.gI().getMaxLevel(d.passType);
+                    String passName = d.passType == SeasonPass.PASS_MASTER ? "Master" : (d.passType == SeasonPass.PASS_PRO ? "Pro" : "Free");
+                    this.chat = "|7|=== HÀNH TRÌNH MÙA " + seasonId + " ===\n"
+                            + "|0|Gói: " + passName + " | Cấp: " + d.level + " / " + maxLv + " | Điểm: " + d.exp + " / 10 (mỗi cấp 10 điểm)\n"
+                            + "|6|--------------------------------\n"
+                            + "|0|Fide Đại Ca 3: " + d.fideKillCount + " | Tiểu đội trưởng: " + d.tieuDoiTruongKillCount + " | Super Bojack: " + d.superBojackKillCount + "\n"
+                            + "|0|King Kong: " + d.kingKongKillCount + " | Online (phút): " + d.onlineMinutes + " | Quái: " + d.monsterKillCount + " | PvP kill: " + d.pvpKillCount + "\n"
+                            + "|6|--------------------------------\n"
+                            + "|0|Chọn bên dưới:";
+                    this.arrMenu.add(new MenuInfo("Nhận quà theo cấp", 2100));
+                    this.arrMenu.add(new MenuInfo("Mua điểm (100 thỏi vàng = 10 điểm)", 2104));
+                    this.arrMenu.add(new MenuInfo("Xem bảng quà theo cấp", 2105));
+                    if (d.passType == SeasonPass.PASS_FREE) {
+                        this.arrMenu.add(new MenuInfo("Mua Pro (150.000 VND)", 2102));
+                        this.arrMenu.add(new MenuInfo("Mua Master (200.000 VND)", 2103));
+                    } else {
+                        this.arrMenu.add(new MenuInfo("Đã kích hoạt gói " + passName, -1));
+                    }
+                    this.arrMenu.add(new MenuInfo("Đóng", 0));
+                    this.openUIConfirm(npcId, null, null, -1);
+                    break;
+                }
+                case 80: {
+                    if (this.session.myCharz().mapTemplateId == 169) {
+                        this.session.myCharz().resetMenu();
+                        this.chat = mResources.SAY_DR_MY_1;
+                        this.arrMenu.add(new MenuInfo(mResources.AGREE, 2482));
+                        this.arrMenu.add(new MenuInfo(mResources.REFUSE, 0));
+                        this.openUIConfirm(npcId, null, null, -1);
+                    } else {
+                        this.session.myCharz().resetMenu();
+                        this.chat = mResources.SAY_DR_MY;
+                        this.arrMenu.add(new MenuInfo(mResources.AGREE, 2481));
+                        this.arrMenu.add(new MenuInfo(mResources.REFUSE, 0));
+                        this.openUIConfirm(npcId, null, null, -1);
+                    }
+                    break;
+                }
+                case 81: {
+                    if (this.session.myCharz().mapTemplateId == 14) {
+                        if (Dragon.isEvent_Noel) {
+                            this.session.myCharz().resetMenu();
+                            this.chat = mResources.SAY1_EVENT_NOEL;
+//                            this.arrMenu.add(new MenuInfo(mResources.EVENT_NOEL, 535));
+//                            this.arrMenu.add(new MenuInfo(mResources.EVENT_MAP_NOEL, 2483));
+                            this.arrMenu.add(new MenuInfo(mResources.REFUSE, 0));
+                        }
+                        // this.arrMenu.add(new MenuInfo(mResources.SHOP, 182));
+//                        this.arrMenu.add(new MenuInfo(mResources.CUAHANG_DACBIET, 361));
+                        // this.arrMenu.add(new MenuInfo(mResources.SHOP_HEAD, 183));
+                        this.openUIConfirm(npcId, null, null, -1);
+                    }
+                    break;
+                }
                 default: {
 
                     break;
@@ -2112,6 +2254,7 @@ public class MenuBoard {
                 this.arrMenu.add(new MenuInfo(mResources.ADD_LINHLUC_1, 72));
                 this.arrMenu.add(new MenuInfo(mResources.ADD_LINHLUC_2, 74));
                 this.arrMenu.add(new MenuInfo(mResources.ADD_LINHLUC_3, 76));
+                this.arrMenu.add(new MenuInfo(mResources.ADD_LINHLUC_4, 776));
                 this.arrMenu.add(new MenuInfo(mResources.REFUSE, 0));
                 this.openUIConfirm(npcId, null, null, -1);
                 // this.session.service.addEffectServer(5, 3, 19,
@@ -2182,6 +2325,14 @@ public class MenuBoard {
                 this.openUIConfirm(npcId, null, null, -1);
                 break;
             }
+            case 776: {
+                this.session.myCharz().resetMenu();
+                this.chat = mResources.SAY_QUA_TRUNG13;
+                this.arrMenu.add(new MenuInfo(mResources.OK, 777));
+                this.arrMenu.add(new MenuInfo(mResources.REFUSE, 0));
+                this.openUIConfirm(npcId, null, null, -1);
+                break;
+            }
             case 77: {
 
                 if (this.session.myCharz().isgiaodich) {
@@ -2193,6 +2344,26 @@ public class MenuBoard {
                             mResources.SAY_QUA_TRUNG12, new int[]{700, 457}, new int[]{30, 4}, 0, -1, -1, true,
                             1)) {
                         this.session.myCharz().getDuaHau(50, 6546).second -= 86400;
+                        this.session.myCharz().eggEffStatus(363, 240, this.session.myCharz().getDuaHau(50, 6546).duahau,
+                                this.session.myCharz().getDuaHau(50, 6546).duaHauIndex,
+                                (int) (this.session.myCharz().getDuaHau(50, 6546).second
+                                - ((System.currentTimeMillis() / 1000L)
+                                - this.session.myCharz().getDuaHau(50, 6546).last)));
+                    }
+                }
+                break;
+            }
+            case 777: {
+
+                if (this.session.myCharz().isgiaodich) {
+                    this.session.myCharz().addInfo1(mResources.O_THE_THUC_HIEN);
+                } else if (this.session.myCharz().isSecurity) {
+                    this.session.myCharz().addInfo1(mResources.BAOVE);
+                } else if (this.session.myCharz().isHaveDuaHau(50, 6546)) {
+                    if (this.session.myCharz().requestOpenUIItem(this.session.myCharz().menuBoard.npcId,
+                            mResources.SAY_QUA_TRUNG12, new int[]{700, 457}, new int[]{30, 4}, 0, -1, -1, true,
+                            1)) {
+                        this.session.myCharz().getDuaHau(50, 6546).second -= 432000;
                         this.session.myCharz().eggEffStatus(363, 240, this.session.myCharz().getDuaHau(50, 6546).duahau,
                                 this.session.myCharz().getDuaHau(50, 6546).duaHauIndex,
                                 (int) (this.session.myCharz().getDuaHau(50, 6546).second
@@ -2333,7 +2504,9 @@ public class MenuBoard {
                 break;
             }
             case 85: {
-                this.session.myCharz().goManorClan();
+                if (this.session.myCharz().mapTemplateId != 5) {
+                    this.session.myCharz().goManorClan();
+                }
                 break;
             }
             case 86: {
@@ -3664,7 +3837,7 @@ public class MenuBoard {
                     item.options.add(new ItemOption(77, 8));
                     item.options.add(new ItemOption(103, 8));
                     item.options.add(new ItemOption(50, 8));
-                    this.session.myCharz().addEffectChar(1000, 1, 0, 1, 1, 259200 + sc, 1, true, item);
+                    this.session.myCharz().addEffectChar(1000, 1, 0, 1, 1, 604800 + sc, 1, true, item);
                 }
                 break;
             }
@@ -3683,7 +3856,7 @@ public class MenuBoard {
                     item.options.add(new ItemOption(77, 5));
                     item.options.add(new ItemOption(103, 5));
                     item.options.add(new ItemOption(50, 5));
-                    this.session.myCharz().addEffectChar(1001, 1, 0, 1, 1, 259200 + sc, 1, true, item);
+                    this.session.myCharz().addEffectChar(1001, 1, 0, 1, 1, 604800 + sc, 1, true, item);
                 }
                 break;
             }
@@ -3702,7 +3875,7 @@ public class MenuBoard {
                     item.options.add(new ItemOption(77, 2));
                     item.options.add(new ItemOption(103, 2));
                     item.options.add(new ItemOption(50, 2));
-                    this.session.myCharz().addEffectChar(1002, 1, 0, 1, 1, 259200 + sc, 1, true, item);
+                    this.session.myCharz().addEffectChar(1002, 1, 0, 1, 1, 604800 + sc, 1, true, item);
                 }
                 break;
             }
@@ -3759,7 +3932,7 @@ public class MenuBoard {
                 this.chat = String.format(mResources.SAY_NAP_1,
                         Util.gI().getFormatNumber(Money.gI().getMoney(this.session.myCharz())),
                         Util.gI().getFormatNumber(this.session.myCharz().totalGold));
-//                this.arrMenu.add(new MenuInfo(mResources.MONEY_TO_NGOC, 210));
+                this.arrMenu.add(new MenuInfo(mResources.MONEY_TO_NGOC, 210));
                 this.arrMenu.add(new MenuInfo(mResources.MONEY_TO_GOLD, 212));
                 if (this.session.myCharz().totalGold > 0) {
                     this.arrMenu.add(new MenuInfo(mResources.NHAN_THOI_VANG, 216));
@@ -4188,6 +4361,22 @@ public class MenuBoard {
                 } else {
                     this.session.myCharz().addInfo1(mResources.YOUR_NOT_TO);
                 }
+                break;
+            }
+            case 2481: {
+                this.session.myCharz().goPhongThiNghiem();
+                break;
+            }
+            case 2482: {
+                this.session.myCharz().goVachNuiDen();
+                break;
+            }
+            case 2483: {
+                this.session.myCharz().goMapNoel();
+                break;
+            }
+            case 2484: {
+                this.session.myCharz().goBill2();
                 break;
             }
             case 249: {
@@ -5614,62 +5803,221 @@ public class MenuBoard {
 //                MocNapHandle.instance().showReward(session);
 //                break;
 //            }
-            case 367: {
-                this.session.myCharz().resetMenu();
-                this.chat = mResources.SAY_SUKIEN2;
-                this.arrMenu.add(new MenuInfo(String.format(mResources.VIP_NUMBER, 1), 368));
-                this.arrMenu.add(new MenuInfo(String.format(mResources.VIP_NUMBER, 2), 369));
-                this.arrMenu.add(new MenuInfo(String.format(mResources.VIP_NUMBER, 3), 370));
-                this.arrMenu.add(new MenuInfo(mResources.CLOSE, 0));
-                this.openUIConfirm(npcId, null, null, -1);
+           case 367: {
+    this.session.myCharz().resetMenu();
+    this.chat = mResources.SAY_SUKIEN2;
+    this.arrMenu.add(new MenuInfo(String.format(mResources.VIP_NUMBER, 3), 368));
+    this.arrMenu.add(new MenuInfo(String.format(mResources.VIP_NUMBER, 2), 369));
+    this.arrMenu.add(new MenuInfo(String.format(mResources.VIP_NUMBER, 1), 370));
+    this.arrMenu.add(new MenuInfo(mResources.CLOSE, 0));
+    this.openUIConfirm(npcId, null, null, -1);
+    break;
+}
+
+case 368: { // VIP 1 - 2000 VND
+    this.session.myCharz().resetMenu();
+    this.chat = mResources.SAY_SUKIEN3;
+
+    long vnd = 0;
+    try {
+        MySQL mySQL = MySQL.createData2();
+        try {
+            ResultSet red = mySQL.getConnection().prepareStatement(
+                    String.format(mResources.QUERY_SELECT_USER_MONEY, this.session.userId),
+                    ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY
+            ).executeQuery();
+            red.first();
+            vnd = red.getLong(1);
+        } finally {
+            mySQL.close();
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    this.arrMenu.add(new MenuInfo(
+            String.format(mResources.POINT_SEASON2, 500000, Util.gI().getFormatNumber(vnd)),
+            371, new int[]{0, 1, 0}
+    ));
+    this.arrMenu.add(new MenuInfo(mResources.CLOSE, 0));
+    this.openUIConfirm(npcId, null, null, -1);
+    break;
+}
+
+case 369: { // VIP 2 - 500 VND
+    this.session.myCharz().resetMenu();
+    this.chat = mResources.SAY_SUKIEN4;
+
+    long vnd = 0;
+    try {
+        MySQL mySQL = MySQL.createData2();
+        try {
+            ResultSet red = mySQL.getConnection().prepareStatement(
+                    String.format(mResources.QUERY_SELECT_USER_MONEY, this.session.userId),
+                    ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY
+            ).executeQuery();
+            red.first();
+            vnd = red.getLong(1);
+        } finally {
+            mySQL.close();
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    this.arrMenu.add(new MenuInfo(
+            String.format(mResources.POINT_SEASON2, 100000, Util.gI().getFormatNumber(vnd)),
+            371, new int[]{0, 2, 0}
+    ));
+    this.arrMenu.add(new MenuInfo(mResources.CLOSE, 0));
+    this.openUIConfirm(npcId, null, null, -1);
+    break;
+}
+
+case 370: { // VIP 3 - 200 VND
+    this.session.myCharz().resetMenu();
+    this.chat = mResources.SAY_SUKIEN5;
+
+    long vnd = 0;
+    try {
+        MySQL mySQL = MySQL.createData2();
+        try {
+            ResultSet red = mySQL.getConnection().prepareStatement(
+                    String.format(mResources.QUERY_SELECT_USER_MONEY, this.session.userId),
+                    ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY
+            ).executeQuery();
+            red.first();
+            vnd = red.getLong(1);
+        } finally {
+            mySQL.close();
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    this.arrMenu.add(new MenuInfo(
+            String.format(mResources.POINT_SEASON2, 50000, Util.gI().getFormatNumber(vnd)),
+            371, new int[]{0, 3, 0}
+    ));
+    this.arrMenu.add(new MenuInfo(mResources.CLOSE, 0));
+    this.openUIConfirm(npcId, null, null, -1);
+    break;
+}
+case 371: {
+    int[] array = (int[]) info.p;
+    int vip = this.session.myCharz().myObj().vip_1;
+
+    // Ép mua theo bậc: VIP3 (vip=0) -> VIP2 (vip=1) -> VIP1 (vip=2)
+    if (array[1] == 3 && vip != 0) { 
+        this.session.myCharz().addInfo1("Mua Rồi Thì Nhịn Đi");
+        break;
+    }
+    if (array[1] == 2 && vip != 1) { 
+        this.session.myCharz().addInfo1("Bạn phải mua VIP 1 trước.");
+        break;
+    }
+    if (array[1] == 1 && vip != 2) { 
+        this.session.myCharz().addInfo1("Bạn phải mua VIP 2 trước.");
+        break;
+    }
+
+    // Bước hỏi nhận pet / không nhận pet
+    if (array[0] == 0 && this.session.myCharz().myPet != null) {
+        this.session.myCharz().resetMenu();
+        this.chat = mResources.SAY_SUKIEN6;
+        this.arrMenu.add(new MenuInfo(mResources.AGREE, 371, new int[]{1, array[1], 0}));
+        this.arrMenu.add(new MenuInfo(mResources.NOT_RECEIVED_PET, 371, new int[]{1, array[1], 1}));
+        this.arrMenu.add(new MenuInfo(mResources.CLOSE, 0));
+        this.openUIConfirm(npcId, null, null, -1);
+        break;
+    }
+
+    // Giá theo gói
+    int cost = 0;
+    int needEmpty = 15;
+
+    if (array[1] == 1) cost = 500000;      // VIP 1
+    else if (array[1] == 2) cost = 100000;  // VIP 2
+    else if (array[1] == 3) cost = 50000;  // VIP 3
+
+    if (cost <= 0) {
+        this.session.myCharz().addInfo1("Lựa chọn không hợp lệ.");
+        break;
+    }
+
+    // Check túi trước khi trừ tiền
+    if (this.session.myCharz().getEmptyBagCount() < needEmpty) {
+        this.session.myCharz().addInfo1(String.format(mResources.BAG_FULL_2, needEmpty));
+        break;
+    }
+
+    // Check canProceed trước khi trừ tiền
+    if (!this.session.myCharz().canProceed()) {
+        break;
+    }
+
+    try {
+        MySQL mySQL = MySQL.createData2(); // nro_root theo bạn nói
+        try {
+            // Lấy VND hiện có
+            ResultSet red = mySQL.getConnection().prepareStatement(
+                    String.format(mResources.QUERY_SELECT_USER_MONEY, this.session.userId),
+                    ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY
+            ).executeQuery();
+            red.first();
+            long vnd = red.getLong(1);
+
+            if (vnd < cost) {
+                this.session.myCharz().addInfo1(
+                        String.format(mResources.MONEY_NOT, Util.gI().getFormatNumber(cost - vnd))
+                );
                 break;
             }
-            case 368: {
-                this.session.myCharz().resetMenu();
-                this.chat = mResources.SAY_SUKIEN3;
-                this.arrMenu.add(new MenuInfo(String.format(mResources.POINT_SEASON, 2000, this.session.myCharz().myObj().pointEventVIP), 371, new int[]{0, 1, 0}));
-                this.arrMenu.add(new MenuInfo(mResources.CLOSE, 0));
-                this.openUIConfirm(npcId, null, null, -1);
-                break;
+
+            mySQL.getConnection().setAutoCommit(false);
+            try {
+                // Trừ tiền
+                mySQL.getConnection().prepareStatement(
+                        String.format(mResources.UPDATE_USER_MONEY, -cost, this.session.userId)
+                ).executeUpdate();
+
+                // Trao quà
+                if (array[1] == 1) this.session.myCharz().giftSeason1(array[2]);
+                else if (array[1] == 2) this.session.myCharz().giftSeason2(array[2]);
+                else if (array[1] == 3) this.session.myCharz().giftSeason3(array[2]);
+
+                // Nâng bậc VIP (mua thành công)
+                int newVip = vip;
+                if (array[1] == 3) newVip = 1;
+                else if (array[1] == 2) newVip = 2;
+                else if (array[1] == 1) newVip = 3;
+
+                this.session.myCharz().myObj().vip_1 = newVip;
+
+                // Update DB player.vip_1 (cùng DB createData2)
+                mySQL.getConnection().prepareStatement(
+                        "UPDATE `player` SET `vip_1` = " + newVip +
+                        " WHERE `playerId` = " + this.session.myCharz().playerId
+                ).executeUpdate();
+
+                mySQL.getConnection().commit();
+                this.session.isSave = true;
+
+                this.session.myCharz().addInfo1("Mua thành công!");
+
+            } catch (SQLException e) {
+                mySQL.getConnection().rollback();
+                e.printStackTrace();
             }
-            case 369: {
-                this.session.myCharz().resetMenu();
-                this.chat = mResources.SAY_SUKIEN4;
-                this.arrMenu.add(new MenuInfo(String.format(mResources.POINT_SEASON, 500, this.session.myCharz().myObj().pointEventVIP), 371, new int[]{0, 2, 0}));
-                this.arrMenu.add(new MenuInfo(mResources.CLOSE, 0));
-                this.openUIConfirm(npcId, null, null, -1);
-                break;
-            }
-            case 370: {
-                this.session.myCharz().resetMenu();
-                this.chat = mResources.SAY_SUKIEN5;
-                this.arrMenu.add(new MenuInfo(String.format(mResources.POINT_SEASON, 200, this.session.myCharz().myObj().pointEventVIP), 371, new int[]{0, 3, 0}));
-                this.arrMenu.add(new MenuInfo(mResources.CLOSE, 0));
-                this.openUIConfirm(npcId, null, null, -1);
-                break;
-            }
-            case 371: {
-                int array[] = (int[]) info.p;
-                if (array[0] == 0 && this.session.myCharz().myPet != null) {
-                    this.session.myCharz().resetMenu();
-                    this.chat = mResources.SAY_SUKIEN6;
-                    this.arrMenu.add(new MenuInfo(mResources.AGREE, 371, new int[]{1, array[1], 0}));
-                    this.arrMenu.add(new MenuInfo(mResources.NOT_RECEIVED_PET, 371, new int[]{1, array[1], 1}));
-                    this.arrMenu.add(new MenuInfo(mResources.CLOSE, 0));
-                    this.openUIConfirm(npcId, null, null, -1);
-                } else {
-                    if (array[1] == 1) {
-                        this.session.myCharz().giftSeason1(array[2]);
-                    }
-                    if (array[1] == 2) {
-                        this.session.myCharz().giftSeason2(array[2]);
-                    }
-                    if (array[1] == 3) {
-                        this.session.myCharz().giftSeason3(array[2]);
-                    }
-                }
-                break;
-            }
+        } finally {
+            mySQL.close();
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    break;
+}
             case 372: {
                 break;
             }
@@ -5784,68 +6132,68 @@ public class MenuBoard {
                 break;
             }
             // --------------------- đệ tử Mabu -------------------
-//            case 417: {
-//                if (this.session.myCharz().isgiaodich) {
-//                    this.session.myCharz().addInfo1(mResources.O_THE_THUC_HIEN);
-//                } else if (this.session.myCharz().isSecurity) {
-//                    this.session.myCharz().addInfo1(mResources.BAOVE);
-//                } else if (this.session.myCharz().arrItem != null && this.session.myCharz().arrItem.length == 1
-//                        && this.session.myCharz().arrItem[0].template.id == 568) {
-//                    if (this.session.myCharz().myPetz() != null && this.session.myCharz().myPetz().petStatus == 4) {
-//                        this.session.myCharz().addInfo1(mResources.NO_FINNISH);
-//                    } else {
-//                        this.session.myCharz().useItemBag(this.session.myCharz().arrItem[0].indexUI, 1);
-//                        Player.mabuInfo(this.session.myCharz(), 0);
-//                        this.session.myCharz().session.service.chat(this.session.myCharz().myPetz().charID,
-//                                mResources.XIN_HAY_NHAN);
-//                        this.session.myCharz().arrItem = null;
-//                    }
-//                }
-//                this.session.myCharz().resetMenu();
-//                break;
-//            }
-//            case 418: {
-//                if (this.session.myCharz().isgiaodich) {
-//                    this.session.myCharz().addInfo1(mResources.O_THE_THUC_HIEN);
-//                } else if (this.session.myCharz().isSecurity) {
-//                    this.session.myCharz().addInfo1(mResources.BAOVE);
-//                } else if (this.session.myCharz().arrItem != null && this.session.myCharz().arrItem.length == 1
-//                        && this.session.myCharz().arrItem[0].template.id == 568) {
-//                    if (this.session.myCharz().myPetz() != null && this.session.myCharz().myPetz().petStatus == 4) {
-//                        this.session.myCharz().addInfo1(mResources.NO_FINNISH);
-//                    } else {
-//                        this.session.myCharz().useItemBag(this.session.myCharz().arrItem[0].indexUI, 1);
-//                        Player.mabuInfo(this.session.myCharz(), 1);
-//                        this.session.myCharz().session.service.chat(this.session.myCharz().myPetz().charID,
-//                                mResources.XIN_HAY_NHAN);
-//                        this.session.myCharz().arrItem = null;
-//                    }
-//                }
-//                this.session.myCharz().resetMenu();
-//                break;
-//            }
-//            case 419: {
-//                if (this.session.myCharz().isgiaodich) {
-//                    this.session.myCharz().addInfo1(mResources.O_THE_THUC_HIEN);
-//                } else if (this.session.myCharz().isSecurity) {
-//                    this.session.myCharz().addInfo1(mResources.BAOVE);
-//                } else if (this.session.myCharz().arrItem != null && this.session.myCharz().arrItem.length == 1
-//                        && this.session.myCharz().arrItem[0].template.id == 568) {
-//                    if (this.session.myCharz().myPetz() != null && this.session.myCharz().myPetz().petStatus == 4) {
-//                        this.session.myCharz().addInfo1(mResources.NO_FINNISH);
-//                    } else {
-//                        this.session.myCharz().useItemBag(this.session.myCharz().arrItem[0].indexUI, 1);
-//                        Player.mabuInfo(this.session.myCharz(), 2);
-//                        this.session.myCharz().session.service.chat(this.session.myCharz().myPetz().charID,
-//                                mResources.XIN_HAY_NHAN);
-//                        this.session.myCharz().arrItem = null;
-//                    }
-//                }
-//                this.session.myCharz().resetMenu();
-//                break;
-//            }
+  case 417: {
+                if (this.session.myCharz().isgiaodich) {
+                    this.session.myCharz().addInfo1(mResources.O_THE_THUC_HIEN);
+                } else if (this.session.myCharz().isSecurity) {
+                    this.session.myCharz().addInfo1(mResources.BAOVE);
+                } else if (this.session.myCharz().arrItem != null && this.session.myCharz().arrItem.length == 1
+                        && this.session.myCharz().arrItem[0].template.id == 568) {
+                    if (this.session.myCharz().myPetz() != null && this.session.myCharz().myPetz().petStatus == 4) {
+                        this.session.myCharz().addInfo1(mResources.NO_FINNISH);
+                    } else {
+                        this.session.myCharz().useItemBag(this.session.myCharz().arrItem[0].indexUI, 1);
+                        Player.mabuInfo(this.session.myCharz());
+                        this.session.myCharz().session.service.chat(this.session.myCharz().myPetz().charID,
+                                mResources.XIN_HAY_NHAN);
+                        this.session.myCharz().arrItem = null;
+                    }
+                }
+                this.session.myCharz().resetMenu();
+                break;
+            }
+            case 418: {
+                if (this.session.myCharz().isgiaodich) {
+                    this.session.myCharz().addInfo1(mResources.O_THE_THUC_HIEN);
+                } else if (this.session.myCharz().isSecurity) {
+                    this.session.myCharz().addInfo1(mResources.BAOVE);
+                } else if (this.session.myCharz().arrItem != null && this.session.myCharz().arrItem.length == 1
+                       && this.session.myCharz().arrItem[0].template.id == 568) {
+                    if (this.session.myCharz().myPetz() != null && this.session.myCharz().myPetz().petStatus == 4) {
+                        this.session.myCharz().addInfo1(mResources.NO_FINNISH);
+                    } else {
+                        this.session.myCharz().useItemBag(this.session.myCharz().arrItem[0].indexUI, 1);
+                        Player.mabuInfo(this.session.myCharz());
+                        this.session.myCharz().session.service.chat(this.session.myCharz().myPetz().charID,
+                                mResources.XIN_HAY_NHAN);
+                        this.session.myCharz().arrItem = null;
+                    }
+                }
+                this.session.myCharz().resetMenu();
+               break;
+            }
+            case 419: {
+                if (this.session.myCharz().isgiaodich) {
+                    this.session.myCharz().addInfo1(mResources.O_THE_THUC_HIEN);
+                } else if (this.session.myCharz().isSecurity) {
+                    this.session.myCharz().addInfo1(mResources.BAOVE);
+                } else if (this.session.myCharz().arrItem != null && this.session.myCharz().arrItem.length == 1
+                        && this.session.myCharz().arrItem[0].template.id == 568) {
+                    if (this.session.myCharz().myPetz() != null && this.session.myCharz().myPetz().petStatus == 4) {
+                        this.session.myCharz().addInfo1(mResources.NO_FINNISH);
+                    } else {
+                       this.session.myCharz().useItemBag(this.session.myCharz().arrItem[0].indexUI, 1);
+                       Player.mabuInfo(this.session.myCharz());
+                       this.session.myCharz().session.service.chat(this.session.myCharz().myPetz().charID,
+                               mResources.XIN_HAY_NHAN);
+                        this.session.myCharz().arrItem = null;
+                    }
+                }
+                this.session.myCharz().resetMenu();
+                break;
+            }
             case 421: {
-                Item itemhop = this.session.myCharz().getItemBag(2024);
+                Item itemhop = this.session.myCharz().getItemBag(2028);
                 if (itemhop == null) {
                     this.session.myCharz().addInfo1(String.format(mResources.THIEU, 1, ItemTemplate.get((short) 1976).name));
                 } else {
@@ -5868,7 +6216,7 @@ public class MenuBoard {
                 break;
             }
             case 422: {
-                Item itemhop = this.session.myCharz().getItemBag(2024);
+                Item itemhop = this.session.myCharz().getItemBag(2028);
                 if (itemhop == null) {
                     this.session.myCharz().addInfo1(String.format(mResources.THIEU, 1, ItemTemplate.get((short) 1976).name));
                 } else {
@@ -5891,7 +6239,7 @@ public class MenuBoard {
                 break;
             }
             case 423: {
-                Item itemhop = this.session.myCharz().getItemBag(2024);
+                Item itemhop = this.session.myCharz().getItemBag(2028);
                 if (itemhop == null) {
                     this.session.myCharz().addInfo1(String.format(mResources.THIEU, 1, ItemTemplate.get((short) 1976).name));
                 } else {
@@ -5914,7 +6262,7 @@ public class MenuBoard {
                 break;
             }
             case 424: {
-                Item itemhop = this.session.myCharz().getItemBag(2027);
+                Item itemhop = this.session.myCharz().getItemBag(2029);
                 if (itemhop == null) {
                     this.session.myCharz().addInfo1(String.format(mResources.THIEU, 1, ItemTemplate.get((short) 1976).name));
                 } else {
@@ -5936,7 +6284,7 @@ public class MenuBoard {
                 break;
             }
             case 425: {
-                Item itemhop = this.session.myCharz().getItemBag(2027);
+                Item itemhop = this.session.myCharz().getItemBag(2029);
                 if (itemhop == null) {
                     this.session.myCharz().addInfo1(String.format(mResources.THIEU, 1, ItemTemplate.get((short) 1976).name));
                 } else {
@@ -5958,7 +6306,7 @@ public class MenuBoard {
                 break;
             }
             case 426: {
-                Item itemhop = this.session.myCharz().getItemBag(2027);
+                Item itemhop = this.session.myCharz().getItemBag(2029);
                 if (itemhop == null) {
                     this.session.myCharz().addInfo1(String.format(mResources.THIEU, 1, ItemTemplate.get((short) 1976).name));
                 } else {
@@ -6230,6 +6578,277 @@ public class MenuBoard {
                 break;
             }
 
+            case 460: {
+                this.session.myCharz().resetMenu();
+                this.chat = mResources.SAY_BA_HAT_MIT12;
+                this.arrMenu.add(new MenuInfo(mResources.SACH_TUYET_KY2, 461));
+                this.arrMenu.add(new MenuInfo(mResources.SACH_TUYET_KY3, 463));
+                this.arrMenu.add(new MenuInfo(mResources.SACH_TUYET_KY4, 465));
+                this.arrMenu.add(new MenuInfo(mResources.SACH_TUYET_KY5, 466));
+                this.arrMenu.add(new MenuInfo(mResources.SACH_TUYET_KY6, 467));
+                this.arrMenu.add(new MenuInfo(mResources.SACH_TUYET_KY7, 468));
+                this.arrMenu.add(new MenuInfo(mResources.SACH_TUYET_KY8, 469));
+                this.openUIConfirm(npcId, null, null, -1);
+                break;
+            }
+
+            case 461: {
+                this.session.myCharz().requestOpenUIItem(this.npcId, mResources.MAKE_BOOK1);
+                break;
+            }
+            case 462: {
+                this.session.service.getFlag();
+                this.session.service.npcChat(this.npcId, mResources.UM_BALA);
+                boolean flag = Util.gI().nextInt(100) < 20;
+                if (flag) {
+                    this.session.myCharz().useItemBagById(1281, 99);
+                    Item item = new Item(1283, false, 1, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
+                    this.session.service.setCombineEff(7, item.template.iconID, -1, this.npcId);
+                    this.session.myCharz().addItemBag(1, item);
+                    this.session.myCharz().addInfo1(3000, String.format(mResources.BAN_NHAN_DUOC, item.template.name));
+                } else {
+                    this.session.myCharz().useItemBagById(1281, 9);
+                    this.session.service.setCombineEff(8, -1, -1, this.npcId);
+                    this.session.service.npcChat(this.npcId, mResources.CHUCCON_MM_LAN_SAU);
+                }
+                this.session.myCharz().useItemBagById(1282, 1);
+                this.session.myCharz().resetMenu();
+                break;
+            }
+            case 463: {
+                this.session.myCharz().requestOpenUIItem(this.npcId, mResources.MAKE_BOOK2);
+                break;
+            }
+            case 464: {
+                this.session.service.getFlag();
+                this.session.service.npcChat(this.npcId, mResources.UM_BALA);
+                boolean flag = Util.gI().nextInt(100) < 20;
+                if (flag) {
+                    Item item = new Item(new int[]{1044, 1211, 1212}[Util.gI().nextInt(3)], false, 1, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
+                    for (int i = Util.gI().nextInt(3); i >= 0; i--) {
+                        item.options.add(new ItemOption(240, 0));
+                    }
+                    item.options.add(new ItemOption(21, 40));
+                    item.options.add(new ItemOption(30, 0));
+                    item.options.add(new ItemOption(86, 0));
+                    item.options.add(new ItemOption(242, 5));
+                    item.options.add(new ItemOption(212, 1000));
+                    this.session.service.setCombineEff(7, item.template.iconID, -1, this.npcId);
+                    this.session.myCharz().addItemBag(1, item);
+                    this.session.myCharz().addInfo1(3000, String.format(mResources.BAN_NHAN_DUOC, item.template.name));
+                } else {
+                    this.session.service.setCombineEff(8, -1, -1, this.npcId);
+                    this.session.service.npcChat(this.npcId, mResources.CHUCCON_MM_LAN_SAU);
+                }
+                this.session.myCharz().resetMenu();
+                break;
+            }
+            case 465: {
+                this.session.service.combine(mResources.SRC_NANGCAP_15, mResources.SRC_NANGCAP_16, -1);
+                this.session.myCharz().nangcap = new NangCap(this.session) {
+                    @Override
+                    public void init() {
+                    }
+
+                    @Override
+                    public void execute() {
+
+                        if (super.myItem.size() == 2 && super.checkBagOK() && super.isHaveItem(1044, 1211, 1212, 1278, 1279, 1280) && super.isHaveItem(1284)) {
+                            Item book = super.getItemById(1044, 1211, 1212, 1278, 1279, 1280);
+                            Item amu = super.getItemById(1284);
+                            if (!book.isHaveOption(240)) {
+                                super.session.myCharz().addInfo1(mResources.FAILED_GIAM_DINH_1);
+                            } else if (super.type == 0) {
+                                super.session.myCharz().requestOpenUIItem(npcId, String.format(mResources.MAKE_BOOK3, book.template.name));
+                            } else {
+                                ArrayList<Integer> myList = new ArrayList<>();
+                                myList.add(50);
+                                myList.add(77);
+                                myList.add(103);
+                                myList.add(108);
+                                myList.add(97);
+                                myList.add(94);
+                                myList.add(14);
+                                myList.add(237);
+                                myList.add(80);
+                                myList.add(81);
+                                myList.add(175);
+                                myList.add(5);
+                                for (int i = 0; i < book.options.size(); i++) {
+                                    if (book.options.get(i).optionTemplate.id == 240) {
+                                        int optionId = myList.remove(Util.gI().nextInt(myList.size()));
+                                        if (optionId == 5) {
+                                            book.options.set(i, new ItemOption(optionId, Util.gI().nextInt(1, 5)));
+                                        } else if (optionId == 50 || optionId == 77 || optionId == 103
+                                                || optionId == 108 || optionId == 97 || optionId == 94
+                                                || optionId == 14 || optionId == 237 || optionId == 80
+                                                || optionId == 81 || optionId == 175) {
+                                            book.options.set(i, new ItemOption(optionId, Util.gI().nextInt(1, 10)));
+                                        }
+                                    }
+                                }
+                                //Eff
+                                this.session.service.setCombineEff(2, -1, -1, npcId);
+                                super.session.service.Bag(super.session.myCharz().arrItemBag);
+                                super.session.service.setCombineEff(super.myItem, npcId);
+                            }
+                        } else {
+                            this.session.service.startOKDlg(mResources.BOOK_AND_AMU);
+                        }
+                    }
+                };
+                break;
+            }
+            case 466: {
+                this.session.service.combine(mResources.SRC_NANGCAP_17, mResources.SRC_NANGCAP_18, -1);
+                this.session.myCharz().nangcap = new NangCap(this.session) {
+                    @Override
+                    public void init() {
+                    }
+
+                    @Override
+                    public void execute() {
+                        if (super.myItem.size() == 1 && super.checkBagOK() && super.isHaveItem(1044, 1211, 1212, 1278, 1279, 1280)) {
+                            Item book = super.getItemById(1044, 1211, 1212, 1278, 1279, 1280);
+                            if (book.isHaveOption(240) || book.getParamOption(242) == 0) {
+                                super.session.myCharz().addInfo1(mResources.FAILED_GIAM_DINH_2);
+                            } else if (super.type == 0) {
+                                super.session.myCharz().requestOpenUIItem(npcId, mResources.MAKE_BOOK4);
+                            } else {
+                                for (int i = 0; i < book.options.size(); i++) {
+                                    int optionId = book.options.get(i).optionTemplate.id;
+                                    if (optionId == 50 || optionId == 77 || optionId == 103
+                                            || optionId == 108 || optionId == 97 || optionId == 94
+                                            || optionId == 14 || optionId == 237 || optionId == 80
+                                            || optionId == 81 || optionId == 175 || optionId == 5) {
+                                        book.options.set(i, new ItemOption(240, 0));
+                                    }
+                                }
+                                book.getOption(242).param--;
+                                //Eff
+                                this.session.service.setCombineEff(2, -1, -1, npcId);
+                                super.session.service.Bag(super.session.myCharz().arrItemBag);
+                                super.session.service.setCombineEff(super.myItem, npcId);
+                            }
+                        } else {
+                            this.session.service.startOKDlg(mResources.CLEAR_BOOK_FAILD);
+                        }
+                    }
+                };
+                break;
+            }
+            case 467: {
+                this.session.service.combine(mResources.SRC_NANGCAP_19, mResources.SRC_NANGCAP_20, -1);
+                this.session.myCharz().nangcap = new NangCap(this.session) {
+                    @Override
+                    public void init() {
+                    }
+
+                    @Override
+                    public void execute() {
+                        if (super.myItem.size() == 2 && super.checkBagOK() && super.isHaveItem(1044, 1211, 1212) && super.isHaveItem(1285)) {
+                            Item book = super.getItemById(1044, 1211, 1212);
+                            Item pliers = super.getItemById(1285);
+                            if (super.type == 0) {
+                                super.session.myCharz().requestOpenUIItem(npcId, mResources.MAKE_BOOK5);
+                            } else {
+                                boolean flag = Util.gI().nextInt(100) < 10;
+                                //Eff
+                                if (flag) {
+                                    if (book.template.id == 1044) {
+                                        book.setTemplate(1278);
+                                    }
+                                    if (book.template.id == 1211) {
+                                        book.setTemplate(1279);
+                                    }
+                                    if (book.template.id == 1212) {
+                                        book.setTemplate(1280);
+                                    }
+                                    this.session.service.setCombineEff(2, -1, -1, npcId);
+                                } else {
+                                    this.session.service.setCombineEff(3, -1, -1, npcId);
+                                }
+                                super.session.service.Bag(super.session.myCharz().arrItemBag);
+                                super.session.service.setCombineEff(super.myItem, npcId);
+                            }
+                        } else {
+                            this.session.service.startOKDlg(mResources.UPGRADE_BOOK_FAILD);
+                        }
+                    }
+                };
+                break;
+            }
+            case 468: {
+                this.session.service.combine(mResources.SRC_NANGCAP_21, mResources.SRC_NANGCAP_22, -1);
+                this.session.myCharz().nangcap = new NangCap(this.session) {
+                    @Override
+                    public void init() {
+                    }
+
+                    @Override
+                    public void execute() {
+                        if (super.myItem.size() == 1 && super.checkBagOK() && super.isHaveItem(1044, 1211, 1212, 1278, 1279, 1280)) {
+                            Item book = super.getItemById(1044, 1211, 1212, 1278, 1279, 1280);
+                            if (super.type == 0) {
+                                super.session.myCharz().requestOpenUIItem(npcId, mResources.MAKE_BOOK6);
+                            } else {
+                                if (super.session.myCharz().getXu() >= 100000000) {
+                                    super.session.myCharz().updateXu(-100000000, 2);
+                                    book.getOption(212).param += 1;
+                                    if (book.getOption(212).param > 1000) {
+                                        book.getOption(212).param = 1000;
+                                    }
+                                    this.session.service.setCombineEff(2, -1, -1, npcId);
+                                    super.session.service.Bag(super.session.myCharz().arrItemBag);
+                                    super.session.service.setCombineEff(super.myItem, npcId);
+                                }
+                            }
+                        } else {
+                            this.session.service.startOKDlg(mResources.BROKEN_BOOK_FAILD);
+                        }
+                    }
+                };
+                break;
+            }
+            case 469: {
+                this.session.service.combine(mResources.SRC_NANGCAP_23, mResources.SRC_NANGCAP_24, -1);
+                this.session.myCharz().nangcap = new NangCap(this.session) {
+                    @Override
+                    public void init() {
+                    }
+
+                    @Override
+                    public void execute() {
+                        if (super.myItem.size() == 1 && super.checkBagOK() && super.isHaveItem(1044, 1211, 1212, 1278, 1279, 1280)) {
+                            Item book = super.getItemById(1044, 1211, 1212, 1278, 1279, 1280);
+                            if (super.type == 0) {
+                                super.session.myCharz().requestOpenUIItem(npcId, mResources.MAKE_BOOK7);
+                            } else {
+                                if (super.session.myCharz().xu >= 10000000) {
+                                    super.session.myCharz().useItemBag(book.indexUI, 1);
+                                    super.session.myCharz().updateXu(-10000000, 2);
+
+                                    this.session.service.setCombineEff(2, -1, -1, npcId);
+                                    super.session.service.Bag(super.session.myCharz().arrItemBag);
+                                    super.session.service.setCombineEff(super.myItem, npcId);
+                                    super.session.myCharz().addItemBag(1, new Item(1283, false, 5, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY));
+                                }
+                            }
+                        } else {
+                            this.session.service.startOKDlg(mResources.DECAY_BOOK_FAILD);
+                        }
+                    }
+                };
+                break;
+            }
+            case 630: {
+                if (this.session.myCharz().nangcap != null) {
+                    this.session.myCharz().nangcap.type = 1;
+                    this.session.myCharz().nangcap.execute();
+                }
+                break;
+            }
+
             case 503: {
                 if (this.session.myCharz().cgender == 0) {
                     // TraiDat
@@ -6280,7 +6899,7 @@ public class MenuBoard {
                     Random random = new Random();
                     int regularOptionId = regularOptions.get(random.nextInt(regularOptions.size()));
                     int percentOptionId = percentOptions.get(random.nextInt(percentOptions.size()));
-                    chanmenh.options.add(new ItemOption(regularOptionId, Util.gI().nextInt(700, 7000)));
+                    chanmenh.options.add(new ItemOption(regularOptionId, Util.gI().nextInt(100, 1500)));
                     chanmenh.options.add(new ItemOption(percentOptionId, Util.gI().nextInt(1, 7)));
                     this.session.myCharz().useItemBag(itemId.indexUI, 50); // 
                     this.session.myCharz().addItemBag(chanmenh, indexUI);
@@ -6338,12 +6957,12 @@ public class MenuBoard {
                 } else if (this.session.myCharz().isSecurity) {
                     this.session.myCharz().addInfo1(mResources.BAOVE);
                 } else {
-                    this.session.myCharz().removeEffChar(0, 1003);
+                    this.session.myCharz().removeEffChar(0, 1018);
                     Item item = new Item(395, false, 1, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
-                    item.options.add(new ItemOption(77, 2));
-                    item.options.add(new ItemOption(103, 2));
-                    item.options.add(new ItemOption(50, 2));
-                    this.session.myCharz().addEffectChar(1003, 1, 0, 1, 1, 36000000, 1, true, item);
+                    item.options.add(new ItemOption(77, 5));
+                    item.options.add(new ItemOption(103, 5));
+                    item.options.add(new ItemOption(50, 5));
+                    this.session.myCharz().addEffectChar(1018, 1, 0, 1, 1, 36000000, 1, true, item);
                 }
                 break;
             }
@@ -6360,6 +6979,351 @@ public class MenuBoard {
                 this.typeInfo = 522;
                 break;
             }
+            case 525: {
+                this.session.myCharz().shopId = 35;
+                this.session.service.openShop(Shop.shops.get(this.session.myCharz().shopId));
+                break;
+            }
+            case 526: {
+                this.session.myCharz().shopId = 34;
+                this.session.service.openShop(Shop.shops.get(this.session.myCharz().shopId));
+                break;
+            }
+            // Gacha (NPC 40): mở hộp thoại thông tin + nút Quay / Từ chối (tỉ lệ lấy từ GACHA_IDS, GACHA_PERCENTS)
+            case 550: {
+                this.session.myCharz().resetMenu();
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < GACHA_IDS.length; i++) {
+                    ItemTemplate t = ItemTemplate.get((short) GACHA_IDS[i]);
+                    sb.append(t != null ? t.name : ("ID" + GACHA_IDS[i])).append(" ").append(GACHA_PERCENTS[i]).append("%");
+                    if (i < GACHA_IDS.length - 1) sb.append(", ");
+                }
+                this.chat = "Gacha tốn 5000 VND. Tỉ lệ: " + sb.toString();
+                this.arrMenu.add(new MenuInfo("Quay - 5000 VND", 552));
+                this.arrMenu.add(new MenuInfo(mResources.REFUSE, 0));
+                this.openUIConfirm(npcId, null, null, -1);
+                break;
+            }
+            // Gacha thực hiện: -5000 VND, quay theo % (GACHA_IDS, GACHA_PERCENTS — tổng 100%) vào hành trang
+            case 552: {
+                Char pl = this.session.myCharz();
+                long vnd = Money.gI().getMoney(pl);
+                if (vnd < 5000) {
+                    pl.addInfo1("Không đủ 5000 VND trong tài khoản! Cần 5000 VND.");
+                    break;
+                }
+                if (pl.getEmptyBagCount() < 1) {
+                    pl.addInfo1(mResources.BAG_FULL);
+                    break;
+                }
+                int r = Util.gI().nextInt(100);
+                int cum = 0;
+                int id = GACHA_IDS[0];
+                for (int i = 0; i < GACHA_IDS.length; i++) {
+                    cum += GACHA_PERCENTS[i];
+                    if (r < cum) {
+                        id = GACHA_IDS[i];
+                        break;
+                    }
+                }
+                Money.gI().updateMoeny(pl, -5000);
+                Item item = new Item(id, false, 1, ItemOption.getOption(id, 0, 0), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
+                // ID 15, 16, 17 (Ngọc Rồng): cho giao dịch và gộp — không thêm Option 30. Các id khác: Option 30 = "Không thể giao dịch".
+                if (id != 15 && id != 16 && id != 17) {
+                    item.options.add(new ItemOption(30, 1));
+                }
+                pl.addItemBag(0, item);
+                pl.addInfo1("Bạn nhận được: " + item.template.name);
+                break;
+            }
+            case 528: {
+                this.typeInfo = -1;
+                if (this.session.myCharz().mapTemplateId == 5) {
+                    this.session.myCharz().resetMenu();
+                    this.chat = mResources.SAY_HAT_MIT_BT_AS;
+                    this.arrMenu.add(new MenuInfo(mResources.BONG_TOI_HOA, 530));
+                    this.arrMenu.add(new MenuInfo(mResources.TAY_BONG_TOI, 531));
+                    this.arrMenu.add(new MenuInfo(mResources.ANH_SANG_HOA, 532));
+                    this.arrMenu.add(new MenuInfo(mResources.TAY_ANH_SANG, 533));
+                    this.arrMenu.add(new MenuInfo(mResources.GHEP_TINH_THE, 534));
+                    this.openUIConfirm(npcId, null, null, -1);
+                }
+                break;
+            }
+
+            case 530: {
+                this.typeInfo = 530;
+                this.session.service.combine(mResources.SAY_BONG_TOI_HOA_0, mResources.SAY_BONG_TOI_HOA_1, -1);
+                break;
+            }
+            case -530: {
+                this.typeInfo = 530;
+                Combine.bongToiHoaTB(this.session.myCharz(), info.index);
+                break;
+            }
+
+            case 531: {
+                this.typeInfo = 531;
+                this.session.service.combine(mResources.SAY_TAY_BONG_TOI_0, mResources.SAY_TAY_BONG_TOI_1, -1);
+                //menu confirm tay bong toi
+                break;
+            }
+
+            case -531: {
+                //handle tay bong toi
+                Combine.tayThuocTinhTB(this.session.myCharz(), info.index, 0);
+                this.typeInfo = 531;
+                break;
+            }
+
+            case 532: {
+                //menu confirm anh sang hoa trang bi
+                this.typeInfo = 532;
+                this.session.service.combine(mResources.SAY_ANH_SANG_HOA_0, mResources.SAY_ANH_SANG_HOA_1, -1);
+                break;
+            }
+            case -532: {
+                Combine.anhSangHoaTB(this.session.myCharz(), info.index);
+                this.typeInfo = 532;
+                break;
+            }
+
+            case 533: {
+                //menu confirm tay anh sang
+                this.typeInfo = 533;
+                this.session.service.combine(mResources.SAY_TAY_ANH_SANG_0, mResources.SAY_TAY_ANH_SANG_1, -1);
+                break;
+            }
+            case -533: {
+                //handle tay anh sang
+                Combine.tayThuocTinhTB(this.session.myCharz(), info.index, 1);
+                this.typeInfo = 533;
+                break;
+            }
+
+            case 534: {
+                //menu confirm ghep tinh the
+                this.typeInfo = 534;
+                this.session.service.combine(mResources.SAY_GHEP_TINH_THE_0, mResources.SAY_GHEP_TINH_THE_1, -1);
+                break;
+            }
+            case -534: {
+                //menu confirm ghep tinh the
+                Combine.nangCapTinhTheBTAS(this.session.myCharz(), info.index);
+                this.typeInfo = 534;
+                break;
+            }
+            //noel
+            case 535: {
+                this.session.myCharz().resetMenu();
+                this.chat = mResources.SAY1_EVENT_NOEL;
+//                this.arrMenu.add(new MenuInfo(mResources.CAY_THONG_NOEL, 536));
+//                this.arrMenu.add(new MenuInfo(mResources.NGOC_RONG, 538));
+                this.arrMenu.add(new MenuInfo(mResources.CLOSE, 0));
+                this.openUIConfirm(npcId, null, null, -1);
+                break;
+            }
+            case 536: {
+                this.session.myCharz().resetMenu();
+                this.chat = mResources.SAY_CAY_THONG_NOEL;
+                this.arrMenu.add(new MenuInfo(mResources.OK, 537));
+                this.arrMenu.add(new MenuInfo(mResources.CLOSE, 0));
+                this.openUIConfirm(npcId, null, null, -1);
+                break;
+            }
+            case 537: {
+                this.session.myCharz().clientInput.openClientInput(18, mResources.INPUT_QUANTITY,
+                        new String[]{mResources.QUANTITY_KEY}, new int[]{0});
+                break;
+            }
+            case 538: {
+                this.session.myCharz().resetMenu();
+                this.chat = mResources.SAY_NGOC_RONG;
+                this.arrMenu.add(new MenuInfo(mResources.OK, 539));
+                this.arrMenu.add(new MenuInfo(mResources.CLOSE, 0));
+                this.openUIConfirm(npcId, null, null, -1);
+                break;
+            }
+            case 539: {
+                this.session.myCharz().clientInput.openClientInput(19, mResources.INPUT_QUANTITY,
+                        new String[]{mResources.QUANTITY_KEY}, new int[]{0});
+                break;
+            }
+            case 540: {
+                if (this.session.myCharz().isgiaodich) {
+                    this.session.myCharz().addInfo1(mResources.O_THE_THUC_HIEN);
+                } else if (this.session.myCharz().isSecurity) {
+                    this.session.myCharz().addInfo1(mResources.BAOVE);
+                } else {
+                    this.session.myCharz().tangmamlebac(1);
+                }
+                break;
+            }
+            case 541: {
+                if (this.session.myCharz().isgiaodich) {
+                    this.session.myCharz().addInfo1(mResources.O_THE_THUC_HIEN);
+                } else if (this.session.myCharz().isSecurity) {
+                    this.session.myCharz().addInfo1(mResources.BAOVE);
+                } else {
+                    this.session.myCharz().tangmamlevang(1);
+                }
+                break;
+            }
+                 // --------------------- đệ tử cell nhí-------------------
+            case 542: {
+                if (this.session.myCharz().isgiaodich) {
+                    this.session.myCharz().addInfo1(mResources.O_THE_THUC_HIEN);
+                } else if (this.session.myCharz().isSecurity) {
+                    this.session.myCharz().addInfo1(mResources.BAOVE);
+                } else if (this.session.myCharz().arrItem != null && this.session.myCharz().arrItem.length == 1
+                        && this.session.myCharz().arrItem[0].template.id == 2043) {
+                    if (this.session.myCharz().myPetz() != null && this.session.myCharz().myPetz().petStatus == 4) {
+                        this.session.myCharz().addInfo1(mResources.NO_FINNISH);
+                    } else {
+                        this.session.myCharz().useItemBag(this.session.myCharz().arrItem[0].indexUI, 1);
+                        Player.CellnhiInfo(this.session.myCharz(), 0);
+                        this.session.myCharz().session.service.chat(this.session.myCharz().myPetz().charID,
+                                mResources.XIN_HAY_NHAN);
+                        this.session.myCharz().arrItem = null;
+                    }
+                }
+                this.session.myCharz().resetMenu();
+                break;
+            }
+            case 543: {
+                if (this.session.myCharz().isgiaodich) {
+                    this.session.myCharz().addInfo1(mResources.O_THE_THUC_HIEN);
+                } else if (this.session.myCharz().isSecurity) {
+                    this.session.myCharz().addInfo1(mResources.BAOVE);
+                } else if (this.session.myCharz().arrItem != null && this.session.myCharz().arrItem.length == 1
+                       && this.session.myCharz().arrItem[0].template.id == 2043) {
+                    if (this.session.myCharz().myPetz() != null && this.session.myCharz().myPetz().petStatus == 4) {
+                        this.session.myCharz().addInfo1(mResources.NO_FINNISH);
+                    } else {
+                        this.session.myCharz().useItemBag(this.session.myCharz().arrItem[0].indexUI, 1);
+                        Player.CellnhiInfo(this.session.myCharz(), 1);
+                        this.session.myCharz().session.service.chat(this.session.myCharz().myPetz().charID,
+                                mResources.XIN_HAY_NHAN);
+                        this.session.myCharz().arrItem = null;
+                    }
+                }
+                this.session.myCharz().resetMenu();
+               break;
+            }
+            case 544: {
+                if (this.session.myCharz().isgiaodich) {
+                    this.session.myCharz().addInfo1(mResources.O_THE_THUC_HIEN);
+                } else if (this.session.myCharz().isSecurity) {
+                    this.session.myCharz().addInfo1(mResources.BAOVE);
+                } else if (this.session.myCharz().arrItem != null && this.session.myCharz().arrItem.length == 1
+                        && this.session.myCharz().arrItem[0].template.id == 2043) {
+                    if (this.session.myCharz().myPetz() != null && this.session.myCharz().myPetz().petStatus == 4) {
+                        this.session.myCharz().addInfo1(mResources.NO_FINNISH);
+                    } else {
+                       this.session.myCharz().useItemBag(this.session.myCharz().arrItem[0].indexUI, 1);
+                       Player.CellnhiInfo(this.session.myCharz(), 2);
+                       this.session.myCharz().session.service.chat(this.session.myCharz().myPetz().charID,
+                               mResources.XIN_HAY_NHAN);
+                        this.session.myCharz().arrItem = null;
+                    }
+                }
+                this.session.myCharz().resetMenu();
+                break;
+            }
+          case 20441: {
+    if (this.session.myCharz().arrItem != null && this.session.myCharz().arrItem.length == 1
+            && this.session.myCharz().arrItem[0].template.id == 2044) {
+
+        int r = Util.gI().nextInt(100); // 0..99
+
+        // nếu bạn muốn TRƯỢT vẫn mất trứng: trừ luôn ở đây
+        this.session.myCharz().useItemBag(this.session.myCharz().arrItem[0].indexUI, 1);
+
+        if (r < 50) { // 50%
+            // y hệt logic cũ của 414
+            Player.petInfo(this.session.myCharz(), 0);
+            this.session.myCharz().session.service.chat(this.session.myCharz().myPetz().charID, mResources.XIN_HAY_NHAN);
+
+        } else if (r < 70) { // 20%
+            // y hệt logic cũ của 417
+            Player.mabuInfo(this.session.myCharz());
+            this.session.myCharz().session.service.chat(this.session.myCharz().myPetz().charID, mResources.XIN_HAY_NHAN);
+
+        } else if (r < 80) { // 10%
+            // y hệt logic cũ của 542
+            Player.CellnhiInfo(this.session.myCharz(), 0);
+            this.session.myCharz().session.service.chat(this.session.myCharz().myPetz().charID, mResources.XIN_HAY_NHAN);
+
+        } else {
+            // 20% còn lại: để đó (không làm gì)
+            // nếu muốn báo trượt thì mở dòng dưới:
+            // this.session.service.startOKDlg("Trượt (không nhận được đệ).");
+        }
+
+        this.session.myCharz().arrItem = null;
+    }
+    this.session.myCharz().resetMenu();
+    break;
+}
+          case 20442: {
+    if (this.session.myCharz().arrItem != null && this.session.myCharz().arrItem.length == 1
+            && this.session.myCharz().arrItem[0].template.id == 2044) {
+
+        int r = Util.gI().nextInt(100);
+
+        this.session.myCharz().useItemBag(this.session.myCharz().arrItem[0].indexUI, 1);
+
+        if (r < 50) {
+            Player.petInfo(this.session.myCharz(), 1);
+            this.session.myCharz().session.service.chat(this.session.myCharz().myPetz().charID, mResources.XIN_HAY_NHAN);
+
+        } else if (r < 70) {
+            Player.mabuInfo(this.session.myCharz());
+            this.session.myCharz().session.service.chat(this.session.myCharz().myPetz().charID, mResources.XIN_HAY_NHAN);
+
+        } else if (r < 80) {
+            Player.CellnhiInfo(this.session.myCharz(), 1);
+            this.session.myCharz().session.service.chat(this.session.myCharz().myPetz().charID, mResources.XIN_HAY_NHAN);
+
+        } else {
+            // để đó
+        }
+
+        this.session.myCharz().arrItem = null;
+    }
+    this.session.myCharz().resetMenu();
+    break;
+}
+          case 20443: {
+    if (this.session.myCharz().arrItem != null && this.session.myCharz().arrItem.length == 1
+            && this.session.myCharz().arrItem[0].template.id == 2044) {
+
+        int r = Util.gI().nextInt(100);
+
+        this.session.myCharz().useItemBag(this.session.myCharz().arrItem[0].indexUI, 1);
+
+        if (r < 50) {
+            Player.petInfo(this.session.myCharz(), 2);
+            this.session.myCharz().session.service.chat(this.session.myCharz().myPetz().charID, mResources.XIN_HAY_NHAN);
+
+        } else if (r < 70) {
+            Player.mabuInfo(this.session.myCharz());
+            this.session.myCharz().session.service.chat(this.session.myCharz().myPetz().charID, mResources.XIN_HAY_NHAN);
+
+        } else if (r < 80) {
+            Player.CellnhiInfo(this.session.myCharz(), 2);
+            this.session.myCharz().session.service.chat(this.session.myCharz().myPetz().charID, mResources.XIN_HAY_NHAN);
+
+        } else {
+            // để đó
+        }
+
+        this.session.myCharz().arrItem = null;
+    }
+    this.session.myCharz().resetMenu();
+    break;
+}
+            
             case 989: {
                 this.session.myCharz().shopId = 32;
                 this.session.service.openShop(Shop.shops.get(this.session.myCharz().shopId));
@@ -6383,7 +7347,603 @@ public class MenuBoard {
                 break;
             }
 
+            // ĐẠO LỮ cases 2070-2081 → tách sang handleDaoLuMenu() tránh "code too large"
+            // [FIX] Truyền this.typeInfo (= info.type) thay vì info.index vì MenuInfo(str, type)
+            // chỉ set field type, còn index = 0 (default)
+            case 2070: case 2071: case 2072: case 2073: case 2074:
+            case 2075: case 2076: case 2077: case 2078: case 2079:
+            case 2080: case 2081: {
+                try {
+                    handleDaoLuMenu(this.typeInfo, npcId);
+                } catch (Exception eDL) {
+                    System.out.println("[DaoLu] Lỗi handleDaoLuMenu caseId=" + this.typeInfo + ": " + eDL.getMessage());
+                    eDL.printStackTrace();
+                    if (this.session.myCharz() != null) {
+                        this.session.myCharz().addInfo1("|1|Lỗi hệ thống Đạo Lữ! " + eDL.getMessage());
+                    }
+                }
+                break;
+            }
+
+            // NPC Trai Đẹp - Mở shop Đan Đạo Lữ
+            case 2090: {
+                this.session.myCharz().shopId = 45;
+                this.session.service.openShop(Shop.shops.get(this.session.myCharz().shopId));
+                break;
+            }
+    
+            // NPC Trai Đẹp - Mua Hồn Đạo Lữ bằng VND
+            case 2091: {
+                Char me = this.session.myCharz();
+                long cost = 100000;
+                try {
+                    long vnd = Money.gI().getMoney(me);
+                    if (vnd < cost) {
+                        me.addInfo1(String.format(mResources.MONEY_NOT, Util.gI().getFormatNumber(cost - vnd)));
+                    } else {
+                        // Trừ VND
+                        Money.gI().updateMoeny(me, -cost);
+                        // Tạo item Hồn Đạo Lữ (ID 2070) khóa giao dịch + thêm vào hành trang
+                        Item honDaoLu = new Item(ConstDaoLu.ITEM_HON_DAO_LU, false, 1,
+                                ItemOption.getOption(ConstDaoLu.ITEM_HON_DAO_LU, 0, -1),
+                                mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
+                        honDaoLu.options.add(new ItemOption(30, 0));
+                        boolean added = me.addItemBag(0, honDaoLu);
+                        if (added) {
+                            me.addInfo1("|2|Mua thành công Hồn Đạo Lữ! Trừ 100,000 VND.");
+                        } else {
+                            // Hành trang đầy → hoàn tiền
+                            Money.gI().updateMoeny(me, cost);
+                            me.addInfo1("|1|Hành trang đầy! Không thể mua.");
+                        }
+                    }
+                } catch (Exception e) {
+                    me.addInfo1("|1|Lỗi hệ thống! Thử lại sau.");
+                    System.out.println("[TraiDep] Lỗi mua Hồn Đạo Lữ: " + e.getMessage());
+                }
+                break;
+            }
+            // NPC Trai Đẹp - Đổi điểm lấy item (khóa giao dịch)
+            case 2092:
+                handleDoiDiemLayItem(4, 457, 10);
+                break;
+            case 2093:
+                handleDoiDiemLayItem(5, 2044, 1);
+                break;
+            case 2094:
+                handleDoiDiemLayItem(8, 2045, 1);
+                break;
+            case 2095:
+                handleDiemDanhNhanQua();
+                break;
+                case 2100:
+                handleBattlePassClaim();
+                break;
+            case 2102:
+                handleBattlePassBuyPro();
+                break;
+            case 2103:
+                handleBattlePassBuyMaster();
+                break;
+            case 2104:
+                handleBattlePassBuyPoints();
+                break;
+            case 2105:
+                handleBattlePassShowRewards();
+                break;
         }
         info.clean();
+    }
+
+    /** Số ô hành trang tối thiểu cần trống để nhận quà điểm danh theo ngày (1-7). */
+    private int diemDanhRequiredSlots(int day) {
+        switch (day) {
+            case 1: return 3;  // 1901x2(1 ô), 1902x2(1 ô), 2044x1(1 ô)
+            case 2: return 4;  // 1901x2, 1902x2, 1903x2, 457x20 – mỗi 1 ô
+            case 3: return 4;  // 381,382,383,384 x30 – 4 ô
+            case 4: return 4;  // 1150,1151,1152,1153 x20 – 4 ô
+            case 5: return 5;  // 220,221,222,223,224 x50 – 5 ô
+            case 6: return 2;  // 1988x100, 457x100 – 2 ô
+            case 7: return 9;  // 753x3, 752x3 + 925-931 x2 mỗi loại – 2+7 ô
+            default: return 9;
+        }
+    }
+
+    /** Thêm 1 item vào túi với khóa giao dịch (option 30 = 1). Trả về true nếu thêm được. */
+    private boolean addDiemDanhItem(dragon.object.Char me, int itemId, int quantity) {
+        dragon.object.Item item = new dragon.object.Item(itemId, false, quantity,
+                dragon.object.ItemOption.getOption(itemId, 0, -1),
+                mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
+        item.options.add(new dragon.object.ItemOption(30, 1)); // 30 = khóa giao dịch
+        return me.addItemBag(0, item);
+    }
+
+    /** [Điểm danh] Nhận quà chuỗi đăng nhập 7 ngày theo bảng quà; check đúng ngày và đủ chỗ hành trang. */
+    private void handleDiemDanhNhanQua() {
+        dragon.object.Char me = this.session.myCharz();
+        if (me.isgiaodich) {
+            me.addInfo1(mResources.O_THE_THUC_HIEN);
+            return;
+        }
+        if (me.isSecurity) {
+            me.addInfo1(mResources.BAOVE);
+            return;
+        }
+        java.util.Calendar cal = java.util.Calendar.getInstance();
+        String today = String.format("%04d-%02d-%02d", cal.get(java.util.Calendar.YEAR), cal.get(java.util.Calendar.MONTH) + 1, cal.get(java.util.Calendar.DAY_OF_MONTH));
+        cal.add(java.util.Calendar.DAY_OF_MONTH, -1);
+        String yesterday = String.format("%04d-%02d-%02d", cal.get(java.util.Calendar.YEAR), cal.get(java.util.Calendar.MONTH) + 1, cal.get(java.util.Calendar.DAY_OF_MONTH));
+        String last = me.loginStreakLastDate != null ? me.loginStreakLastDate : "";
+        int streak = me.loginStreakDays;
+        if (last.equals(today)) {
+            me.addInfo1("|0|Bạn đã nhận quà điểm danh hôm nay rồi. Mai quay lại nhé!");
+            return;
+        }
+        int newStreak;
+        if (last.equals(yesterday)) {
+            newStreak = (streak >= 7) ? 1 : (streak + 1);
+        } else {
+            newStreak = 1;
+        }
+        int needSlots = diemDanhRequiredSlots(newStreak);
+        if (me.getEmptyBagCount() < needSlots) {
+            me.addInfo1("|1|Hành trang cần ít nhất " + needSlots + " ô trống để nhận quà ngày " + newStreak + ". Hiện có: " + me.getEmptyBagCount() + " ô.");
+            return;
+        }
+        boolean ok = true;
+        switch (newStreak) {
+            case 1:
+                ok = addDiemDanhItem(me, 1901, 2) && addDiemDanhItem(me, 1902, 2) && addDiemDanhItem(me, 2044, 1);
+                break;
+            case 2:
+                ok = addDiemDanhItem(me, 1901, 2) && addDiemDanhItem(me, 1902, 2) && addDiemDanhItem(me, 1903, 2) && addDiemDanhItem(me, 457, 20);
+                break;
+            case 3:
+                ok = addDiemDanhItem(me, 381, 30) && addDiemDanhItem(me, 382, 30) && addDiemDanhItem(me, 383, 30) && addDiemDanhItem(me, 384, 30);
+                break;
+            case 4:
+                ok = addDiemDanhItem(me, 1150, 20) && addDiemDanhItem(me, 1151, 20) && addDiemDanhItem(me, 1152, 20) && addDiemDanhItem(me, 1153, 20);
+                break;
+            case 5:
+                ok = addDiemDanhItem(me, 220, 50) && addDiemDanhItem(me, 221, 50) && addDiemDanhItem(me, 222, 50) && addDiemDanhItem(me, 223, 50) && addDiemDanhItem(me, 224, 50);
+                break;
+            case 6:
+                ok = addDiemDanhItem(me, 1988, 100) && addDiemDanhItem(me, 457, 100);
+                break;
+            case 7:
+                ok = addDiemDanhItem(me, 753, 3) && addDiemDanhItem(me, 752, 3)
+                        && addDiemDanhItem(me, 925, 2) && addDiemDanhItem(me, 926, 2) && addDiemDanhItem(me, 927, 2) && addDiemDanhItem(me, 928, 2)
+                        && addDiemDanhItem(me, 929, 2) && addDiemDanhItem(me, 930, 2) && addDiemDanhItem(me, 931, 2);
+                break;
+        }
+        if (ok) {
+            me.loginStreakLastDate = today;
+            me.loginStreakDays = newStreak;
+            this.session.saveLoginStreak();
+            me.addInfo1("|2|Chúc mừng! Nhận quà điểm danh ngày " + newStreak + "/7 thành công." + (newStreak >= 7 ? " Chuỗi hoàn thành, ngày mai bắt đầu lại từ ngày 1." : ""));
+        } else {
+            me.addInfo1("|1|Hành trang đầy! Không thể nhận. Cần ít nhất " + needSlots + " ô trống.");
+        }
+    }
+
+    /** Đổi điểm online (onlinePoints) lấy item có khóa giao dịch; dùng cho case 2092, 2093, 2094. Trùng với số điểm hiện có trên box NPC. */
+    private void handleDoiDiemLayItem(int pointCost, int itemId, int quantity) {
+        Char me = this.session.myCharz();
+        if (me.isgiaodich) {
+            me.addInfo1(mResources.O_THE_THUC_HIEN);
+            return;
+        }
+        if (me.isSecurity) {
+            me.addInfo1(mResources.BAOVE);
+            return;
+        }
+        if (me.getEmptyBagCount() < 1) {
+            me.addInfo1(mResources.BAG_FULL);
+            return;
+        }
+        if (me.onlinePoints < pointCost) {
+            me.addInfo1("Cần " + pointCost + " điểm thời gian. Bạn đang có: " + me.onlinePoints);
+            return;
+        }
+        me.onlinePoints -= pointCost;
+        Item item = new Item(itemId, false, quantity,
+                ItemOption.getOption(itemId, 0, -1),
+                mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
+        item.options.add(new ItemOption(30, 0));
+        if (me.addItemBag(0, item)) {
+            me.addInfo1("|2|Đổi thành công " + (quantity > 1 ? quantity + " vật phẩm" : "vật phẩm") + "! Trừ " + pointCost + " điểm.");
+        } else {
+            me.onlinePoints += pointCost;
+            me.addInfo1("|1|Hành trang đầy! Không thể nhận.");
+        }
+    }
+    /** [Battle Pass] Nhận quà từ cấp (lastClaimLevel+1) đến level hiện tại. */
+    private void handleBattlePassClaim() {
+        Char me = this.session.myCharz();
+        if (me.isgiaodich) {
+            me.addInfo1(mResources.O_THE_THUC_HIEN);
+            return;
+        }
+        if (me.isSecurity) {
+            me.addInfo1(mResources.BAOVE);
+            return;
+        }
+        String seasonId = SeasonPass.getCurrentSeasonId();
+        SeasonPass.SeasonPassData d = SeasonPass.gI().getOrCreate(me.playerId, seasonId);
+        if (d.lastClaimLevel >= d.level) {
+            me.addInfo1("|0|Không có quà chưa nhận. Cấp hiện tại: " + d.level + ".");
+            return;
+        }
+        int fromLv = d.lastClaimLevel + 1;
+        int toLv = d.level;
+        int needSlots = toLv - d.lastClaimLevel;
+        if (me.getEmptyBagCount() < needSlots) {
+            me.addInfo1("|1|Cần ít nhất " + needSlots + " ô trống hành trang để nhận quà.");
+            return;
+        }
+        if (SeasonPass.gI().claimRewards(me, d)) {
+            me.addInfo1("|2|Nhận quà Hành trình mùa thành công! (cấp " + fromLv + " → " + toLv + ")");
+        } else {
+            me.addInfo1("|1|Hành trang đầy! Không thể nhận quà.");
+        }
+    }
+
+    /** [Battle Pass] Mua Pro 150.000 VND. */
+    private void handleBattlePassBuyPro() {
+        Char me = this.session.myCharz();
+        if (me.isgiaodich) {
+            me.addInfo1(mResources.O_THE_THUC_HIEN);
+            return;
+        }
+        if (me.isSecurity) {
+            me.addInfo1(mResources.BAOVE);
+            return;
+        }
+        String msg = SeasonPass.gI().buyPro(me);
+        me.addInfo1(msg);
+    }
+
+    /** [Battle Pass] Mua Master 200.000 VND. */
+    private void handleBattlePassBuyMaster() {
+        Char me = this.session.myCharz();
+        if (me.isgiaodich) {
+            me.addInfo1(mResources.O_THE_THUC_HIEN);
+            return;
+        }
+        if (me.isSecurity) {
+            me.addInfo1(mResources.BAOVE);
+            return;
+        }
+        String msg = SeasonPass.gI().buyMaster(me);
+        me.addInfo1(msg);
+    }
+
+    /** [Battle Pass] Mua điểm: 100 thỏi vàng (457) = 10 điểm. */
+    private void handleBattlePassBuyPoints() {
+        Char me = this.session.myCharz();
+        if (me.isgiaodich) {
+            me.addInfo1(mResources.O_THE_THUC_HIEN);
+            return;
+        }
+        if (me.isSecurity) {
+            me.addInfo1(mResources.BAOVE);
+            return;
+        }
+        String msg = SeasonPass.gI().buyPointsWithGold(me);
+        me.addInfo1(msg);
+    }
+
+    /** [Battle Pass] Hiển thị bảng quà theo cấp (1–50). */
+    private void handleBattlePassShowRewards() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("|7|=== BẢNG QUÀ HÀNH TRÌNH MÙA THEO CẤP ===\n");
+        sb.append("|0|Cấp 1–20: Free & VIP đều nhận. Cấp 21–50: Chỉ Pro/Master.\n|6|--------------------------------\n");
+        for (int line = 0; line < 50; line += 5) {
+            boolean first = true;
+            for (int i = 0; i < 5; i++) {
+                int lv = line + i + 1;
+                if (lv > 50) break;
+                int[] r = SeasonPass.gI().getRewardForLevel(lv);
+                if (r != null && r[0] != 0) {
+                    String name = "";
+                    try {
+                        name = dragon.template.ItemTemplate.get((short) r[0]).name;
+                    } catch (Exception e) {
+                        name = "ID " + r[0];
+                    }
+                    if (!first) sb.append(" | ");
+                    sb.append("|0|Cấp ").append(lv).append(": ").append(name).append(" x").append(r[1]);
+                    first = false;
+                }
+            }
+            if (!first) sb.append("\n");
+        }
+        sb.append("|6|--------------------------------\n|0|Đóng để quay lại.");
+        this.session.service.openUISay(this.npcId, sb.toString(), -1);
+    }
+    /**
+     * Mở menu Đạo Lữ từ bên ngoài (ví dụ: chat command "dl").
+     * Public wrapper để ZoneMap.chat() gọi được mà không cần tự build menu.
+     */
+    public void openDaoLuMenu() {
+        try {
+            handleDaoLuMenu(2070, 5);
+        } catch (Exception e) {
+            System.out.println("[DaoLu] Lỗi openDaoLuMenu: " + e.getMessage());
+            if (this.session.myCharz() != null) {
+                this.session.myCharz().addInfo1("|1|Lỗi mở menu Đạo Lữ!");
+            }
+        }
+    }
+
+    /**
+     * Xử lý menu Đạo Lữ - tách riêng để method openUIConfirm không vượt 64KB bytecode.
+     */
+    private void handleDaoLuMenu(int caseId, int npcId) {
+        switch (caseId) {
+            case 2070: {
+                Char me = this.session.myCharz();
+                DaoLu dl = me.myDaoLu;
+                me.resetMenu();
+                if (dl == null) {
+                    this.chat = "Bạn chưa có Đạo Lữ.\n"
+                            + "|7|Cần 1 item \"Hồn Đạo Lữ\" (ID " + ConstDaoLu.ITEM_HON_DAO_LU + ") để chiêu mộ.\n"
+                            + "|0|Bạn có muốn tạo Đạo Lữ không?";
+                    this.arrMenu.add(new MenuInfo("Tạo Đạo Lữ", 2080));
+                    this.arrMenu.add(new MenuInfo("Đóng", 0));
+                    this.openUIConfirm(npcId, this.chat, this.arrMenu, -1);
+                } else {
+                    int[] buffPct = dl.getBuffPercentDetail();
+                    int[] buffReal = dl.calcBuff(me.cHPFull, me.cMPFull, me.cDamFull);
+                    this.chat = "|7|=== ĐẠO LỮ THÔNG TIN ===\n"
+                            + "|2|Tên: " + dl.nameDaoLu + "\n"
+                            + "|5|Phẩm: " + ConstDaoLu.getTenPham(dl.typeDaoLu) + "\n"
+                            + "|0|Cảnh Giới: " + ConstDaoLu.getFullCapBac(dl.pointCapCanhGioi, dl.pointCapTinh) + "\n"
+                            + "|8|Tu Vi: " + dl.pointTuVi + "/" + ConstDaoLu.MAX_TU_VI + "\n"
+                            + "|6|Trạng Thái: " + dl.getTextStatusInfo() + "\n"
+                            + "|7|--------------------\n"
+                            + "|3|Buff Sư Phụ: HP +" + buffPct[0] + "% | KI +" + buffPct[1] + "% | SD +" + buffPct[2] + "%\n"
+                            + "|2|Cộng: HP +" + buffReal[0] + " | KI +" + buffReal[1] + " | SD +" + buffReal[2];
+                    this.arrMenu.add(new MenuInfo("Đi Theo", 2071));
+                    this.arrMenu.add(new MenuInfo("Tu Luyện", 2072));
+                    this.arrMenu.add(new MenuInfo("Về Nhà", 2073));
+                    this.arrMenu.add(new MenuInfo("Thăng Tinh", 2074));
+                    this.arrMenu.add(new MenuInfo("Thăng Cảnh Giới", 2075));
+                    if (dl.pointCapCanhGioi == ConstDaoLu.MAX_CAP_BAC - 1) {
+                        this.arrMenu.add(new MenuInfo("Đột Phá Đấu Đế", 2076));
+                    }
+                    this.arrMenu.add(new MenuInfo("Đóng", 0));
+                    this.openUIConfirm(npcId, this.chat, this.arrMenu, -1);
+                }
+                break;
+            }
+            case 2071: {
+                DaoLu dl = this.session.myCharz().myDaoLu;
+                if (dl != null) {
+                    dl.changeStatus(ConstDaoLu.STATUS_FOLLOW);
+                    this.session.service.addInfo("|2|Đạo Lữ đang đi theo bạn!");
+                } else {
+                    this.session.service.addInfo("|1|Bạn chưa có Đạo Lữ!");
+                }
+                break;
+            }
+            case 2072: {
+                DaoLu dl = this.session.myCharz().myDaoLu;
+                if (dl != null) {
+                    dl.changeStatus(ConstDaoLu.STATUS_ATTACK);
+                    this.session.service.addInfo("|2|Đạo Lữ đang tu luyện!");
+                } else {
+                    this.session.service.addInfo("|1|Bạn chưa có Đạo Lữ!");
+                }
+                break;
+            }
+            case 2073: {
+                DaoLu dl = this.session.myCharz().myDaoLu;
+                if (dl != null) {
+                    dl.changeStatus(ConstDaoLu.STATUS_GOHOME);
+                    this.session.service.addInfo("|2|Đạo Lữ đang về nhà!");
+                } else {
+                    this.session.service.addInfo("|1|Bạn chưa có Đạo Lữ!");
+                }
+                break;
+            }
+            case 2074: {
+                Char me = this.session.myCharz();
+                DaoLu dl = me.myDaoLu;
+                if (dl == null) { break; }
+                me.resetMenu();
+                int tiLe = ConstDaoLu.getTiLeThangTinh(dl.pointCapCanhGioi, dl.pointCapTinh);
+                this.chat = "|7|=== THĂNG TINH ===\n"
+                        + "|0|Cảnh Giới: " + ConstDaoLu.getFullCapBac(dl.pointCapCanhGioi, dl.pointCapTinh) + "\n"
+                        + "|8|Tu Vi: " + dl.pointTuVi + "/" + ConstDaoLu.MAX_TU_VI + "\n"
+                        + "|5|Tỷ lệ thành công: " + tiLe + "%\n"
+                        + "|1|Yêu cầu: Tu Vi >= " + ConstDaoLu.MIN_TU_VI_THANG_TINH + "\n"
+                        + "|7|Tiêu hao: TOÀN BỘ Tu Vi\n"
+                        + "|1|Thất bại: Rớt hết Tu Vi";
+                this.arrMenu.add(new MenuInfo("Xác Nhận Thăng Tinh", 2077));
+                this.arrMenu.add(new MenuInfo("Hủy", 0));
+                this.openUIConfirm(npcId, this.chat, this.arrMenu, -1);
+                break;
+            }
+            case 2075: {
+                Char me = this.session.myCharz();
+                DaoLu dl = me.myDaoLu;
+                if (dl == null) { break; }
+                me.resetMenu();
+                int tiLeCG = ConstDaoLu.getTiLeThangCanhGioi(dl.pointCapCanhGioi);
+                int soTinhMat = ConstDaoLu.getSoTinhMatKhiThatBai(dl.pointCapCanhGioi);
+                this.chat = "|7|=== THĂNG CẢNH GIỚI ===\n"
+                        + "|0|Hiện tại: " + ConstDaoLu.getFullCapBac(dl.pointCapCanhGioi, dl.pointCapTinh) + "\n"
+                        + "|2|Thăng lên: " + ConstDaoLu.getTenCanhGioi(dl.pointCapCanhGioi + 1) + "\n"
+                        + "|5|Tỷ lệ: " + tiLeCG + "%\n"
+                        + "|1|Yêu cầu: Tu Vi=" + ConstDaoLu.MAX_TU_VI + " + Max Tinh\n"
+                        + "|1|Thất bại: -" + soTinhMat + " tinh + chết";
+                this.arrMenu.add(new MenuInfo("Xác Nhận Thăng Bậc", 2078));
+                this.arrMenu.add(new MenuInfo("Hủy", 0));
+                this.openUIConfirm(npcId, this.chat, this.arrMenu, -1);
+                break;
+            }
+            case 2076: {
+                Char me = this.session.myCharz();
+                DaoLu dl = me.myDaoLu;
+                if (dl == null || dl.pointCapCanhGioi != ConstDaoLu.MAX_CAP_BAC - 1) { break; }
+                me.resetMenu();
+                String txtDauDe = "|7|=== ĐỘT PHÁ ĐẤU ĐẾ ===\n"
+                        + "|1|CẢNH BÁO: Đột phá cuối cùng!\n"
+                        + "|0|Nguyên liệu cần:\n";
+                for (int i = 0; i < ConstDaoLu.ITEM_DAN_DUOC.length; i++) {
+                    txtDauDe += "|8| Dan #" + (i + 1) + " (ID " + ConstDaoLu.ITEM_DAN_DUOC[i] + "): " + ConstDaoLu.SO_LUONG_DAN_CAN + "\n";
+                }
+                txtDauDe += "|6| Đà Xá Cổ Đế (ID " + ConstDaoLu.ITEM_DA_XA_CO_DE + "): " + ConstDaoLu.SO_LUONG_DA_XA_CAN + "\n"
+                        + "|2|Tỷ lệ: 100% nếu đủ liệu";
+                this.chat = txtDauDe;
+                this.arrMenu.add(new MenuInfo("Đột Phá!", 2079));
+                this.arrMenu.add(new MenuInfo("Hủy", 0));
+                this.openUIConfirm(npcId, this.chat, this.arrMenu, -1);
+                break;
+            }
+            case 2077: {
+                Char me = this.session.myCharz();
+                DaoLu dl = me.myDaoLu;
+                if (dl == null) { break; }
+                if (dl.pointTuVi < ConstDaoLu.MIN_TU_VI_THANG_TINH) {
+                    me.addInfo1("|1|Tu Vi chưa đủ " + ConstDaoLu.MIN_TU_VI_THANG_TINH);
+                    break;
+                }
+                int maxT = ConstDaoLu.getMaxTinh(dl.pointCapCanhGioi);
+                if (dl.pointCapTinh >= maxT) {
+                    me.addInfo1("|1|Đã max tinh! Hãy thăng cảnh giới.");
+                    break;
+                }
+                boolean ok = dl.thangTinh();
+                if (ok) {
+                    me.addInfo1("|2|Thăng tinh OK! " + ConstDaoLu.getFullCapBac(dl.pointCapCanhGioi, dl.pointCapTinh));
+                    me.updateAll();
+                } else {
+                    me.addInfo1("|1|Thăng tinh THẤT BẠI! Rớt hết Tu Vi.");
+                }
+                break;
+            }
+            case 2078: {
+                Char me = this.session.myCharz();
+                DaoLu dl = me.myDaoLu;
+                if (dl == null) { break; }
+                if (dl.pointTuVi < ConstDaoLu.MAX_TU_VI) {
+                    me.addInfo1("|1|Tu Vi chưa max (" + ConstDaoLu.MAX_TU_VI + ")");
+                    break;
+                }
+                int maxTinh = ConstDaoLu.getMaxTinh(dl.pointCapCanhGioi);
+                if (dl.pointCapTinh < maxTinh) {
+                    me.addInfo1("|1|Chưa max tinh (" + dl.pointCapTinh + "/" + maxTinh + ")");
+                    break;
+                }
+                if (dl.pointCapCanhGioi >= ConstDaoLu.MAX_CAP_BAC - 1) {
+                    me.addInfo1("|1|Dùng Đột Phá Đấu Đế!");
+                    break;
+                }
+                boolean okCG = dl.thangCanhGioi();
+                if (okCG) {
+                    if (dl.pointCapCanhGioi >= 5) {
+                        for (Session_ME conn : Server.gI().connList) {
+                            if (conn != null && conn.myCharz() != null) {
+                                conn.service.chatTHEGIOI("",
+                                        me.cName + " đã thăng " + ConstDaoLu.getTenCanhGioi(dl.pointCapCanhGioi) + "!",
+                                        null, 0);
+                            }
+                        }
+                    }
+                    me.addInfo1("|2|Thăng bậc OK! " + ConstDaoLu.getFullCapBac(dl.pointCapCanhGioi, dl.pointCapTinh));
+                    me.updateAll();
+                } else {
+                    int soMat = ConstDaoLu.getSoTinhMatKhiThatBai(dl.pointCapCanhGioi);
+                    me.addInfo1("|1|Thăng bậc THẤT BẠI! -" + soMat + " tinh, Đạo Lữ ngã...");
+                }
+                break;
+            }
+            case 2079: {
+                Char me = this.session.myCharz();
+                DaoLu dl = me.myDaoLu;
+                if (dl == null || dl.pointCapCanhGioi != ConstDaoLu.MAX_CAP_BAC - 1) { break; }
+                boolean duNguyenLieu = true;
+                for (int i = 0; i < ConstDaoLu.ITEM_DAN_DUOC.length; i++) {
+                    int itemId = ConstDaoLu.ITEM_DAN_DUOC[i];
+                    int cnt = me.getItemBagQuantityById(itemId);
+                    if (cnt < ConstDaoLu.SO_LUONG_DAN_CAN) {
+                        me.addInfo1("|1|Thiếu Đan #" + (i + 1) + ": cần " + ConstDaoLu.SO_LUONG_DAN_CAN + ", có " + cnt);
+                        duNguyenLieu = false;
+                        break;
+                    }
+                }
+                if (!duNguyenLieu) { break; }
+                int cntDaXa = me.getItemBagQuantityById(ConstDaoLu.ITEM_DA_XA_CO_DE);
+                if (cntDaXa < ConstDaoLu.SO_LUONG_DA_XA_CAN) {
+                    me.addInfo1("|1|Thiếu Đà Xá: cần " + ConstDaoLu.SO_LUONG_DA_XA_CAN + ", có " + cntDaXa);
+                    break;
+                }
+                for (int i = 0; i < ConstDaoLu.ITEM_DAN_DUOC.length; i++) {
+                    me.removeItemBagByTemplateId(ConstDaoLu.ITEM_DAN_DUOC[i], ConstDaoLu.SO_LUONG_DAN_CAN);
+                }
+                me.removeItemBagByTemplateId(ConstDaoLu.ITEM_DA_XA_CO_DE, ConstDaoLu.SO_LUONG_DA_XA_CAN);
+                dl.thangDauDe();
+                dl.effDauDeXuatHien();
+                me.addInfo1("|7|=== ĐẤU ĐẾ XUẤT HIỆN ===\n|2|Đạo Lữ đã đạt đỉnh cao!");
+                me.updateAll();
+                break;
+            }
+            case 2080: {
+                Char me = this.session.myCharz();
+                me.resetMenu();
+                if (me.myDaoLu != null) {
+                    String tenPham = ConstDaoLu.getTenPham(me.myDaoLu.typeDaoLu);
+                    this.chat = "|1|Bạn đang có Đạo Lữ |7|" + tenPham + "|0|\n"
+                            + "Dùng Hồn Đạo Lữ sẽ |1|XÓA Đạo Lữ cũ|0| và tạo mới!\n"
+                            + "|5|Tỷ lệ phẩm: 60% Nhất, 30% Nhị, 10% Tam\n"
+                            + "|1|Mất toàn bộ tiến trình tu luyện!\n"
+                            + "|0|Xác nhận đổi?";
+                } else {
+                    this.chat = "|0|Tạo Đạo Lữ\n"
+                            + "|7|Cần item Hồn Đạo Lữ (ID " + ConstDaoLu.ITEM_HON_DAO_LU + ")\n"
+                            + "|5|Tỷ lệ phẩm: 60% Nhất, 30% Nhị, 10% Tam\n"
+                            + "|2|Tam Phẩm mạnh nhất, Nhất Phẩm yếu nhất\n"
+                            + "|0|Xác nhận tạo?";
+                }
+                this.arrMenu.add(new MenuInfo("Xác Nhận", 2081));
+                this.arrMenu.add(new MenuInfo("Hủy", 0));
+                this.openUIConfirm(npcId, this.chat, this.arrMenu, -1);
+                break;
+            }
+            case 2081: {
+                Char me = this.session.myCharz();
+                if (!me.isHaveItemBag(ConstDaoLu.ITEM_HON_DAO_LU)) {
+                    me.addInfo1("|1|Không có Hồn Đạo Lữ!");
+                    break;
+                }
+                // Xóa Đạo Lữ cũ nếu có
+                if (me.myDaoLu != null) {
+                    me.myDaoLu.dispose();
+                    me.myDaoLu = null;
+                }
+                // Tiêu hao 1 Hồn Đạo Lữ
+                me.removeItemBagByTemplateId(ConstDaoLu.ITEM_HON_DAO_LU, 1);
+                // Random phẩm: 10% Tam, 30% Nhị, 60% Nhất
+                byte pham;
+                int rnd = Util.gI().nextInt(100);
+                if (rnd < 10) {
+                    pham = ConstDaoLu.TYPE_TAM_PHAM;
+                } else if (rnd < 40) {
+                    pham = ConstDaoLu.TYPE_NHI_PHAM;
+                } else {
+                    pham = ConstDaoLu.TYPE_NHAT_PHAM;
+                }
+                // Tạo Đạo Lữ mới - tên = tên nhân vật (phẩm đã hiện trong prefix $[Phẩm])
+                String dlName = me.cName;
+                DaoLu newDL = new DaoLu(me);
+                newDL.initNew(dlName, pham, me.cgender);
+                me.myDaoLu = newDL;
+                me.addInfo1(ConstDaoLu.getTextTaoDaoLu(pham));
+                newDL.joinMapMaster();
+                break;
+            }
+        }
     }
 }

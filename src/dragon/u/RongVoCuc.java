@@ -22,7 +22,7 @@ public class RongVoCuc {
     public int total;
     private int[] arrWish;
     private boolean isWish;
-    public final String[] arrStrWish = new String[] {"1 ngày\nx2 TN,SM", "10k\nHồng ngọc", "1Tỉ\nVàng", "1 ngày\nDoremon"};
+    public final String[] arrStrWish = new String[] {"1 ngày\nx2 TN,SM", "500\nHồng ngọc", "1Tỉ\nVàng", "1 ngày\n10% Chỉ Số"};
     private final HashMap<Integer, Byte> hPlayer = new HashMap<>();
     public int timeClose;
     
@@ -102,28 +102,32 @@ public class RongVoCuc {
                             player.myCharz().setText(3, mResources.X2_TEXT_RVC, 86400, 2, 0);
                             break;
                         }
-                        //10K Ngọc
+                        //500 Ngọc
                         case 1:
                         {
-                            player.myCharz().addItemBag(0, new Item(861, false, 10000, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY));
+                            player.myCharz().addItemBag(0, new Item(861, false, 500, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY));
                             break;
                         }
                         //10 ti vang
                         case 2:
                         {
-                            player.myCharz().addItemBag(0, new Item(190, false, 1000000000, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY));
+                            for (int i = 0; i < 26; i++){
+                            player.myCharz().addItemBag(0, new Item(76, false, 1000000000, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY));
+                        }
+//                            player.myCharz().addItemBag(0, new Item(76, false, 1000000000, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY));
                             break;
                         }
                         //Doremon
                         case 3:
                         {
-                            Item doremon = new Item(806, false, 1, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
-                            doremon.options.add(new ItemOption(50, 30));
-                            doremon.options.add(new ItemOption(77, 30));
-                            doremon.options.add(new ItemOption(103, 30));
-                            doremon.options.add(new ItemOption(5, 20));
-                            doremon.options.add(new ItemOption(93, 1));
-                            player.myCharz().addItemMore(0, doremon);
+                            player.myCharz().setText(11, mResources.AD_SDHPKI_TEXT_1d, 86400, 2, 0);
+//                            Item doremon = new Item(806, false, 1, null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
+//                            doremon.options.add(new ItemOption(50, 30));
+//                            doremon.options.add(new ItemOption(77, 30));
+//                            doremon.options.add(new ItemOption(103, 30));
+//                            doremon.options.add(new ItemOption(5, 20));
+//                            doremon.options.add(new ItemOption(93, 1));
+//                            player.myCharz().addItemMore(0, doremon);
                             break;
                         }
                     }

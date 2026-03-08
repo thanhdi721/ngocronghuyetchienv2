@@ -326,6 +326,17 @@ public class Controller implements IMessageHandler {
                                     this.session.myCharz().nangcap.type = 0;
                                     this.session.myCharz().nangcap.execute();
                                 }
+
+                                if (this.session.myCharz().nangcap != null) {
+                                    this.session.myCharz().nangcap.myItem.clear();
+                                    for (Item item : items591) {
+                                        if (item != null) {
+                                            this.session.myCharz().nangcap.myItem.add(item);
+                                        }
+                                    }
+                                    this.session.myCharz().nangcap.type = 0;
+                                    this.session.myCharz().nangcap.execute();
+                                }
                                 Combine.Combine(this.session.myCharz(), action348, items591);
                             }
                         }
@@ -792,9 +803,13 @@ public class Controller implements IMessageHandler {
                                 this.session.service.chatTHEGIOI(mResources.EMPTY, mResources.BAOVE, null, (byte) 0);
                             } else if (this.session.myCharz().timeHSTaiCho > 0) {
                                 this.session.service.chatTHEGIOI(mResources.EMPTY, String.format(mResources.HS_SAU, Util.gI().getFormatTime3(this.session.myCharz().timeHSTaiCho)), null, (byte) 0);
-                            } else if (this.session.myCharz().getLuongNew() > 0) {
+                            } else if (this.session.myCharz().getLuong() > 5) {
+                                if(this.session.myCharz().getLuong() < 5){
+                                    this.session.service.chatTHEGIOI(mResources.EMPTY, "Không đủ ngọc xanh", null, (byte) 0);
+                                    return;
+                                }
                                 this.session.myCharz().timeHSTaiCho = 5000;
-                                this.session.myCharz().updateLuongNew(-1, 2);
+                                this.session.myCharz().updateLuong(-5, 2);
                                 this.session.myCharz().liveFromDead(2);
                                 this.session.myCharz().timeHit = this.session.myCharz().timeReady = 5000;
                             }
@@ -1091,7 +1106,7 @@ public class Controller implements IMessageHandler {
                 case 0:
                     if (!this.session.isSetClient || this.session.isLogin) {
                         this.session.disconnect();
-                    } else if (this.session.loginFaid >= 10) {
+                    } else if (this.session.loginFaid >= 10000) {
                         this.session.service.startOKDlg(mResources.BAN_2);
                     } else {
                         //============================
@@ -1125,7 +1140,7 @@ public class Controller implements IMessageHandler {
                                             this.session.service.startOKDlg(mResources.BAN);
                                         } else {
                                             Session_ME player = Server.gI().getByUId(uId);
-                                            final int SECOND_DELAY = 15;
+                                            final int SECOND_DELAY = 1;
                                             int second = (int) ((System.currentTimeMillis() / 1000L) - Memory.get(uId).lastlogout);
                                             if (player != null) {
                                                 player.disconnect();
@@ -1271,6 +1286,29 @@ public class Controller implements IMessageHandler {
                                                         newChar.isCan = red2.getBoolean("isCan");
                                                         newChar.yesterday = red2.getLong("yesterday");
                                                         newChar.timeReceiveNamek = red2.getLong("timeReceiveNamek");
+                                                        try {
+                                                            newChar.todayOnlineMinutes = red2.getInt("todayOnlineMinutes");
+                                                        } catch (Exception e) { newChar.todayOnlineMinutes = 0; }
+                                                        try {
+                                                            newChar.todayClaimedBoxes = red2.getInt("todayClaimedBoxes");
+                                                        } catch (Exception e) { newChar.todayClaimedBoxes = 0; }
+                                                        try {
+                                                            newChar.onlinePoints = red2.getInt("onlinePoints");
+                                                        } catch (Exception e) { newChar.onlinePoints = 0; }
+                                                        try {
+                                                            newChar.lastOnlineDate = red2.getString("lastOnlineDate") != null ? red2.getString("lastOnlineDate") : "";
+                                                        } catch (Exception e) { newChar.lastOnlineDate = ""; }
+                                                        // [Điểm danh] Chuỗi đăng nhập 7 ngày
+                                                        try {
+                                                            ResultSet redLS = mySQL1.getConnection().prepareStatement(String.format(mResources.QUERY_SELECT_LOGIN_STREAK, playerId), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery();
+                                                            if (redLS.first()) {
+                                                                newChar.loginStreakLastDate = redLS.getString("lastLoginDate") != null ? redLS.getString("lastLoginDate") : "";
+                                                                newChar.loginStreakDays = redLS.getInt("streakDays");
+                                                            }
+                                                        } catch (Exception e) {
+                                                            newChar.loginStreakLastDate = "";
+                                                            newChar.loginStreakDays = 1;
+                                                        }
                                                     }
 
                                                     //Vat pham no ra\\
@@ -1461,6 +1499,85 @@ public class Controller implements IMessageHandler {
                                                         }
                                                     }
 
+                                                    // [ĐẠO LỮ] Load dữ liệu Đạo Lữ từ bảng daolus
+                                                    {
+                                                        try {
+                                                            ResultSet redDL = mySQL3.getConnection().prepareStatement(String.format(mResources.QUERY_SELECT_DAOLUS, playerId), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery();
+                                                            if (redDL.first() && redDL.getBoolean("have")) {
+                                                                dragon.t.DaoLu dl = new dragon.t.DaoLu(newChar);
+                                                                dl.nameDaoLu = redDL.getString("name");
+                                                                dl.typeDaoLu = redDL.getByte("typeDaoLu");
+                                                                dl.charDaoLu.cgender = redDL.getByte("cgender");
+                                                                dl.status = redDL.getByte("status");
+                                                                dl.pointTuVi = redDL.getInt("pointTuVi");
+                                                                dl.pointCapTinh = redDL.getInt("pointCapTinh");
+                                                                dl.pointCapCanhGioi = redDL.getInt("pointCapCanhGioi");
+                                                                dl.timeThangCap = redDL.getLong("timeThangCap");
+                                                                dl.isTransform = redDL.getBoolean("isTransform");
+                                                                dl.isMacDo = redDL.getBoolean("isMacDo");
+                                                                dl.var2 = redDL.getInt("var2");
+                                                                dl.charDaoLu.cPower = redDL.getLong("cPower");
+                                                                dl.charDaoLu.cPowerLimit = redDL.getByte("cPowerLimit");
+                                                                dl.charDaoLu.cHPGoc = redDL.getInt("cHPGoc");
+                                                                dl.charDaoLu.cMPGoc = redDL.getInt("cMPGoc");
+                                                                dl.charDaoLu.cDamGoc = redDL.getInt("cDamGoc");
+                                                                dl.charDaoLu.cDefGoc = redDL.getInt("cDefGoc");
+                                                                dl.charDaoLu.cCriticalGoc = redDL.getInt("cCriticalGoc");
+                                                                dl.charDaoLu.cTiemNang = redDL.getLong("cTiemNang");
+                                                                dl.charDaoLu.cHP = redDL.getInt("cHP");
+                                                                dl.charDaoLu.cMP = redDL.getInt("cMP");
+                                                                dl.charDaoLu.cStamina = redDL.getShort("cStamina");
+                                                                dl.charDaoLu.cMaxStamina = redDL.getShort("cMaxStamina");
+                                                                dl.charDaoLu.cName = "$[" + dragon.t.ConstDaoLu.getTenPham(dl.typeDaoLu) + "] " + dl.nameDaoLu;
+                                                                // Load arrItemBody Đạo Lữ
+                                                                dl.charDaoLu.arrItemBody = new Item[Char.MAXBODY_PET];
+                                                                dl.charDaoLu.arrItemBag = new Item[20];
+                                                                dl.charDaoLu.arrItemBox = new Item[20];
+                                                                JSONArray dlItems = (JSONArray) JSONValue.parseWithException(redDL.getString("arrItemBody"));
+                                                                for (int i = 0; i < dlItems.size(); i++) {
+                                                                    Item dlItem = Item.parseItem(dlItems.get(i).toString());
+                                                                    if (dlItem != null && !dlItem.isClear()) {
+                                                                        dragon.t.CaiTrang.gI().setPartTemp(dlItem);
+                                                                        dlItem.typeUI = 5;
+                                                                        dl.charDaoLu.arrItemBody[dlItem.indexUI] = dlItem;
+                                                                    }
+                                                                }
+                                                                // Load skills Đạo Lữ
+                                                                JSONArray dlSkillsArr = (JSONArray) JSONValue.parseWithException(redDL.getString("skills"));
+                                                                for (int i = 0; i < dlSkillsArr.size(); i++) {
+                                                                    JSONArray skArr = (JSONArray) dlSkillsArr.get(i);
+                                                                    int skId = Integer.parseInt(skArr.get(0).toString());
+                                                                    if (skId >= 0 && skId < Skill.arrSkill.length) {
+                                                                        Skill dlSkill = Skill.arrSkill[skId].clone();
+                                                                        dlSkill.lastTimeUseThisSkill = Long.parseLong(skArr.get(1).toString());
+                                                                        if (dlSkill.template.type == 4 && skArr.size() > 2) {
+                                                                            dlSkill.curExp = Short.parseShort(skArr.get(2).toString());
+                                                                        }
+                                                                        dl.charDaoLu.skills.add(dlSkill);
+                                                                    }
+                                                                }
+                                                                dl.charDaoLu.myChar = newChar;
+                                                                dl.charDaoLu.updateAll();
+                                                                // [FIX] Set ngoại hình Đạo Lữ (head/body/leg) sau khi load
+                                                                dl.charDaoLu.head = dl.getHead();
+                                                                dl.charDaoLu.body = dl.getBody();
+                                                                dl.charDaoLu.leg = dl.getLeg();
+                                                                // [ĐẠO LỮ] Nếu đã đạt Đấu Đế, set flag và aura
+                                                                if (dl.pointCapCanhGioi >= dragon.t.ConstDaoLu.MAX_CAP_BAC) {
+                                                                    dl.isThangDauDe = true;
+                                                                    dl.charDaoLu.idAuraEff = 22;
+                                                                }
+                                                                newChar.myDaoLu = dl;
+                                                                System.out.println("[DaoLu] Loaded DaoLu '" + dl.nameDaoLu + "' cho player " + playerId + " (Pham=" + dl.typeDaoLu + ", CG=" + dl.pointCapCanhGioi + ")");
+
+                                                            }
+                                                        } catch (Exception eDL) {
+                                                            // Bảng daolus có thể chưa tồn tại hoặc lỗi load
+                                                            System.out.println("[DaoLu] Load DaoLu cho player " + playerId + " thất bại: " + eDL.getMessage());
+                                                            eDL.printStackTrace();
+                                                        }
+                                                    }
+
                                                     //Nhiem vu\\
                                                     {
                                                         ResultSet red6 = mySQL3.getConnection().prepareStatement(String.format(mResources.QUERY_SELECT_ARRTASKS_FORMAT, playerId), ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY).executeQuery();
@@ -1564,6 +1681,8 @@ public class Controller implements IMessageHandler {
                                                     newChar.myObj().myChar = newChar;
                                                     newChar.myObj().petition = true;
                                                     this.session.myChar = newChar;
+                                                    
+                                                   
                                                     Server.gI().addConn(this.session, newChar.charID, newChar.cName, newChar.playerId);
                                                 }
                                                 this.session.isBackup = true;
@@ -1662,7 +1781,7 @@ public class Controller implements IMessageHandler {
                                         short sendX = 400;
                                         short sendY = 400;
                                         byte nClassId = -1;
-                                        long xu = 5000000000L;
+                                        int xu = 500000000;
                                         int luong = 10000;
                                         int luongKhoa = 0;
                                         int cHPGoc = 0;
@@ -1772,6 +1891,12 @@ public class Controller implements IMessageHandler {
                                                 mySQL2.getConnection().prepareStatement(String.format(mResources.INSERT_ARRAMUS, red.getInt(1))).executeUpdate();
                                                 //Insert petz
                                                 mySQL2.getConnection().prepareStatement(String.format(mResources.INSERT_PETZS, red.getInt(1))).executeUpdate();
+                                                // [ĐẠO LỮ] Insert bản ghi daolus trống cho player mới
+                                                try {
+                                                    mySQL2.getConnection().prepareStatement(String.format(mResources.INSERT_DAOLUS, red.getInt(1))).executeUpdate();
+                                                } catch (Exception eDL) {
+                                                    // Bỏ qua nếu bảng chưa tồn tại
+                                                }
                                                 //Insert arrTask
                                                 mySQL2.getConnection().prepareStatement(String.format(mResources.INSERT_ARRTASKS, red.getInt(1))).executeUpdate();
                                                 //Insert arrays
@@ -1898,6 +2023,7 @@ public class Controller implements IMessageHandler {
                         } else {
                             this.session.service.updateItem2(max);
                         }
+                        // [ĐẠO LỮ] Item template gửi qua updateItem2/3 với max bao gồm DaoLu items
                         this.session.service.updateFHead();
                     }
                     break;

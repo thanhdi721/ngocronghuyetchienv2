@@ -73,9 +73,9 @@ public class CallDragon {
     public String[][] arrDieuUocRongThan = new String[][]{
         {
             "Đẹp trai nhất\nVũ trụ",
-            "Giầu có\n+50k Ngọc",
+            "Giầu có\n+1k Hồng Ngọc",
             "+200 Tr\nSức mạnh và tiềm năng",
-            "Giầu có\n+250 Tỉ Vàng"
+            "Giầu có\n+2 Tỉ Vàng"
         },
         {
             "Găng tay đang mang lên 1 cấp",
@@ -84,7 +84,7 @@ public class CallDragon {
         },
         {
             "x2 TN,SM\n3 ngày",
-            "5k Ngọc",
+            "500 Hồng Ngọc",
             "20 tỉ\nvàng",
             "x2 Đá\nbảo vệ\n(Khóa)",
             "100 Đá\nlinh lực\n(Khóa)",
@@ -170,7 +170,7 @@ public class CallDragon {
                         }
                         //Giau co 20k ngoc
                         if (this.select == 1) {
-                            charz.updateLuong(50000, 2);
+                            charz.updateLuongKhoa(1000, 2);
                         }
                         //+200m tn, sm
                         if (this.select == 2) {
@@ -179,7 +179,7 @@ public class CallDragon {
                         }
                         //Giau co 250 tỉ vàng
                         if (this.select == 3) {
-                            charz.updateXu(250000000000l, 1);
+                            charz.updateXu(2000000000l, 1);
                         }
                         break;
                     }
@@ -242,17 +242,17 @@ public class CallDragon {
                         if (this.select == 0) {
                             for (i = 0; i < array.length; i++) {
                                 if (array[i] != null && array[i].timeReceiveNamek < System.currentTimeMillis()) {
-                                    array[i].timeReceiveNamek = System.currentTimeMillis() + 172800000L;
+                                    array[i].timeReceiveNamek = System.currentTimeMillis() + 1000;
                                     array[i].setText(7, mResources.X2_TEXT_RNM, 259200, 2, 0);
                                 }
                             }
                         }
-                        //5k hong ngoc
+                        //500 hong ngoc
                         if (this.select == 1) {
                            for (i = 0; i < array.length; i++) {
                                 if (array[i] != null && array[i].timeReceiveNamek < System.currentTimeMillis()) {
-                                    array[i].timeReceiveNamek = System.currentTimeMillis() + 172800000L;
-                                    array[i].updateLuongKhoa(5000, 2);
+                                    array[i].timeReceiveNamek = System.currentTimeMillis() + 1000;
+                                    array[i].updateLuongKhoa(500, 2);
                                 }
                             }
                         }
@@ -260,7 +260,7 @@ public class CallDragon {
                         if (this.select == 2) {
                             for (i = 0; i < array.length; i++) {
                                 if (array[i] != null && array[i].timeReceiveNamek < System.currentTimeMillis()) {
-                                    array[i].timeReceiveNamek = System.currentTimeMillis() + 172800000L;
+                                    array[i].timeReceiveNamek = System.currentTimeMillis() + 1000;
                                     array[i].updateXu(20000000000l, 1);
                                 }
                             }
@@ -269,7 +269,7 @@ public class CallDragon {
                         if (this.select == 3) {
                             for (i = 0; i < array.length; i++) {
                                 if (array[i] != null && array[i].timeReceiveNamek < System.currentTimeMillis()) {
-                                    array[i].timeReceiveNamek = System.currentTimeMillis() + 172800000L;
+                                    array[i].timeReceiveNamek = System.currentTimeMillis() + 1000;
                                     array[i].addItemMore(0, new Item(1143, false, 2, ItemOption.getOption(1143, 0, 0), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY));
                                 }
                             }
@@ -278,7 +278,7 @@ public class CallDragon {
                         if (this.select == 4) {
                             for (i = 0; i < array.length; i++) {
                                 if (array[i] != null && array[i].timeReceiveNamek < System.currentTimeMillis()) {
-                                    array[i].timeReceiveNamek = System.currentTimeMillis() + 172800000L;
+                                    array[i].timeReceiveNamek = System.currentTimeMillis() + 1000;
                                     array[i].addItemMore(0, new Item(700, false, 100, ItemOption.getOption(700, 0, 0), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY));
                                 }
                             }
@@ -287,7 +287,7 @@ public class CallDragon {
                         if (this.select == 5) {
                             for (i = 0; i < array.length; i++) {
                                 if (array[i] != null && array[i].timeReceiveNamek < System.currentTimeMillis()) {
-                                    array[i].timeReceiveNamek = System.currentTimeMillis() + 172800000L;
+                                    array[i].timeReceiveNamek = System.currentTimeMillis() + 1000;
                                     array[i].setText(8, mResources.X2_TEXT_RNM, 86400, 2, 0);
                                 }
                             }

@@ -1,19 +1,56 @@
-Xuat hien boss gau tuong cop mapName=Rừng Bamboo zoneId=2: 17h50 24/08/2025
-Name=Kamin zoneId=8 mapName=Hành tinh ngục tù: 17h50 24/08/2025
-Name=Oren zoneId=8 mapName=Hành tinh ngục tù: 17h50 24/08/2025
-Name=Tiểu đội trưởng zoneId=0 mapName=Núi khỉ đỏ: 17h51 24/08/2025
-Name=Số 1 zoneId=0 mapName=Núi khỉ đỏ: 17h51 24/08/2025
-Name=Số 2 zoneId=0 mapName=Núi khỉ đỏ: 17h51 24/08/2025
-Name=Số 3 zoneId=0 mapName=Núi khỉ đỏ: 17h51 24/08/2025
-Name=Số 4 zoneId=0 mapName=Núi khỉ đỏ: 17h51 24/08/2025
-Name=Fide Đại Ca 1 zoneId=9 mapName=Núi khỉ vàng: 17h51 24/08/2025
-Name=Android 19 zoneId=0 mapName=Cao nguyên: 17h52 24/08/2025
-Name=Dr.Kôrê zoneId=0 mapName=Cao nguyên: 17h52 24/08/2025
-Name=Android 15 zoneId=12 mapName=Sân sau siêu thị: 17h52 24/08/2025
-Name=Android 14 zoneId=12 mapName=Sân sau siêu thị: 17h52 24/08/2025
-Name=Pic zoneId=0 mapName=Ngọn núi phía bắc: 17h52 24/08/2025
-Name=Poc zoneId=0 mapName=Ngọn núi phía bắc: 17h52 24/08/2025
-Name=King Kong zoneId=0 mapName=Ngọn núi phía bắc: 17h52 24/08/2025
-Name=Xên bọ hung zoneId=9 mapName=Thị trấn Ginder: 17h52 24/08/2025
-Name=Xên hoàn thiện zoneId=5 mapName=Võ đài Xên bọ hung: 17h52 24/08/2025
-Name=Black Goku zoneId=1 mapName=Thành phố phía nam: 17h53 24/08/2025
+Xuat hien boss gau tuong cop mapName=Nam Kamê zoneId=11: 20h11 08/03/2026
+Name=Kamin zoneId=8 mapName=Hành tinh ngục tù: 20h11 08/03/2026
+Name=Oren zoneId=8 mapName=Hành tinh ngục tù: 20h11 08/03/2026
+Name=Baby zoneId=1 mapName=Hành tinh ngục tù: 20h11 08/03/2026
+Name=Beerus zoneId=4 mapName=Hanh Tinh Bill 2: 20h11 08/03/2026
+Name=Whis zoneId=4 mapName=Hanh Tinh Bill 2: 20h11 08/03/2026
+Name=Tiểu đội trưởng zoneId=1 mapName=Hang khỉ đen: 20h12 08/03/2026
+Name=Số 1 zoneId=1 mapName=Hang khỉ đen: 20h13 08/03/2026
+Name=Số 2 zoneId=1 mapName=Hang khỉ đen: 20h13 08/03/2026
+Name=Số 3 zoneId=1 mapName=Hang khỉ đen: 20h13 08/03/2026
+Name=Số 4 zoneId=1 mapName=Hang khỉ đen: 20h13 08/03/2026
+Name=Fide Đại Ca 1 zoneId=10 mapName=Núi khỉ vàng: 20h13 08/03/2026
+Name=Android 19 zoneId=7 mapName=Đảo Balê: 20h13 08/03/2026
+Name=Dr.Kôrê zoneId=7 mapName=Đảo Balê: 20h13 08/03/2026
+Name=Android 15 zoneId=5 mapName=Sân sau siêu thị: 20h13 08/03/2026
+Name=Android 14 zoneId=5 mapName=Sân sau siêu thị: 20h13 08/03/2026
+Name=Pic zoneId=3 mapName=Ngọn núi phía bắc: 20h13 08/03/2026
+Name=Poc zoneId=3 mapName=Ngọn núi phía bắc: 20h13 08/03/2026
+Name=King Kong zoneId=3 mapName=Ngọn núi phía bắc: 20h13 08/03/2026
+Name=Xên bọ hung zoneId=7 mapName=Thị trấn Ginder: 20h14 08/03/2026
+Name=Xên hoàn thiện zoneId=14 mapName=Võ đài Xên bọ hung: 20h14 08/03/2026
+Name=Black Goku zoneId=0 mapName=Thành phố phía đông: 20h14 08/03/2026
+Name=Cooler zoneId=2 mapName=Hang băng: 20h14 08/03/2026
+Name=Fusion Zamasu zoneId=4 mapName=Thành phố phía tây: 20h14 08/03/2026
+Name=Bojack zoneId=10 mapName=Đông Karin: 20h14 08/03/2026
+Name=Bido zoneId=10 mapName=Đông Karin: 20h14 08/03/2026
+Name=Zangya zoneId=10 mapName=Đông Karin: 20h14 08/03/2026
+Name=Kogu zoneId=10 mapName=Đông Karin: 20h14 08/03/2026
+Name=Bujin zoneId=10 mapName=Đông Karin: 20h14 08/03/2026
+Name=Tiểu đội trưởng zoneId=13 mapName=Nam Guru: 20h15 08/03/2026
+Name=Số 1 zoneId=13 mapName=Nam Guru: 20h15 08/03/2026
+Name=Số 2 zoneId=13 mapName=Nam Guru: 20h15 08/03/2026
+Name=Số 3 zoneId=13 mapName=Nam Guru: 20h15 08/03/2026
+Name=Số 4 zoneId=13 mapName=Nam Guru: 20h15 08/03/2026
+Name=Golden Cooler zoneId=1 mapName=Hành tinh ngục tù: 20h15 08/03/2026
+Name=King Cold zoneId=4 mapName=Hành tinh ngục tù: 20h19 08/03/2026
+Name=Boss Thế Giới zoneId=3 mapName=Hành tinh ngục tù: 20h21 08/03/2026
+Name=Kamin zoneId=10 mapName=Hành tinh ngục tù: 20h26 08/03/2026
+Name=Oren zoneId=10 mapName=Hành tinh ngục tù: 20h26 08/03/2026
+Name=Baby zoneId=8 mapName=Hành tinh ngục tù: 20h26 08/03/2026
+Name=Beerus zoneId=2 mapName=Hanh Tinh Bill 2: 20h26 08/03/2026
+Name=Whis zoneId=2 mapName=Hanh Tinh Bill 2: 20h26 08/03/2026
+Name=Tiểu đội trưởng zoneId=8 mapName=Núi khỉ đỏ: 20h27 08/03/2026
+Name=Số 1 zoneId=8 mapName=Núi khỉ đỏ: 20h28 08/03/2026
+Name=Số 2 zoneId=8 mapName=Núi khỉ đỏ: 20h28 08/03/2026
+Name=Số 3 zoneId=8 mapName=Núi khỉ đỏ: 20h28 08/03/2026
+Name=Số 4 zoneId=8 mapName=Núi khỉ đỏ: 20h28 08/03/2026
+Name=Fide Đại Ca 1 zoneId=0 mapName=Núi khỉ vàng: 20h28 08/03/2026
+Name=Android 19 zoneId=14 mapName=Cao nguyên: 20h28 08/03/2026
+Name=Dr.Kôrê zoneId=14 mapName=Cao nguyên: 20h28 08/03/2026
+Name=Android 15 zoneId=10 mapName=Sân sau siêu thị: 20h28 08/03/2026
+Name=Android 14 zoneId=10 mapName=Sân sau siêu thị: 20h28 08/03/2026
+Name=Pic zoneId=8 mapName=Thành phố phía bắc: 20h28 08/03/2026
+Name=Poc zoneId=8 mapName=Thành phố phía bắc: 20h28 08/03/2026
+Name=King Kong zoneId=8 mapName=Thành phố phía bắc: 20h28 08/03/2026
+Name=Xên bọ hung zoneId=3 mapName=Thị trấn Ginder: 20h29 08/03/2026

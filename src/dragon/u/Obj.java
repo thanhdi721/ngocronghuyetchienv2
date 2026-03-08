@@ -13,7 +13,7 @@ public class Obj {
 
     public final static HashMap<String, Obj> HOBJ = new HashMap<>();
     public final ArrayList<Item> blackBalls = new ArrayList<>();
-
+    public int nTrangsach = 0;
     public int nManhAo = 0;
     public int nManhQuan = 0;
     public int nManhGang = 0;
@@ -37,7 +37,7 @@ public class Obj {
     public int nWinHD23 = 0;
     public boolean isHideFusion;
     public int pointEventVIP = 0;
-
+    public int vip_1 = 0;
     public boolean isHaveItemBlackBall(int id) {
         synchronized (this.blackBalls) {
             for (int i = 0; i < this.blackBalls.size(); i++) {

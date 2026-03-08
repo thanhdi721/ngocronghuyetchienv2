@@ -151,7 +151,7 @@ public class ClientInput {
                     } else {
                         int ntv = Integer.parseInt(this.inputs[0]);
                         if (ntv > 0 && ntv <= this.session.myCharz().totalGold) {
-                            if (this.session.myCharz().totalBagById(457, 30000) < ntv) {
+                            if (this.session.myCharz().totalBagById(457, 3000000) < ntv) {
                                 this.session.service.chatTHEGIOI(mResources.EMPTY, mResources.BAG_FULL, null, 0);
                             } else {
                                 Item thoivang = new Item(457, false, ntv, ItemOption.getOption(457, 0, 0), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);

@@ -10,69 +10,67 @@ import java.util.ArrayList;
  * @author Admin
  */
 public class ItemOption {
-    
+
     public ItemOption() {
-        
+
     }
-    
+
     public ItemOption(int optionTemplateId, int param) {
         this.param = param;
         this.optionTemplate = GameData.iOptionTemplates[optionTemplateId];
     }
-    
+
     public long getParam() {
         switch (this.optionTemplate.id) {
             case 2:
-                return (long)this.param * 1000l;
+                return (long) this.param * 1000l;
             case 21:
-                return (long)this.param * 1000000000l;
+                return (long) this.param * 1000000000l;
             case 22:
-                return (long)this.param * 1000l;
+                return (long) this.param * 1000l;
             case 23:
-                return (long)this.param * 1000l;
+                return (long) this.param * 1000l;
             case 171:
-                return (long)this.param * 1000l;
+                return (long) this.param * 1000l;
             default:
                 return this.param;
         }
     }
-    
+
     public void setParam(long param) {
         switch (this.optionTemplate.id) {
             case 2:
-                this.param = (int)(param / 1000);
+                this.param = (int) (param / 1000);
                 break;
             case 21:
-                this.param = (int)(param / 1000000000);
+                this.param = (int) (param / 1000000000);
                 break;
             case 22:
-                this.param = (int)(param / 1000);
+                this.param = (int) (param / 1000);
                 break;
             case 23:
-                this.param = (int)(param / 1000);
+                this.param = (int) (param / 1000);
                 break;
             case 171:
-                this.param = (int)(param / 1000);
+                this.param = (int) (param / 1000);
                 break;
             default:
                 this.param = (int) param;
                 break;
         }
     }
-    
+
     public int param;
     public byte active;
     public byte activeCard;
     public ItemOptionTemplate optionTemplate;
-    
+
     public static void addSKH(Char charz, Item it, int status) {
         int gender = (it.template.gender == 3 && charz != null) ? charz.cgender : it.template.gender;
 
-
 //    it.options.add(new ItemOption(47, gender == 2 ? 3 : 2));
-
         ArrayList<ItemOption> options = new ArrayList<>();
-        
+
         switch (gender) {
             case 0: {
                 // KICK HOAT XI HANG
@@ -133,10 +131,10 @@ public class ItemOption {
             break;
         }
     }
-    
+
     public static ArrayList<ItemOption> getOption(int itemTemplateId, int status, int gender) {
         ArrayList<ItemOption> options = new ArrayList<>();
-        switch(itemTemplateId) {
+        switch (itemTemplateId) {
             case 0:
                 options.add(new ItemOption(47, 2));
                 //KICK HOAT XI HANG
@@ -623,12 +621,12 @@ public class ItemOption {
             case 842:
                 options.add(new ItemOption(87, 0));
                 options.add(new ItemOption(30, 0));
-                break;        
+                break;
             case 859:
                 options.add(new ItemOption(87, 0));
                 options.add(new ItemOption(30, 0));
-                break;           
-            
+                break;
+
             case 933:
                 options.add(new ItemOption(31, gender));
                 options.add(new ItemOption(30, 0));
@@ -762,11 +760,11 @@ public class ItemOption {
             case 28:
                 options.add(new ItemOption(7, 15));
                 //KICK HOAT PICO
-                if (status == 1) {
-                    options.add(new ItemOption(130, 0));
-                    options.add(new ItemOption(142, 0));
-                    options.add(new ItemOption(30, 0));
-                }
+//                if (status == 1) {
+//                    options.add(new ItemOption(130, 0));
+//                    options.add(new ItemOption(142, 0));
+//                    options.add(new ItemOption(30, 0));
+//                }
                 //KICK HOAT OC TIEU
 //                if (status == 2) {
 //                    options.add(new ItemOption(131, 0));
@@ -1938,7 +1936,7 @@ public class ItemOption {
                 options.add(new ItemOption(30, 0));
                 break;
             case 1803:
-                 options.add(new ItemOption(50, Util.gI().nextInt(22, Util.gI().nextInt(27, Util.gI().nextInt(33, 38)))));
+                options.add(new ItemOption(50, Util.gI().nextInt(22, Util.gI().nextInt(27, Util.gI().nextInt(33, 38)))));
                 options.add(new ItemOption(77, Util.gI().nextInt(22, Util.gI().nextInt(27, Util.gI().nextInt(33, 38)))));
                 options.add(new ItemOption(103, Util.gI().nextInt(22, Util.gI().nextInt(27, Util.gI().nextInt(33, 38)))));
                 options.add(new ItemOption(94, Util.gI().nextInt(3, Util.gI().nextInt(8, 10))));
@@ -1951,7 +1949,7 @@ public class ItemOption {
                 }
                 break;
             case 1775:
-                 options.add(new ItemOption(50, Util.gI().nextInt(22, Util.gI().nextInt(27, Util.gI().nextInt(33, 38)))));
+                options.add(new ItemOption(50, Util.gI().nextInt(22, Util.gI().nextInt(27, Util.gI().nextInt(33, 38)))));
                 options.add(new ItemOption(77, Util.gI().nextInt(22, Util.gI().nextInt(27, Util.gI().nextInt(33, 38)))));
                 options.add(new ItemOption(103, Util.gI().nextInt(22, Util.gI().nextInt(27, Util.gI().nextInt(33, 38)))));
                 options.add(new ItemOption(94, Util.gI().nextInt(3, Util.gI().nextInt(8, 10))));
@@ -1964,7 +1962,7 @@ public class ItemOption {
                 }
                 break;
             case 1777:
-                 options.add(new ItemOption(50, Util.gI().nextInt(22, Util.gI().nextInt(27, Util.gI().nextInt(33, 38)))));
+                options.add(new ItemOption(50, Util.gI().nextInt(22, Util.gI().nextInt(27, Util.gI().nextInt(33, 38)))));
                 options.add(new ItemOption(77, Util.gI().nextInt(22, Util.gI().nextInt(27, Util.gI().nextInt(33, 38)))));
                 options.add(new ItemOption(103, Util.gI().nextInt(22, Util.gI().nextInt(27, Util.gI().nextInt(33, 38)))));
                 options.add(new ItemOption(94, Util.gI().nextInt(3, Util.gI().nextInt(8, 10))));
@@ -1977,7 +1975,7 @@ public class ItemOption {
                 }
                 break;
             case 1744:
-                 options.add(new ItemOption(50, Util.gI().nextInt(22, Util.gI().nextInt(27, Util.gI().nextInt(33, 38)))));
+                options.add(new ItemOption(50, Util.gI().nextInt(22, Util.gI().nextInt(27, Util.gI().nextInt(33, 38)))));
                 options.add(new ItemOption(77, Util.gI().nextInt(22, Util.gI().nextInt(27, Util.gI().nextInt(33, 38)))));
                 options.add(new ItemOption(103, Util.gI().nextInt(22, Util.gI().nextInt(27, Util.gI().nextInt(33, 38)))));
                 options.add(new ItemOption(94, Util.gI().nextInt(3, Util.gI().nextInt(8, 10))));
@@ -2006,18 +2004,22 @@ public class ItemOption {
                 break;
             case 668:
                 options.add(new ItemOption(30, 0));
+                break;
             // binh tnsm
-//            case 1900:
-//                options.add(new ItemOption(101, 200));
-//                break;
+      //     case 1900:
+      //          options.add(new ItemOption(101, 200));
+      //          break;
             case 1901:
-                options.add(new ItemOption(160, 30));
-                break;   
+                options.add(new ItemOption(101, 300));
+                options.add(new ItemOption(160, 300));
+                break;
             case 1902:
-                options.add(new ItemOption(160, 50));
+                options.add(new ItemOption(101, 500));
+                options.add(new ItemOption(160, 500));
                 break;
             case 1903:
-                options.add(new ItemOption(160, 70));
+                options.add(new ItemOption(101, 700));
+                options.add(new ItemOption(160, 700));
                 break;
             case 677:
                 options.add(new ItemOption(50, Util.gI().nextInt(20, Util.gI().nextInt(25, 30))));
@@ -2054,8 +2056,8 @@ public class ItemOption {
                 options.add(new ItemOption(154, 0));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
-                }             
-                break;    
+                }
+                break;
             case 681:
                 options.add(new ItemOption(50, 20));
                 options.add(new ItemOption(77, 20));
@@ -2114,7 +2116,7 @@ public class ItemOption {
             case 732:
                 options.add(new ItemOption(50, Util.gI().nextInt(20, Util.gI().nextInt(20, 25))));
                 options.add(new ItemOption(77, Util.gI().nextInt(20, Util.gI().nextInt(22, 25))));
-                options.add(new ItemOption(103, Util.gI().nextInt(20,  Util.gI().nextInt(25, 30))));
+                options.add(new ItemOption(103, Util.gI().nextInt(20, Util.gI().nextInt(25, 30))));
                 options.add(new ItemOption(96, Util.gI().nextInt(10, 15)));
                 options.add(new ItemOption(81, Util.gI().nextInt(10, 15)));
                 options.add(new ItemOption(154, 0));
@@ -2123,7 +2125,7 @@ public class ItemOption {
                 options.add(new ItemOption(148, 25));
                 options.add(new ItemOption(84, 1));
                 break;
-                
+
             case 754:
                 options.add(new ItemOption(77, 31));
                 options.add(new ItemOption(80, 50));
@@ -2191,7 +2193,7 @@ public class ItemOption {
                 options.add(new ItemOption(80, 50));
                 options.add(new ItemOption(50, 22));
                 break;
-            
+
             case 843:
                 options.add(new ItemOption(77, 31));
                 options.add(new ItemOption(80, 50));
@@ -2300,22 +2302,22 @@ public class ItemOption {
                 options.add(new ItemOption(14, 25));
                 options.add(new ItemOption(103, 20));
                 break;
-                
+
             case 875:
                 options.add(new ItemOption(187, 3));
                 options.add(new ItemOption(50, Util.gI().nextInt(20, Util.gI().nextInt(22, Util.gI().nextInt(24, 28)))));
                 options.add(new ItemOption(77, Util.gI().nextInt(22, Util.gI().nextInt(25, 28))));
-                options.add(new ItemOption(103, Util.gI().nextInt(22, Util.gI().nextInt(25, 28))));     
+                options.add(new ItemOption(103, Util.gI().nextInt(22, Util.gI().nextInt(25, 28))));
                 options.add(new ItemOption(94, Util.gI().nextInt(5, Util.gI().nextInt(5, Util.gI().nextInt(9, 15)))));
                 options.add(new ItemOption(97, 10));
-                options.add(new ItemOption(80, Util.gI().nextInt(5, Util.gI().nextInt(5, Util.gI().nextInt(8, 15)))));      
+                options.add(new ItemOption(80, Util.gI().nextInt(5, Util.gI().nextInt(5, Util.gI().nextInt(8, 15)))));
                 options.add(new ItemOption(154, 0));
                 break;
             case 876:
                 options.add(new ItemOption(187, 3));
                 options.add(new ItemOption(50, Util.gI().nextInt(20, Util.gI().nextInt(22, Util.gI().nextInt(24, 28)))));
                 options.add(new ItemOption(77, Util.gI().nextInt(22, Util.gI().nextInt(25, 28))));
-                options.add(new ItemOption(103, Util.gI().nextInt(22, Util.gI().nextInt(25, 28))));     
+                options.add(new ItemOption(103, Util.gI().nextInt(22, Util.gI().nextInt(25, 28))));
                 options.add(new ItemOption(94, Util.gI().nextInt(5, Util.gI().nextInt(5, Util.gI().nextInt(9, 15)))));
                 options.add(new ItemOption(97, 10));
                 options.add(new ItemOption(80, Util.gI().nextInt(5, Util.gI().nextInt(5, Util.gI().nextInt(8, 15)))));
@@ -2325,7 +2327,7 @@ public class ItemOption {
                 options.add(new ItemOption(187, 3));
                 options.add(new ItemOption(50, Util.gI().nextInt(22, Util.gI().nextInt(25, 28))));
                 options.add(new ItemOption(77, Util.gI().nextInt(20, Util.gI().nextInt(22, Util.gI().nextInt(24, 28)))));
-                options.add(new ItemOption(103, Util.gI().nextInt(22, Util.gI().nextInt(25, 28))));     
+                options.add(new ItemOption(103, Util.gI().nextInt(22, Util.gI().nextInt(25, 28))));
                 options.add(new ItemOption(94, Util.gI().nextInt(5, Util.gI().nextInt(5, Util.gI().nextInt(9, 15)))));
                 options.add(new ItemOption(97, 10));
                 options.add(new ItemOption(80, Util.gI().nextInt(5, Util.gI().nextInt(5, Util.gI().nextInt(8, 15)))));
@@ -2443,7 +2445,7 @@ public class ItemOption {
                 options.add(new ItemOption(184, 2));
                 options.add(new ItemOption(106, 1));
                 break;
-         
+
             case 937:
                 options.add(new ItemOption(50, 24));
                 options.add(new ItemOption(77, 20));
@@ -2454,8 +2456,7 @@ public class ItemOption {
                 options.add(new ItemOption(106, 1));
                 options.add(new ItemOption(186, 1));
                 break;
-            
-                
+
 //END RCN
 //BEGIN HIEU
             case 555:
@@ -2486,7 +2487,7 @@ public class ItemOption {
                 options.add(new ItemOption(21, 15));
                 break;
             case 561:
-                options.add(new ItemOption(14, Util.gI().nextInt(0, 17)));
+                options.add(new ItemOption(14, Util.gI().nextInt(14, 17)));
                 options.add(new ItemOption(21, 15));
                 break;
             case 562:
@@ -2516,12 +2517,12 @@ public class ItemOption {
                 options.add(new ItemOption(28, Util.gI().nextInt(3000, 9000)));
                 options.add(new ItemOption(21, 16));
                 break;
-                
+
             ///25/6                    
             case 1007:
-                options.add(new ItemOption(50, 11));
-                options.add(new ItemOption(77, 10));
-                options.add(new ItemOption(103, 11));
+                options.add(new ItemOption(50, 4));
+                options.add(new ItemOption(77, 4));
+                options.add(new ItemOption(103, 4));
                 options.add(new ItemOption(94, 11));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
@@ -2540,12 +2541,12 @@ public class ItemOption {
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
-                options.add(new ItemOption(50, Util.gI().nextInt(15,30)));
+                options.add(new ItemOption(50, Util.gI().nextInt(15, 30)));
                 options.add(new ItemOption(94, Util.gI().nextInt(10, 20)));
                 options.add(new ItemOption(103, Util.gI().nextInt(10, Util.gI().nextInt(10, Util.gI().nextInt(30, 100)))));
                 options.add(new ItemOption(77, Util.gI().nextInt(10, Util.gI().nextInt(10, Util.gI().nextInt(30, 100)))));
                 options.add(new ItemOption(101, Util.gI().nextInt(10, 100)));
-                options.add(new ItemOption(100, Util.gI().nextInt(10,100)));
+                options.add(new ItemOption(100, Util.gI().nextInt(10, 100)));
                 options.add(new ItemOption(148, Util.gI().nextInt(10, 100)));
                 options.add(new ItemOption(106, 0));
                 break;
@@ -2553,12 +2554,12 @@ public class ItemOption {
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
-                options.add(new ItemOption(50, Util.gI().nextInt(15,30)));
+                options.add(new ItemOption(50, Util.gI().nextInt(15, 30)));
                 options.add(new ItemOption(94, Util.gI().nextInt(10, 20)));
                 options.add(new ItemOption(103, Util.gI().nextInt(10, Util.gI().nextInt(10, Util.gI().nextInt(30, 100)))));
                 options.add(new ItemOption(77, Util.gI().nextInt(10, Util.gI().nextInt(10, Util.gI().nextInt(30, 100)))));
                 options.add(new ItemOption(101, Util.gI().nextInt(10, 100)));
-                options.add(new ItemOption(100, Util.gI().nextInt(10,100)));
+                options.add(new ItemOption(100, Util.gI().nextInt(10, 100)));
                 options.add(new ItemOption(148, Util.gI().nextInt(10, 100)));
                 options.add(new ItemOption(106, 0));
                 break;
@@ -2566,12 +2567,12 @@ public class ItemOption {
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
-                options.add(new ItemOption(50, Util.gI().nextInt(15,30)));
+                options.add(new ItemOption(50, Util.gI().nextInt(15, 30)));
                 options.add(new ItemOption(94, Util.gI().nextInt(10, 20)));
                 options.add(new ItemOption(103, Util.gI().nextInt(10, Util.gI().nextInt(10, Util.gI().nextInt(30, 100)))));
                 options.add(new ItemOption(77, Util.gI().nextInt(10, Util.gI().nextInt(10, Util.gI().nextInt(30, 100)))));
                 options.add(new ItemOption(101, Util.gI().nextInt(10, 100)));
-                options.add(new ItemOption(100, Util.gI().nextInt(10,100)));
+                options.add(new ItemOption(100, Util.gI().nextInt(10, 100)));
                 options.add(new ItemOption(148, Util.gI().nextInt(10, 100)));
                 options.add(new ItemOption(106, 0));
                 break;
@@ -2586,7 +2587,7 @@ public class ItemOption {
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
-                break;    
+                break;
             case 1019:
                 options.add(new ItemOption(50, 23));
                 options.add(new ItemOption(77, 22));
@@ -2623,7 +2624,7 @@ public class ItemOption {
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
-                break;    
+                break;
             case 1042:
                 options.add(new ItemOption(50, 25));
                 options.add(new ItemOption(77, 23));
@@ -2649,8 +2650,8 @@ public class ItemOption {
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
-                break;   
-             //event trung thu
+                break;
+            //event trung thu
 
             //item lưng
             case 865:
@@ -2666,28 +2667,26 @@ public class ItemOption {
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
-                break; 
-           
+                break;
+
             case 227:
-                options.add(new ItemOption(76,0));
+                options.add(new ItemOption(76, 0));
                 options.add(new ItemOption(77, Util.gI().nextInt(10, Util.gI().nextInt(10, 20))));
                 options.add(new ItemOption(97, Util.gI().nextInt(5, Util.gI().nextInt(5, 10))));
                 break;
             case 228:
-                options.add(new ItemOption(76,0));
+                options.add(new ItemOption(76, 0));
                 options.add(new ItemOption(77, Util.gI().nextInt(10, Util.gI().nextInt(10, 20))));
                 options.add(new ItemOption(97, Util.gI().nextInt(5, Util.gI().nextInt(5, 10))));
                 break;
-                
+
             case 229:
-                options.add(new ItemOption(76,0));
+                options.add(new ItemOption(76, 0));
                 options.add(new ItemOption(77, Util.gI().nextInt(10, Util.gI().nextInt(10, 20))));
                 options.add(new ItemOption(97, Util.gI().nextInt(5, Util.gI().nextInt(5, 10))));
                 break;
             // sư kien trung thu 2022    
-               
-            
-           
+
             /// Capsule
             /// van bay
             case 735:
@@ -2696,22 +2695,22 @@ public class ItemOption {
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
-                break;  
+                break;
             case 734:
                 options.add(new ItemOption(148, 25));
                 options.add(new ItemOption(84, 1));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
-                break;  
+                break;
             case 743:
                 options.add(new ItemOption(148, 25));
                 options.add(new ItemOption(84, 1));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
-                break;      
-             /// pet đi theo
+                break;
+            /// pet đi theo
             case 916:
                 options.add(new ItemOption(95, Util.gI().nextInt(3, Util.gI().nextInt(3, 10))));
                 options.add(new ItemOption(96, Util.gI().nextInt(3, Util.gI().nextInt(3, 10))));
@@ -2728,29 +2727,29 @@ public class ItemOption {
                 break;
             case 918:
                 options.add(new ItemOption(103, Util.gI().nextInt(3, Util.gI().nextInt(3, 10))));
-                options.add(new ItemOption(94, Util.gI().nextInt(3, Util.gI().nextInt(3 , 10))));
+                options.add(new ItemOption(94, Util.gI().nextInt(3, Util.gI().nextInt(3, 10))));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
                 break;
-            
+
             case 1046:
-                options.add(new ItemOption(77, Util.gI().nextInt(10, Util.gI().nextInt(10 , 15))));
-                options.add(new ItemOption(103, Util.gI().nextInt(10, Util.gI().nextInt(10 , 15))));
+                options.add(new ItemOption(77, Util.gI().nextInt(10, Util.gI().nextInt(10, 15))));
+                options.add(new ItemOption(103, Util.gI().nextInt(10, Util.gI().nextInt(10, 15))));
                 options.add(new ItemOption(50, Util.gI().nextInt(9, Util.gI().nextInt(9, 12))));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
                 break;
-             case 1087:
+            case 1087:
                 options.add(new ItemOption(50, 22));
                 options.add(new ItemOption(77, 22));
-                options.add(new ItemOption(103,22));
+                options.add(new ItemOption(103, 22));
                 options.add(new ItemOption(94, 18));
-                options.add(new ItemOption(108, 14)); 
-                options.add(new ItemOption(148, 20));              
+                options.add(new ItemOption(108, 14));
+                options.add(new ItemOption(148, 20));
                 options.add(new ItemOption(205, 2));
-                options.add(new ItemOption(154, 0)); 
+                options.add(new ItemOption(154, 0));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
@@ -2758,12 +2757,12 @@ public class ItemOption {
             case 1088:
                 options.add(new ItemOption(50, 22));
                 options.add(new ItemOption(77, 22));
-                options.add(new ItemOption(103,22));
+                options.add(new ItemOption(103, 22));
                 options.add(new ItemOption(94, 18));
-                options.add(new ItemOption(108, 14)); 
-                options.add(new ItemOption(148, 20));              
+                options.add(new ItemOption(108, 14));
+                options.add(new ItemOption(148, 20));
                 options.add(new ItemOption(205, 2));
-                options.add(new ItemOption(154, 0)); 
+                options.add(new ItemOption(154, 0));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
@@ -2771,12 +2770,12 @@ public class ItemOption {
             case 1089:
                 options.add(new ItemOption(50, 22));
                 options.add(new ItemOption(77, 22));
-                options.add(new ItemOption(103,22));
+                options.add(new ItemOption(103, 22));
                 options.add(new ItemOption(94, 18));
-                options.add(new ItemOption(108, 14)); 
-                options.add(new ItemOption(148, 20));              
+                options.add(new ItemOption(108, 14));
+                options.add(new ItemOption(148, 20));
                 options.add(new ItemOption(205, 2));
-                options.add(new ItemOption(154, 0)); 
+                options.add(new ItemOption(154, 0));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
@@ -2784,30 +2783,30 @@ public class ItemOption {
             case 1090:
                 options.add(new ItemOption(50, 22));
                 options.add(new ItemOption(77, 22));
-                options.add(new ItemOption(103,22));
+                options.add(new ItemOption(103, 22));
                 options.add(new ItemOption(94, 18));
-                options.add(new ItemOption(108, 14)); 
-                options.add(new ItemOption(148, 20));              
+                options.add(new ItemOption(108, 14));
+                options.add(new ItemOption(148, 20));
                 options.add(new ItemOption(205, 2));
-                options.add(new ItemOption(154, 0)); 
+                options.add(new ItemOption(154, 0));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
-                break; 
+                break;
             case 1091:
                 options.add(new ItemOption(50, 22));
                 options.add(new ItemOption(77, 22));
-                options.add(new ItemOption(103,22));
+                options.add(new ItemOption(103, 22));
                 options.add(new ItemOption(94, 18));
-                options.add(new ItemOption(108, 14)); 
-                options.add(new ItemOption(148, 20));              
+                options.add(new ItemOption(108, 14));
+                options.add(new ItemOption(148, 20));
                 options.add(new ItemOption(205, 2));
-                options.add(new ItemOption(154, 0)); 
+                options.add(new ItemOption(154, 0));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
-                break;    
-                //Bua nang cap
+                break;
+            //Bua nang cap
             case 205:
                 options.add(new ItemOption(30, 0));
                 break;
@@ -2829,7 +2828,7 @@ public class ItemOption {
                 options.add(new ItemOption(174, 2022));
                 options.add(new ItemOption(30, 0));
                 options.add(new ItemOption(93, 30));
-                break;    
+                break;
             // tui qua halloween    
             case 739:
                 options.add(new ItemOption(50, Util.gI().nextInt(15, Util.gI().nextInt(15, Util.gI().nextInt(20, 35)))));
@@ -2840,7 +2839,7 @@ public class ItemOption {
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
-                break;   
+                break;
             case 742:
                 options.add(new ItemOption(50, Util.gI().nextInt(15, Util.gI().nextInt(20, Util.gI().nextInt(20, 35)))));
                 options.add(new ItemOption(77, Util.gI().nextInt(15, Util.gI().nextInt(15, Util.gI().nextInt(25, 40)))));
@@ -2849,14 +2848,14 @@ public class ItemOption {
                 options.add(new ItemOption(154, 0));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
-                }    
+                }
                 break;
             //capsule halloween
             case 818:
                 options.add(new ItemOption(174, 2022));
                 options.add(new ItemOption(30, 0));
                 options.add(new ItemOption(93, 30));
-                break; 
+                break;
             case 204:
                 options.add(new ItemOption(174, 2022));
                 options.add(new ItemOption(30, 0));
@@ -2866,14 +2865,14 @@ public class ItemOption {
                 options.add(new ItemOption(174, 2022));
                 options.add(new ItemOption(30, 0));
                 options.add(new ItemOption(93, 30));
-                break;     
+                break;
             case 1001:
                 options.add(new ItemOption(50, Util.gI().nextInt(5, Util.gI().nextInt(8, Util.gI().nextInt(8, 15)))));
                 options.add(new ItemOption(5, Util.gI().nextInt(1, Util.gI().nextInt(1, Util.gI().nextInt(1, 5)))));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
-                break;      
+                break;
             case 814:
                 options.add(new ItemOption(77, Util.gI().nextInt(5, Util.gI().nextInt(8, Util.gI().nextInt(10, 20)))));
                 options.add(new ItemOption(99, Util.gI().nextInt(5, Util.gI().nextInt(10, 15))));
@@ -2903,8 +2902,7 @@ public class ItemOption {
                 }
                 break;
             // Hop qua halloween
-            
- 
+
             case 1104:
                 options.add(new ItemOption(50, Util.gI().nextInt(20, Util.gI().nextInt(22, Util.gI().nextInt(25, 28)))));
                 options.add(new ItemOption(77, Util.gI().nextInt(20, Util.gI().nextInt(22, Util.gI().nextInt(25, 28)))));
@@ -2916,7 +2914,7 @@ public class ItemOption {
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
-                break;  
+                break;
             case 1105:
                 options.add(new ItemOption(50, Util.gI().nextInt(20, Util.gI().nextInt(25, Util.gI().nextInt(28, 30)))));
                 options.add(new ItemOption(77, Util.gI().nextInt(20, Util.gI().nextInt(25, Util.gI().nextInt(28, 30)))));
@@ -3046,10 +3044,10 @@ public class ItemOption {
                 options.add(new ItemOption(28, 11200));
                 options.add(new ItemOption(21, 64));
                 options.add(new ItemOption(30, 0));
-                break;  
-             case 1066:
+                break;
+            case 1066:
                 options.add(new ItemOption(86, 0));
-                break;    
+                break;
             case 1067:
                 options.add(new ItemOption(86, 0));
                 break;
@@ -3058,57 +3056,57 @@ public class ItemOption {
                 break;
             case 1069:
                 options.add(new ItemOption(87, 0));
-                  break;      
+                break;
             case 1070:
                 options.add(new ItemOption(87, 0));
-                break;       
+                break;
             // Su kien world cup
             case 1118:
                 options.add(new ItemOption(86, 0));
                 options.add(new ItemOption(93, 30));
-                break;  
+                break;
             case 1119:
                 options.add(new ItemOption(86, 0));
                 options.add(new ItemOption(93, 30));
-                break;   
+                break;
             case 1120:
                 options.add(new ItemOption(86, 0));
                 options.add(new ItemOption(93, 30));
-                break;    
+                break;
             case 1121:
                 options.add(new ItemOption(86, 0));
                 options.add(new ItemOption(93, 30));
-                break;    
+                break;
             case 1122:
                 options.add(new ItemOption(86, 0));
                 options.add(new ItemOption(93, 30));
-                break;    
-             case 1123:
+                break;
+            case 1123:
                 options.add(new ItemOption(86, 0));
                 options.add(new ItemOption(93, 30));
-                break;   
+                break;
             case 1124:
                 options.add(new ItemOption(86, 0));
                 options.add(new ItemOption(93, 30));
-                break;   
+                break;
             case 1125:
                 options.add(new ItemOption(86, 0));
                 options.add(new ItemOption(93, 30));
-                break;    
+                break;
             case 1126:
                 options.add(new ItemOption(86, 0));
                 options.add(new ItemOption(93, 30));
-                break;    
+                break;
             case 1127:
                 options.add(new ItemOption(86, 0));
                 options.add(new ItemOption(93, 30));
-                break;   
+                break;
             case 1132:
                 options.add(new ItemOption(30, 0));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
-                break;  
+                break;
             case 1133:
                 options.add(new ItemOption(30, 0));
                 if (status > 0) {
@@ -3122,14 +3120,14 @@ public class ItemOption {
             case 1136:
                 options.add(new ItemOption(30, 0));
                 options.add(new ItemOption(93, 30));
-                break;    
+                break;
             case 1134:
                 options.add(new ItemOption(87, 0));
                 options.add(new ItemOption(30, 0));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
-                break;  
+                break;
             case 966:
                 options.add(new ItemOption(50, Util.gI().nextInt(3, Util.gI().nextInt(3, 9))));
                 options.add(new ItemOption(95, Util.gI().nextInt(5, 10)));
@@ -3137,15 +3135,15 @@ public class ItemOption {
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
-                break;  
+                break;
             case 982:
-                 options.add(new ItemOption(77, Util.gI().nextInt(3, Util.gI().nextInt(3, 9))));
+                options.add(new ItemOption(77, Util.gI().nextInt(3, Util.gI().nextInt(3, 9))));
                 options.add(new ItemOption(96, Util.gI().nextInt(5, 10)));
                 options.add(new ItemOption(30, 0));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
-                break;  
+                break;
             case 983:
                 options.add(new ItemOption(103, Util.gI().nextInt(5, Util.gI().nextInt(5, 9))));
                 options.add(new ItemOption(96, Util.gI().nextInt(5, 10)));
@@ -3153,7 +3151,7 @@ public class ItemOption {
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
-                break;  
+                break;
             case 897:
                 options.add(new ItemOption(148, 25));
                 options.add(new ItemOption(84, 1));
@@ -3168,12 +3166,12 @@ public class ItemOption {
                     options.add(new ItemOption(93, status));
                 }
                 break;
-            
+
             case 1114:
-               options.add(new ItemOption(50, Util.gI().nextInt(7, Util.gI().nextInt(10, Util.gI().nextInt(12, 18)))));
-               options.add(new ItemOption(5 , Util.gI().nextInt(1, Util.gI().nextInt(3, Util.gI().nextInt(5, 10)))));
-               options.add(new ItemOption(14, 5));
-               options.add(new ItemOption(30, 0));
+                options.add(new ItemOption(50, Util.gI().nextInt(7, Util.gI().nextInt(10, Util.gI().nextInt(12, 18)))));
+                options.add(new ItemOption(5, Util.gI().nextInt(1, Util.gI().nextInt(3, Util.gI().nextInt(5, 10)))));
+                options.add(new ItemOption(14, 5));
+                options.add(new ItemOption(30, 0));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
@@ -3187,7 +3185,7 @@ public class ItemOption {
                 break;
             case 967:
                 options.add(new ItemOption(50, Util.gI().nextInt(5, Util.gI().nextInt(10, Util.gI().nextInt(12, 18)))));
-                options.add(new ItemOption(98 , Util.gI().nextInt(5, Util.gI().nextInt(5, 10))));
+                options.add(new ItemOption(98, Util.gI().nextInt(5, Util.gI().nextInt(5, 10))));
                 options.add(new ItemOption(30, 0));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
@@ -3219,7 +3217,7 @@ public class ItemOption {
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
-                break;        
+                break;
             case 981:
                 options.add(new ItemOption(174, 2022));
                 if (status > 0) {
@@ -3230,7 +3228,7 @@ public class ItemOption {
                 options.add(new ItemOption(97, 5));
                 options.add(new ItemOption(50, Util.gI().nextInt(20, Util.gI().nextInt(22, Util.gI().nextInt(24, 28)))));
                 options.add(new ItemOption(77, Util.gI().nextInt(22, Util.gI().nextInt(25, 28))));
-                options.add(new ItemOption(103, Util.gI().nextInt(22, Util.gI().nextInt(25, 28))));     
+                options.add(new ItemOption(103, Util.gI().nextInt(22, Util.gI().nextInt(25, 28))));
                 options.add(new ItemOption(94, Util.gI().nextInt(5, Util.gI().nextInt(5, Util.gI().nextInt(9, 15)))));
                 options.add(new ItemOption(80, Util.gI().nextInt(5, Util.gI().nextInt(5, Util.gI().nextInt(8, 15)))));
                 options.add(new ItemOption(106, 0));
@@ -3240,7 +3238,7 @@ public class ItemOption {
                 options.add(new ItemOption(97, 5));
                 options.add(new ItemOption(50, Util.gI().nextInt(20, Util.gI().nextInt(22, Util.gI().nextInt(24, 28)))));
                 options.add(new ItemOption(77, Util.gI().nextInt(22, Util.gI().nextInt(25, 28))));
-                options.add(new ItemOption(103, Util.gI().nextInt(22, Util.gI().nextInt(25, 28))));     
+                options.add(new ItemOption(103, Util.gI().nextInt(22, Util.gI().nextInt(25, 28))));
                 options.add(new ItemOption(94, Util.gI().nextInt(5, Util.gI().nextInt(5, Util.gI().nextInt(9, 15)))));
                 options.add(new ItemOption(80, Util.gI().nextInt(5, Util.gI().nextInt(5, Util.gI().nextInt(8, 15)))));
                 options.add(new ItemOption(106, 0));
@@ -3250,7 +3248,7 @@ public class ItemOption {
                 options.add(new ItemOption(97, 5));
                 options.add(new ItemOption(50, Util.gI().nextInt(22, Util.gI().nextInt(25, 28))));
                 options.add(new ItemOption(77, Util.gI().nextInt(20, Util.gI().nextInt(22, Util.gI().nextInt(24, 28)))));
-                options.add(new ItemOption(103, Util.gI().nextInt(22, Util.gI().nextInt(25, 28))));     
+                options.add(new ItemOption(103, Util.gI().nextInt(22, Util.gI().nextInt(25, 28))));
                 options.add(new ItemOption(94, Util.gI().nextInt(5, Util.gI().nextInt(5, Util.gI().nextInt(9, 15)))));
                 options.add(new ItemOption(80, Util.gI().nextInt(5, Util.gI().nextInt(5, Util.gI().nextInt(8, 15)))));
                 options.add(new ItemOption(106, 0));
@@ -3259,9 +3257,9 @@ public class ItemOption {
             case 989:
                 options.add(new ItemOption(50, Util.gI().nextInt(22, Util.gI().nextInt(25, Util.gI().nextInt(28, 30)))));
                 options.add(new ItemOption(77, Util.gI().nextInt(22, Util.gI().nextInt(25, Util.gI().nextInt(28, 30)))));
-                options.add(new ItemOption(103,Util.gI().nextInt(22, Util.gI().nextInt(25, Util.gI().nextInt(28, 30)))));
+                options.add(new ItemOption(103, Util.gI().nextInt(22, Util.gI().nextInt(25, Util.gI().nextInt(28, 30)))));
                 options.add(new ItemOption(94, Util.gI().nextInt(5, 15)));
-                options.add(new ItemOption(108,Util.gI().nextInt(5, 15)));
+                options.add(new ItemOption(108, Util.gI().nextInt(5, 15)));
                 options.add(new ItemOption(148, 20));
                 options.add(new ItemOption(195, 2));
                 options.add(new ItemOption(154, 0));
@@ -3272,9 +3270,9 @@ public class ItemOption {
             case 990:
                 options.add(new ItemOption(50, Util.gI().nextInt(22, Util.gI().nextInt(25, Util.gI().nextInt(28, 30)))));
                 options.add(new ItemOption(77, Util.gI().nextInt(22, Util.gI().nextInt(25, Util.gI().nextInt(28, 30)))));
-                options.add(new ItemOption(103,Util.gI().nextInt(22, Util.gI().nextInt(25, Util.gI().nextInt(28, 30)))));
+                options.add(new ItemOption(103, Util.gI().nextInt(22, Util.gI().nextInt(25, Util.gI().nextInt(28, 30)))));
                 options.add(new ItemOption(94, Util.gI().nextInt(5, 15)));
-                options.add(new ItemOption(108,Util.gI().nextInt(5, 15)));
+                options.add(new ItemOption(108, Util.gI().nextInt(5, 15)));
                 options.add(new ItemOption(148, 20));
                 options.add(new ItemOption(195, 2));
                 options.add(new ItemOption(154, 0));
@@ -3285,9 +3283,9 @@ public class ItemOption {
             case 991:
                 options.add(new ItemOption(50, Util.gI().nextInt(22, Util.gI().nextInt(25, Util.gI().nextInt(28, 30)))));
                 options.add(new ItemOption(77, Util.gI().nextInt(22, Util.gI().nextInt(25, Util.gI().nextInt(28, 30)))));
-                options.add(new ItemOption(103,Util.gI().nextInt(22, Util.gI().nextInt(25, Util.gI().nextInt(28, 30)))));
+                options.add(new ItemOption(103, Util.gI().nextInt(22, Util.gI().nextInt(25, Util.gI().nextInt(28, 30)))));
                 options.add(new ItemOption(94, Util.gI().nextInt(5, 15)));
-                options.add(new ItemOption(108,Util.gI().nextInt(5, 15)));
+                options.add(new ItemOption(108, Util.gI().nextInt(5, 15)));
                 options.add(new ItemOption(148, 20));
                 options.add(new ItemOption(195, 2));
                 options.add(new ItemOption(154, 0));
@@ -3330,7 +3328,7 @@ public class ItemOption {
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
-                break; 
+                break;
             case 823:
                 options.add(new ItemOption(50, Util.gI().nextInt(3, Util.gI().nextInt(3, 9))));
                 options.add(new ItemOption(95, Util.gI().nextInt(5, 10)));
@@ -3339,8 +3337,7 @@ public class ItemOption {
                     options.add(new ItemOption(93, status));
                 }
                 break;
-           
-      
+
             case 827:
                 options.add(new ItemOption(50, Util.gI().nextInt(22, Util.gI().nextInt(30, 35))));
                 options.add(new ItemOption(77, Util.gI().nextInt(22, Util.gI().nextInt(30, 35))));
@@ -3365,9 +3362,9 @@ public class ItemOption {
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
-                break;  
+                break;
             case 952:
-               options.add(new ItemOption(50, Util.gI().nextInt(25, Util.gI().nextInt(28, Util.gI().nextInt(30, 35)))));
+                options.add(new ItemOption(50, Util.gI().nextInt(25, Util.gI().nextInt(28, Util.gI().nextInt(30, 35)))));
                 options.add(new ItemOption(77, Util.gI().nextInt(25, Util.gI().nextInt(28, Util.gI().nextInt(30, 35)))));
                 options.add(new ItemOption(103, Util.gI().nextInt(25, Util.gI().nextInt(28, Util.gI().nextInt(30, 35)))));
                 options.add(new ItemOption(5, Util.gI().nextInt(5, Util.gI().nextInt(15, 25))));
@@ -3378,7 +3375,7 @@ public class ItemOption {
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
-                break;  
+                break;
             case 953:
                 options.add(new ItemOption(50, Util.gI().nextInt(25, Util.gI().nextInt(28, Util.gI().nextInt(30, 35)))));
                 options.add(new ItemOption(77, Util.gI().nextInt(25, Util.gI().nextInt(28, Util.gI().nextInt(30, 35)))));
@@ -3418,7 +3415,7 @@ public class ItemOption {
                 break;
             case 1186:
                 options.add(new ItemOption(77, Util.gI().nextInt(7, Util.gI().nextInt(9, Util.gI().nextInt(12, Util.gI().nextInt(14, 18))))));
-                options.add(new ItemOption(5, Util.gI().nextInt(1,  Util.gI().nextInt(5, 10))));
+                options.add(new ItemOption(5, Util.gI().nextInt(1, Util.gI().nextInt(5, 10))));
                 options.add(new ItemOption(86, 0));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
@@ -3426,13 +3423,13 @@ public class ItemOption {
                 break;
             case 852:
                 options.add(new ItemOption(50, Util.gI().nextInt(7, Util.gI().nextInt(9, Util.gI().nextInt(12, Util.gI().nextInt(14, 18))))));
-                options.add(new ItemOption(14, Util.gI().nextInt(1,  Util.gI().nextInt(5, 10))));
+                options.add(new ItemOption(14, Util.gI().nextInt(1, Util.gI().nextInt(5, 10))));
                 options.add(new ItemOption(86, 0));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
-                break;          
-           
+                break;
+
             case 1100:
                 options.add(new ItemOption(50, Util.gI().nextInt(8, Util.gI().nextInt(10, Util.gI().nextInt(12, 15)))));
                 options.add(new ItemOption(99, Util.gI().nextInt(1, 10)));
@@ -3443,7 +3440,7 @@ public class ItemOption {
                 break;
             case 942:
                 options.add(new ItemOption(103, Util.gI().nextInt(7, Util.gI().nextInt(9, Util.gI().nextInt(11, 18)))));
-                options.add(new ItemOption(108 , Util.gI().nextInt(3, Util.gI().nextInt(5, 10))));
+                options.add(new ItemOption(108, Util.gI().nextInt(3, Util.gI().nextInt(5, 10))));
                 options.add(new ItemOption(14, 5));
                 options.add(new ItemOption(30, 0));
                 if (status > 0) {
@@ -3452,7 +3449,7 @@ public class ItemOption {
                 break;
             case 943:
                 options.add(new ItemOption(77, Util.gI().nextInt(7, Util.gI().nextInt(9, Util.gI().nextInt(11, 18)))));
-                options.add(new ItemOption(97 , Util.gI().nextInt(3, Util.gI().nextInt(5, 10))));
+                options.add(new ItemOption(97, Util.gI().nextInt(3, Util.gI().nextInt(5, 10))));
                 options.add(new ItemOption(14, 5));
                 options.add(new ItemOption(30, 0));
                 if (status > 0) {
@@ -3461,7 +3458,7 @@ public class ItemOption {
                 break;
             case 944:
                 options.add(new ItemOption(50, Util.gI().nextInt(7, Util.gI().nextInt(9, Util.gI().nextInt(11, 18)))));
-                options.add(new ItemOption(5 , Util.gI().nextInt(3, Util.gI().nextInt(5, 10))));
+                options.add(new ItemOption(5, Util.gI().nextInt(3, Util.gI().nextInt(5, 10))));
                 options.add(new ItemOption(14, 5));
                 options.add(new ItemOption(30, 0));
                 if (status > 0) {
@@ -3481,7 +3478,7 @@ public class ItemOption {
                 options.add(new ItemOption(174, 2025));
                 options.add(new ItemOption(93, 30));
                 break;
-             case 751:
+            case 751:
                 options.add(new ItemOption(174, 2025));
                 options.add(new ItemOption(93, 30));
                 break;
@@ -3497,7 +3494,7 @@ public class ItemOption {
                 options.add(new ItemOption(174, 2025));
                 options.add(new ItemOption(93, 30));
                 break;
-             case 1179:
+            case 1179:
                 options.add(new ItemOption(174, 2025));
                 options.add(new ItemOption(93, 30));
                 break;
@@ -3513,17 +3510,17 @@ public class ItemOption {
                 options.add(new ItemOption(174, 2025));
                 options.add(new ItemOption(30, 0));
                 options.add(new ItemOption(93, 30));
-                break; 
+                break;
             case 1183:
                 options.add(new ItemOption(174, 2025));
                 options.add(new ItemOption(30, 0));
                 options.add(new ItemOption(93, 30));
-                break; 
+                break;
             case 1184:
                 options.add(new ItemOption(174, 2025));
                 options.add(new ItemOption(30, 0));
                 options.add(new ItemOption(93, 30));
-                break;    
+                break;
             case 1187:
                 options.add(new ItemOption(174, 2025));
                 options.add(new ItemOption(30, 0));
@@ -3538,18 +3535,18 @@ public class ItemOption {
                 break;
             case 1196:
                 options.add(new ItemOption(174, 2025));
-                break;    
+                break;
             case 1174:
                 options.add(new ItemOption(50, 22));
-                options.add(new ItemOption(77 ,30));
+                options.add(new ItemOption(77, 30));
                 options.add(new ItemOption(80, 25));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
-                break;    
+                break;
             case 1175:
                 options.add(new ItemOption(50, 22));
-                options.add(new ItemOption(77 ,30));
+                options.add(new ItemOption(77, 30));
                 options.add(new ItemOption(80, 25));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
@@ -3557,45 +3554,45 @@ public class ItemOption {
                 break;
             case 1176:
                 options.add(new ItemOption(50, 22));
-                options.add(new ItemOption(77 ,30));
+                options.add(new ItemOption(77, 30));
                 options.add(new ItemOption(80, 25));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
-                break;           
+                break;
             case 1198:
                 options.add(new ItemOption(50, 25));
-                options.add(new ItemOption(77 ,25));
-                options.add(new ItemOption(103 ,25));
+                options.add(new ItemOption(77, 25));
+                options.add(new ItemOption(103, 25));
                 options.add(new ItemOption(94, 15));
                 options.add(new ItemOption(8, 4));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
-                break;    
+                break;
             case 1199:
                 options.add(new ItemOption(50, 25));
-                options.add(new ItemOption(77 ,25));
-                options.add(new ItemOption(103 ,25));
+                options.add(new ItemOption(77, 25));
+                options.add(new ItemOption(103, 25));
                 options.add(new ItemOption(94, 15));
                 options.add(new ItemOption(8, 4));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
-                break;    
+                break;
             case 1200:
                 options.add(new ItemOption(50, 25));
-                options.add(new ItemOption(77 ,25));
-                options.add(new ItemOption(103 ,25));
+                options.add(new ItemOption(77, 25));
+                options.add(new ItemOption(103, 25));
                 options.add(new ItemOption(94, 15));
                 options.add(new ItemOption(8, 4));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
-                break; 
+                break;
             case 969:
                 options.add(new ItemOption(30, 0));
-                break; 
+                break;
             case 700:
                 options.add(new ItemOption(30, 0));
                 break;
@@ -3603,23 +3600,23 @@ public class ItemOption {
                 options.add(new ItemOption(30, 0));
                 break;
             case 805:
-                options.add(new ItemOption(50, Util.gI().nextInt(2, Util.gI().nextInt(5,8))));
-                options.add(new ItemOption(50, Util.gI().nextInt(2, Util.gI().nextInt(5,8))));
-                options.add(new ItemOption(50, Util.gI().nextInt(2, Util.gI().nextInt(5,8))));
+                options.add(new ItemOption(50, Util.gI().nextInt(2, Util.gI().nextInt(5, 8))));
+                options.add(new ItemOption(50, Util.gI().nextInt(2, Util.gI().nextInt(5, 8))));
+                options.add(new ItemOption(50, Util.gI().nextInt(2, Util.gI().nextInt(5, 8))));
                 options.add(new ItemOption(30, 0));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
                 break;
-                
+
             case 1093:
                 options.add(new ItemOption(174, 2025));
                 options.add(new ItemOption(93, 30));
-                break; 
+                break;
             case 1094:
                 options.add(new ItemOption(174, 2025));
                 options.add(new ItemOption(93, 30));
-                break; 
+                break;
             case 1095:
                 options.add(new ItemOption(174, 2025));
                 options.add(new ItemOption(93, 30));
@@ -3628,12 +3625,12 @@ public class ItemOption {
                 options.add(new ItemOption(174, 2025));
                 options.add(new ItemOption(30, 0));
                 options.add(new ItemOption(93, 30));
-                
-                break; 
+
+                break;
             case 1097:
                 options.add(new ItemOption(174, 2025));
                 options.add(new ItemOption(30, 0));
-                options.add(new ItemOption(93, 30));             
+                options.add(new ItemOption(93, 30));
                 break;
             case 1098:
                 options.add(new ItemOption(174, 2025));
@@ -3687,9 +3684,9 @@ public class ItemOption {
             case 1154:
                 options.add(new ItemOption(86, 0));
                 options.add(new ItemOption(30, 0));
-                break; 
-                
-        // su kien 10-3
+                break;
+
+            // su kien 10-3
             case 867:
                 options.add(new ItemOption(50, Util.gI().nextInt(22, Util.gI().nextInt(25, Util.gI().nextInt(28, 30)))));
                 options.add(new ItemOption(77, Util.gI().nextInt(22, Util.gI().nextInt(25, Util.gI().nextInt(28, 30)))));
@@ -3733,8 +3730,8 @@ public class ItemOption {
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
-                break;       
-             // item   
+                break;
+            // item   
             case 908:
                 options.add(new ItemOption(103, Util.gI().nextInt(6, Util.gI().nextInt(8, Util.gI().nextInt(12, 18)))));
                 options.add(new ItemOption(204, Util.gI().nextInt(1, Util.gI().nextInt(2, Util.gI().nextInt(2, 5)))));
@@ -3786,34 +3783,34 @@ public class ItemOption {
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
-                break;    
+                break;
             // qua dua
             case 569:
                 options.add(new ItemOption(174, 2025));
                 options.add(new ItemOption(30, 0));
                 options.add(new ItemOption(93, 30));
-                break;    
+                break;
             // nlsk 
             case 2001:
-                options.add(new ItemOption(174, 2025));               
+                options.add(new ItemOption(174, 2025));
                 options.add(new ItemOption(93, 30));
                 break;
             case 2002:
-                options.add(new ItemOption(174, 2025));               
+                options.add(new ItemOption(174, 2025));
                 options.add(new ItemOption(93, 30));
-                break; 
+                break;
             case 2003:
-                options.add(new ItemOption(174, 2025));               
+                options.add(new ItemOption(174, 2025));
                 options.add(new ItemOption(93, 30));
-                break; 
+                break;
             case 2004:
-                options.add(new ItemOption(174, 2025));               
+                options.add(new ItemOption(174, 2025));
                 options.add(new ItemOption(93, 30));
-                break; 
+                break;
             case 2005:
-                options.add(new ItemOption(174, 2025));               
+                options.add(new ItemOption(174, 2025));
                 options.add(new ItemOption(93, 30));
-                break; 
+                break;
             case 2006:
                 options.add(new ItemOption(174, 2025));
                 options.add(new ItemOption(30, 0));
@@ -3841,17 +3838,17 @@ public class ItemOption {
                 options.add(new ItemOption(14, 5));
                 options.add(new ItemOption(106, 0));
                 options.add(new ItemOption(93, 3));
-                
+
                 break;
             case 421:
                 options.add(new ItemOption(50, Util.gI().nextInt(10, 30)));
                 options.add(new ItemOption(77, Util.gI().nextInt(10, 30)));
-                options.add(new ItemOption(103, Util.gI().nextInt(10,28)));
-                options.add(new ItemOption(101, Util.gI().nextInt(1, 40))); 
+                options.add(new ItemOption(103, Util.gI().nextInt(10, 28)));
+                options.add(new ItemOption(101, Util.gI().nextInt(1, 40)));
                 options.add(new ItemOption(5, Util.gI().nextInt(1, 10)));
                 options.add(new ItemOption(14, 5));
                 options.add(new ItemOption(106, 0));
-                options.add(new ItemOption(93, 3));         
+                options.add(new ItemOption(93, 3));
                 break;
             case 1204:
                 options.add(new ItemOption(87, 0));
@@ -3860,57 +3857,57 @@ public class ItemOption {
             case 1229:
                 options.add(new ItemOption(30, 0));
                 break;
-             //Lech Teamobi
-             case 1002:
+            //Lech Teamobi
+            case 1002:
                 options.add(new ItemOption(174, 2025));
                 options.add(new ItemOption(93, 14));
                 break;
-             case 1003:
+            case 1003:
                 options.add(new ItemOption(174, 2025));
                 options.add(new ItemOption(93, 14));
-                break;    
-             case 1004:
-                options.add(new ItemOption(174, 2025));               
+                break;
+            case 1004:
+                options.add(new ItemOption(174, 2025));
                 options.add(new ItemOption(93, 14));
                 break;
             case 1005:
                 options.add(new ItemOption(174, 2025));
                 options.add(new ItemOption(30, 0));
                 options.add(new ItemOption(93, 14));
-                break;    
-             case 1006:
+                break;
+            case 1006:
                 options.add(new ItemOption(174, 2025));
                 options.add(new ItemOption(30, 0));
                 options.add(new ItemOption(93, 14));
                 break;
-                
-             case 1989:
+
+            case 1989:
                 options.add(new ItemOption(174, 2025));
                 options.add(new ItemOption(30, 0));
                 options.add(new ItemOption(93, 14));
                 break;
-             case 1990:
+            case 1990:
                 options.add(new ItemOption(174, 2025));
                 options.add(new ItemOption(93, 14));
-                break;    
-             case 1991:
-                options.add(new ItemOption(174, 2025));               
+                break;
+            case 1991:
+                options.add(new ItemOption(174, 2025));
                 options.add(new ItemOption(93, 14));
                 break;
             case 1992:
-                options.add(new ItemOption(174, 2025));            
-                options.add(new ItemOption(93, 14));
-                break;    
-             case 1993:
                 options.add(new ItemOption(174, 2025));
                 options.add(new ItemOption(93, 14));
                 break;
-            
-           case 1994:
+            case 1993:
+                options.add(new ItemOption(174, 2025));
+                options.add(new ItemOption(93, 14));
+                break;
+
+            case 1994:
                 options.add(new ItemOption(174, 2025));
                 options.add(new ItemOption(30, 0));
                 options.add(new ItemOption(93, 14));
-                break; 
+                break;
             case 1995:
                 options.add(new ItemOption(174, 2025));
                 options.add(new ItemOption(30, 0));
@@ -3925,7 +3922,7 @@ public class ItemOption {
                 options.add(new ItemOption(174, 2025));
                 options.add(new ItemOption(93, 14));
                 break;
-                
+
             case 1997:
                 options.add(new ItemOption(50, 5));
                 options.add(new ItemOption(103, 5));
@@ -3934,14 +3931,14 @@ public class ItemOption {
 //                 options.add(new ItemOption(30, 0));
                 options.add(new ItemOption(93, 7));
                 break;
-            case 1998:            
+            case 1998:
                 options.add(new ItemOption(50, 10));
                 options.add(new ItemOption(103, 10));
                 options.add(new ItemOption(77, 10));
                 options.add(new ItemOption(101, 20));
 //                options.add(new ItemOption(30, 0));
                 options.add(new ItemOption(93, 7));
-                break;   
+                break;
             //Điều ước thỏ 
             case 1010:
                 options.add(new ItemOption(50, Util.gI().nextInt(22, Util.gI().nextInt(25, Util.gI().nextInt(28, 30)))));
@@ -3955,7 +3952,7 @@ public class ItemOption {
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
-                break; 
+                break;
             case 1011:
                 options.add(new ItemOption(50, Util.gI().nextInt(22, Util.gI().nextInt(25, Util.gI().nextInt(28, 30)))));
                 options.add(new ItemOption(77, Util.gI().nextInt(22, Util.gI().nextInt(25, Util.gI().nextInt(28, 30)))));
@@ -3968,7 +3965,7 @@ public class ItemOption {
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
-                break; 
+                break;
             case 1012:
                 options.add(new ItemOption(50, Util.gI().nextInt(22, Util.gI().nextInt(25, Util.gI().nextInt(28, 30)))));
                 options.add(new ItemOption(77, Util.gI().nextInt(22, Util.gI().nextInt(25, Util.gI().nextInt(28, 30)))));
@@ -3981,9 +3978,9 @@ public class ItemOption {
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
-                break;   
+                break;
             // update 
-                case 984:
+            case 984:
                 options.add(new ItemOption(30, 0));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
@@ -4016,7 +4013,7 @@ public class ItemOption {
                     options.add(new ItemOption(93, status));
                 }
                 break;
-            
+
             // ITEM LUNG
             case 1224:
                 options.add(new ItemOption(103, Util.gI().nextInt(6, Util.gI().nextInt(8, Util.gI().nextInt(12, 18)))));
@@ -4045,7 +4042,7 @@ public class ItemOption {
                     options.add(new ItemOption(93, status));
                 }
                 break;
-            
+
             case 997:
                 options.add(new ItemOption(103, Util.gI().nextInt(5, Util.gI().nextInt(8, Util.gI().nextInt(10, 15)))));
                 options.add(new ItemOption(5, Util.gI().nextInt(1, 5)));
@@ -4075,133 +4072,133 @@ public class ItemOption {
                 break;
             case 1172:
                 options.add(new ItemOption(148, 25));
-                options.add(new ItemOption(84, 1));       
+                options.add(new ItemOption(84, 1));
                 options.add(new ItemOption(103, Util.gI().nextInt(1, Util.gI().nextInt(2, Util.gI().nextInt(3, 5)))));
-                options.add(new ItemOption(30, 0)); 
+                options.add(new ItemOption(30, 0));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
-                break; 
+                break;
             case 1144:
                 options.add(new ItemOption(148, 25));
-                options.add(new ItemOption(84, 1));  
-                options.add(new ItemOption(30, 0)); 
+                options.add(new ItemOption(84, 1));
+                options.add(new ItemOption(30, 0));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
                 break;
             case 1092:
                 options.add(new ItemOption(148, 25));
-                options.add(new ItemOption(84, 1));       
+                options.add(new ItemOption(84, 1));
                 options.add(new ItemOption(50, Util.gI().nextInt(1, Util.gI().nextInt(2, Util.gI().nextInt(3, 5)))));
-                options.add(new ItemOption(30, 0)); 
+                options.add(new ItemOption(30, 0));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
                 break;
             // cai trang he vxmm
-                
+
             case 1208:
                 options.add(new ItemOption(50, 22));
-                options.add(new ItemOption(77, 23));       
-                options.add(new ItemOption(103, 22)); 
-                options.add(new ItemOption(94, 10)); 
-                options.add(new ItemOption(108, 5)); 
-                options.add(new ItemOption(148, 20)); 
-                options.add(new ItemOption(154,0)); 
+                options.add(new ItemOption(77, 20));
+                options.add(new ItemOption(103, 18));
+                options.add(new ItemOption(94, 10));
+                options.add(new ItemOption(108, 5));
+                options.add(new ItemOption(148, 20));
+                options.add(new ItemOption(154, 0));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
                 break;
             case 1209:
-                options.add(new ItemOption(50, 22));
-                options.add(new ItemOption(77, 23));       
-                options.add(new ItemOption(103, 22)); 
-                options.add(new ItemOption(94, 10)); 
-                options.add(new ItemOption(108, 5)); 
-                options.add(new ItemOption(148, 20)); 
-                options.add(new ItemOption(154,0)); 
+                options.add(new ItemOption(50, 20));
+                options.add(new ItemOption(77, 23));
+                options.add(new ItemOption(103, 22));
+                options.add(new ItemOption(94, 10));
+                options.add(new ItemOption(108, 5));
+                options.add(new ItemOption(148, 20));
+                options.add(new ItemOption(154, 0));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
-                break;     
+                break;
             case 1210:
-                options.add(new ItemOption(50, 22));
-                options.add(new ItemOption(77, 23));       
-                options.add(new ItemOption(103, 22)); 
-                options.add(new ItemOption(94, 10)); 
-                options.add(new ItemOption(108, 5)); 
-                options.add(new ItemOption(148, 20)); 
-                options.add(new ItemOption(154,0));
+                options.add(new ItemOption(50, 18));
+                options.add(new ItemOption(77, 20));
+                options.add(new ItemOption(103, 23));
+                options.add(new ItemOption(94, 10));
+                options.add(new ItemOption(108, 5));
+                options.add(new ItemOption(148, 20));
+                options.add(new ItemOption(154, 0));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
                 break;
             case 1234:
-                options.add(new ItemOption(50, 28));
-                options.add(new ItemOption(77, 28));       
-                options.add(new ItemOption(103, 28)); 
-                options.add(new ItemOption(5, 15)); 
-                options.add(new ItemOption(94, 15)); 
-                options.add(new ItemOption(148, 20)); 
-                options.add(new ItemOption(154,0)); 
+                options.add(new ItemOption(50, 22));
+                options.add(new ItemOption(77, 23));
+                options.add(new ItemOption(103, 25));
+                options.add(new ItemOption(5, 15));
+                options.add(new ItemOption(94, 15));
+                options.add(new ItemOption(148, 20));
+                options.add(new ItemOption(154, 0));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
                 break;
             case 1235:
-                options.add(new ItemOption(50, 28));
-                options.add(new ItemOption(77, 28));       
-                options.add(new ItemOption(103, 28)); 
-                options.add(new ItemOption(5, 10)); 
-                options.add(new ItemOption(108, 15)); 
-                options.add(new ItemOption(148, 20)); 
-                options.add(new ItemOption(154,0)); 
+                options.add(new ItemOption(50, 25));
+                options.add(new ItemOption(77, 22));
+                options.add(new ItemOption(103, 23));
+                options.add(new ItemOption(5, 10));
+                options.add(new ItemOption(108, 15));
+                options.add(new ItemOption(148, 20));
+                options.add(new ItemOption(154, 0));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
-                break;     
+                break;
             case 1236:
-                options.add(new ItemOption(50, 28));
-                options.add(new ItemOption(77, 28));       
-                options.add(new ItemOption(103, 28)); 
-                options.add(new ItemOption(5, 10)); 
+                options.add(new ItemOption(50, 22));
+                options.add(new ItemOption(77, 25));
+                options.add(new ItemOption(103, 23));
+                options.add(new ItemOption(5, 10));
                 options.add(new ItemOption(97, 15));
-                options.add(new ItemOption(154,0));
+                options.add(new ItemOption(154, 0));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
                 break;
             case 938:
                 options.add(new ItemOption(50, 22));
-                options.add(new ItemOption(77, 22));       
-                options.add(new ItemOption(103, 22)); 
-                options.add(new ItemOption(80, 10)); 
-                options.add(new ItemOption(95, 10)); 
-                options.add(new ItemOption(96, 10)); 
-                options.add(new ItemOption(154,0)); 
+                options.add(new ItemOption(77, 22));
+                options.add(new ItemOption(103, 22));
+                options.add(new ItemOption(80, 10));
+                options.add(new ItemOption(95, 10));
+                options.add(new ItemOption(96, 10));
+                options.add(new ItemOption(154, 0));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
-                break;     
+                break;
             case 939:
                 options.add(new ItemOption(50, 22));
-                options.add(new ItemOption(77, 22));       
-                options.add(new ItemOption(103, 22)); 
-                options.add(new ItemOption(80, 10)); 
-                options.add(new ItemOption(95, 10)); 
-                options.add(new ItemOption(96, 10)); 
-                options.add(new ItemOption(154,0)); 
+                options.add(new ItemOption(77, 22));
+                options.add(new ItemOption(103, 22));
+                options.add(new ItemOption(80, 10));
+                options.add(new ItemOption(95, 10));
+                options.add(new ItemOption(96, 10));
+                options.add(new ItemOption(154, 0));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
                 break;
             case 1231:
-                options.add(new ItemOption(50, Util.gI().nextInt(3, Util.gI().nextInt(5,  Util.gI().nextInt(8, 10)))));
-                options.add(new ItemOption(77, Util.gI().nextInt(3, Util.gI().nextInt(5,  Util.gI().nextInt(8, 10)))));       
-                options.add(new ItemOption(103, Util.gI().nextInt(3, Util.gI().nextInt(5,  Util.gI().nextInt(8, 10))))); 
-                options.add(new ItemOption(94, Util.gI().nextInt(3, Util.gI().nextInt(5,  Util.gI().nextInt(8, 10))))); 
-                options.add(new ItemOption(30, 0)); 
+                options.add(new ItemOption(50, Util.gI().nextInt(3, Util.gI().nextInt(5, Util.gI().nextInt(8, 10)))));
+                options.add(new ItemOption(77, Util.gI().nextInt(3, Util.gI().nextInt(5, Util.gI().nextInt(8, 10)))));
+                options.add(new ItemOption(103, Util.gI().nextInt(3, Util.gI().nextInt(5, Util.gI().nextInt(8, 10)))));
+                options.add(new ItemOption(94, Util.gI().nextInt(3, Util.gI().nextInt(5, Util.gI().nextInt(8, 10)))));
+                options.add(new ItemOption(30, 0));
                 options.add(new ItemOption(93, Util.gI().nextInt(1, 3)));
                 break;
             case 894:
@@ -4254,7 +4251,7 @@ public class ItemOption {
                     options.add(new ItemOption(93, Util.gI().nextInt(3, Util.gI().nextInt(5, 7))));
                 }
                 options.add(new ItemOption(30, 0));
-                break;   
+                break;
             case 895:
                 if (status == 0) {
                     options.add(new ItemOption(50, Util.gI().nextInt(1, 6)));
@@ -4306,36 +4303,36 @@ public class ItemOption {
                     options.add(new ItemOption(93, status));
                 }
                 break;
-                // he 2025 p2
+            // he 2025 p2
             case 883:
                 options.add(new ItemOption(50, Util.gI().nextInt(25, Util.gI().nextInt(28, 30))));
                 options.add(new ItemOption(77, Util.gI().nextInt(25, Util.gI().nextInt(28, 30))));
                 options.add(new ItemOption(103, Util.gI().nextInt(25, Util.gI().nextInt(28, 30))));
-                options.add(new ItemOption(94, Util.gI().nextInt(5,10))); 
+                options.add(new ItemOption(94, Util.gI().nextInt(5, 10)));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
                 break;
-            case 884:
-                options.add(new ItemOption(5, Util.gI().nextInt(30, Util.gI().nextInt(40, Util.gI().nextInt(50, Util.gI().nextInt(50, Util.gI().nextInt(55, 80)))))));
-                options.add(new ItemOption(50, Util.gI().nextInt(1, 10)));
-                options.add(new ItemOption(14, Util.gI().nextInt(1,10)));    
-                if (status > 0) {
-                    options.add(new ItemOption(93, status));
-                }
-                break;
+//            case 884:
+//                options.add(new ItemOption(5, Util.gI().nextInt(30, Util.gI().nextInt(40, Util.gI().nextInt(50, Util.gI().nextInt(50, Util.gI().nextInt(55, 80)))))));
+//                options.add(new ItemOption(50, Util.gI().nextInt(1, 10)));
+//                options.add(new ItemOption(14, Util.gI().nextInt(1,10)));    
+//                if (status > 0) {
+//                    options.add(new ItemOption(93, status));
+//                }
+//                break;
             case 740:
                 options.add(new ItemOption(50, Util.gI().nextInt(3, Util.gI().nextInt(8, 10))));
                 options.add(new ItemOption(77, Util.gI().nextInt(3, Util.gI().nextInt(8, 10))));
-                options.add(new ItemOption(103, Util.gI().nextInt(3, Util.gI().nextInt(8, 10))));    
+                options.add(new ItemOption(103, Util.gI().nextInt(3, Util.gI().nextInt(8, 10))));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
                 break;
-            
+
             case 1158:
                 options.add(new ItemOption(103, Util.gI().nextInt(5, Util.gI().nextInt(8, Util.gI().nextInt(10, 17)))));
-                options.add(new ItemOption(94, Util.gI().nextInt(1, Util.gI().nextInt(3,8))));
+                options.add(new ItemOption(94, Util.gI().nextInt(1, Util.gI().nextInt(3, 8))));
                 options.add(new ItemOption(30, 1));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
@@ -4343,8 +4340,8 @@ public class ItemOption {
                 break;
             case 1159:
                 options.add(new ItemOption(77, Util.gI().nextInt(5, Util.gI().nextInt(8, Util.gI().nextInt(10, 17)))));
-                options.add(new ItemOption(95, Util.gI().nextInt(1, Util.gI().nextInt(3,10))));
-                options.add(new ItemOption(30, 1));  
+                options.add(new ItemOption(95, Util.gI().nextInt(1, Util.gI().nextInt(3, 10))));
+                options.add(new ItemOption(30, 1));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
@@ -4352,23 +4349,23 @@ public class ItemOption {
             case 1160:
                 options.add(new ItemOption(50, Util.gI().nextInt(8, Util.gI().nextInt(10, Util.gI().nextInt(12, 17)))));
                 options.add(new ItemOption(14, Util.gI().nextInt(1, 10)));
-                options.add(new ItemOption(30, 1));  
+                options.add(new ItemOption(30, 1));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
                 break;
-            
-             case 1243:
-                 options.add(new ItemOption(103, Util.gI().nextInt(7, Util.gI().nextInt(10, Util.gI().nextInt(12, 18)))));
-                 options.add(new ItemOption(203, Util.gI().nextInt(1, 5)));
-                 options.add(new ItemOption(30, 1));
+
+            case 1243:
+                options.add(new ItemOption(103, Util.gI().nextInt(7, Util.gI().nextInt(10, Util.gI().nextInt(12, 18)))));
+                options.add(new ItemOption(203, Util.gI().nextInt(1, 5)));
+                options.add(new ItemOption(30, 1));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
                 break;
-            case 1244:             
+            case 1244:
                 options.add(new ItemOption(77, Util.gI().nextInt(7, Util.gI().nextInt(10, Util.gI().nextInt(12, 18)))));
-                options.add(new ItemOption(94, Util.gI().nextInt(1,Util.gI().nextInt(5,8))));
+                options.add(new ItemOption(94, Util.gI().nextInt(1, Util.gI().nextInt(5, 8))));
                 options.add(new ItemOption(30, 1));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
@@ -4376,7 +4373,7 @@ public class ItemOption {
                 break;
             case 919:
                 options.add(new ItemOption(50, Util.gI().nextInt(7, Util.gI().nextInt(10, Util.gI().nextInt(12, 18)))));
-                options.add(new ItemOption(95, Util.gI().nextInt(1,Util.gI().nextInt(5,8))));
+                options.add(new ItemOption(95, Util.gI().nextInt(1, Util.gI().nextInt(5, 8))));
                 options.add(new ItemOption(30, 1));
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
@@ -4460,8 +4457,8 @@ public class ItemOption {
                 options.add(new ItemOption(174, 2025));
                 options.add(new ItemOption(30, 1));
                 options.add(new ItemOption(93, 30));
-                break;        
-             case 698:
+                break;
+            case 698:
                 options.add(new ItemOption(174, 2025));
                 options.add(new ItemOption(30, 1));
                 options.add(new ItemOption(93, 30));
@@ -4474,8 +4471,8 @@ public class ItemOption {
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
-                break;        
-             case 1040:
+                break;
+            case 1040:
                 options.add(new ItemOption(50, 5));
                 options.add(new ItemOption(77, 5));
                 options.add(new ItemOption(103, 5));
@@ -4483,18 +4480,18 @@ public class ItemOption {
                 if (status > 0) {
                     options.add(new ItemOption(93, status));
                 }
-                break;  
-            case 970: 
+                break;
+            case 970:
                 options.add(new ItemOption(30, 1));
-                break;  
+                break;
             // lech teamobi    
-            case 1988: 
+            case 1988:
                 options.add(new ItemOption(87, 1));
                 options.add(new ItemOption(30, 1));
                 break;
-            case 1987: 
+            case 1987:
                 options.add(new ItemOption(30, 1));
-                break;    
+                break;
             case 2024:
                 options.add(new ItemOption(30, 1));
                 break;
@@ -4502,5 +4499,5 @@ public class ItemOption {
         }
         return options;
     }
-    
+
 }

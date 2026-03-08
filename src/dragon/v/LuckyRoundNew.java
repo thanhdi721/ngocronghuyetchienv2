@@ -285,10 +285,10 @@ public class LuckyRoundNew {
         System.out.println("npcId=54 MapId=5");
         //Dao kame
         Map map = Map.getMapServer(5);
-        for (int i = 0; i < map.zones.size(); i++) {
-            //add Ly Tieu Nuong
-            if (map.zones.get(i).findNPCInMap(54) == null) map.zones.get(i).npcs.add(new dragon.object.Npc(map.zones.get(i).npcs.size(), 1, 1300, 408, 54, 9077));
-        }
+//        for (int i = 0; i < map.zones.size(); i++) {
+//            //add Ly Tieu Nuong
+//            if (map.zones.get(i).findNPCInMap(54) == null) map.zones.get(i).npcs.add(new dragon.object.Npc(map.zones.get(i).npcs.size(), 1, 1300, 408, 54, 9077));
+//        }
     }
     
     public static void saveData() {

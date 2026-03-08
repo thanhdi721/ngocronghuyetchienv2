@@ -17,14 +17,14 @@ import java.util.HashMap;
  * @author Admin
  */
 public class Shop {
-    
+
     public int shopId;
     public byte type;
     public String[] shopTabName;
     public ArrayList<Item>[] arrItemShop;
-    
+
     public static HashMap<Integer, Shop> shops = new HashMap<>();
-    
+
     public static Item getItem(int shopId, int templateId) {
         try {
             for (int i = 0; i < shops.get(shopId).arrItemShop.length; i++) {
@@ -37,21 +37,24 @@ public class Shop {
                     }
                 }
             }
-        } catch (Exception e){}
+        } catch (Exception e) {
+        }
         return null;
     }
+
     public static Shop get(int shopId) {
         try {
             return shops.get(shopId);
-        } catch (Exception e){}
+        } catch (Exception e) {
+        }
         return null;
     }
-    
+
     public static void ItemBuy(Char charz, int type, int id, int num) {
         if (num > 0) {
             num = 1;
             int i;
-            Util.gI().log("type="+type+" id="+id+" num="+num);
+            Util.gI().log("type=" + type + " id=" + id + " num=" + num);
             Item item = Shop.getItem(charz.shopId, id);
             Shop shop = Shop.get(charz.shopId);
             ItemOption option;
@@ -64,18 +67,19 @@ public class Shop {
                     //SETID
                     itemTemplateId = MagicTree.foods30templateId[charz.magicTree_level - 1];
                 }
-                
+
                 if (item.isItemMerge()) {
                     indexUI = charz.getItemBagIndex(itemTemplateId);
                 }
                 if (indexUI == -1) {
                     indexUI = charz.getEmptyBagIndex();
                 }
-                
-                int buyLuong = 0, buyXu = 0, point = 0;
+
+                int buyLuong = 0, buyXu = 0, buyluongkhoa = 0, point = 0;
                 if (shop.type == 0 || shop.type == 2) {
                     buyLuong = item.buyGold * num;
                     buyXu = item.buyCoin * num;
+                    buyluongkhoa = item.buyRuby * num;
                     if (item.isHaveOption(164)) {
                         point = item.getParamOption(164) * num;
                     }
@@ -94,6 +98,10 @@ public class Shop {
                             return;
                         }
                     }
+                }
+                if (charz.getLuongNew() < buyluongkhoa) {
+                    charz.addInfo1(String.format(mResources.NOT_LUONG, buyluongkhoa - charz.getLuongNew()));
+                    return;
                 }
                 if (charz.getLuong() < buyLuong) {
                     charz.addInfo1(String.format(mResources.NOT_LUONG, buyLuong - charz.getLuong()));
@@ -114,11 +122,15 @@ public class Shop {
                     if (charz.shopId == 4 || charz.shopId == 5 || charz.shopId == 6) {
                         charz.headDefault = (short) item.headTemp;
                         charz.session.service.itemBuy(charz.xu, charz.luong, charz.luongKhoa);
-                    ///Shop bua
+                        ///Shop bua
                     } else if (item.template.type == 13) {
                         //Down xu luong
                         if (buyLuong > 0) {
-                            charz.updateLuongNew(-buyLuong, 0);
+                            charz.updateLuong(-buyLuong, 0);
+                            charz.updateTask(8, 1);
+                        }
+                        if (buyluongkhoa > 0) {
+                            charz.updateLuongKhoa(-buyluongkhoa, 0);
                             charz.updateTask(8, 1);
                         }
                         if (buyXu > 0) {
@@ -132,7 +144,7 @@ public class Shop {
                         if (shop.type == 3) {
                             Shop2.buy(charz, shop, item);
                         }
-                        
+
                         int second = 0;
                         if (charz.shopId == 13) {
                             second = 60 * 60;
@@ -157,7 +169,7 @@ public class Shop {
                         if (item.isItemSLL()) {
                             quantity *= item.getParamOption(31);
                         }
-                        if(item.isItemLimit() && ItemCountAdd.getCount(item) - num < 0) {
+                        if (item.isItemLimit() && ItemCountAdd.getCount(item) - num < 0) {
                             charz.addInfo1(String.format(mResources.DA_HET_HANG, item.template.name, Util.gI().getStrTime(ItemCountAdd.get(item).time)));
                         } else if (charz.checkBag(item)) {
                             if (item.isItemLimit()) {
@@ -166,7 +178,11 @@ public class Shop {
                             }
                             //Down xu luong
                             if (buyLuong > 0) {
-                                charz.updateLuongNew(-buyLuong, 0);
+                                charz.updateLuong(-buyLuong, 0);
+                                charz.updateTask(8, 1);
+                            }
+                            if (buyluongkhoa > 0) {
+                                charz.updateLuongNew(-buyluongkhoa, 0);
                                 charz.updateTask(8, 1);
                             }
                             //point
@@ -183,15 +199,29 @@ public class Shop {
 
                             //Bill Huy Diet
                             if (charz.shopId == 17) {
-                                charz.arrItemBag[charz.indexUIFoods99()] =  null;
-                                charz.arrItemBody[item.getIndexBody()] = null;
-                                charz.updateAll();
+                                int index = charz.indexUIFoods99();
+                                if (index != -1) {
+                                    Item item1 = charz.arrItemBag[index];
+                                    // 🔒 Kiểm tra lại lần nữa để đảm bảo an toàn
+                                    if (item1.template.id >= 663 && item1.template.id <= 667 && item1.quantity >= 99) {
+                                        item1.quantity -= 99;
+//                                        charz.arrItemBody[item.getIndexBody()] = null;
+                                        if (item1.quantity <= 0) {
+                                            charz.arrItemBag[index] = null;
+                                        }
+                                        charz.updateAll();
+                                    } else {
+                                        charz.session.service.sendThongBao(charz, "Item không hợp lệ hoặc không đủ số lượng.");
+                                    }
+                                } else {
+                                    charz.session.service.sendThongBao(charz, "Bạn không có đủ 99 item cần thiết để giao dịch.");
+                                }
                             }
                             //IF Buy chien thuyen tennis
                             if (item.template.id == 453) {
                                 charz.typeTeleport = 3;
                                 charz.session.service.openShop(Shop.shops.get(charz.shopId));
-                            //ELSE IF Buy mo rong hanh trang
+                                //ELSE IF Buy mo rong hanh trang
                             } else if (item.template.id == 517) {
                                 Item[] bags = charz.arrItemBag;
                                 charz.arrItemBag = new Item[++charz.bagcount];
@@ -200,7 +230,7 @@ public class Shop {
                                 }
                                 charz.session.service.Bag(charz.arrItemBag);
                                 charz.session.service.openShop(Shop.shops.get(charz.shopId));
-                            //ELSE IF Buy mo rong ruong do
+                                //ELSE IF Buy mo rong ruong do
                             } else if (item.template.id == 518) {
                                 Item[] boxs = charz.arrItemBox;
                                 charz.arrItemBox = new Item[++charz.boxcount];
@@ -222,7 +252,7 @@ public class Shop {
                             } else {
                                 Item itnew = item.clone();
                                 if (itnew.isHaveOption(93)) {
-                                    itnew.setExpires(System.currentTimeMillis() + (86400000L * (long)(itnew.getParamOption(93) + 1L)));
+                                    itnew.setExpires(System.currentTimeMillis() + (86400000L * (long) (itnew.getParamOption(93) + 1L)));
                                 }
                                 //point
                                 if (itnew.isHaveOption(164)) {
@@ -256,7 +286,7 @@ public class Shop {
                                     charz.zoneMap.playerLoadAll(charz);
                                 }
                             }
-                            charz.addInfo1(String.format(mResources.ITEM_BUY_SUCCESS, ItemTemplate.get((short)id).name));
+                            charz.addInfo1(String.format(mResources.ITEM_BUY_SUCCESS, ItemTemplate.get((short) id).name));
                             //Bong tai
                             if (item.template.id == 454) {
                                 charz.session.service.openShop(Shop.shops.get(charz.shopId));

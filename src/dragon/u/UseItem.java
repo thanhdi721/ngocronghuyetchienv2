@@ -10,8 +10,10 @@ import dragon.server.Dragon;
 import dragon.server.Server;
 import dragon.server.mResources;
 import java.util.ArrayList;
+import dragon.t.ConstDaoLu;
 import dragon.t.Rank;
 import dragon.template.ItemTemplate;
+import dragon.v.EffChar;
 
 /**
  *
@@ -93,7 +95,7 @@ public class UseItem {
             player.menuBoard.arrMenu.add(new MenuInfo(mResources.REFUSE, 0));
             player.menuBoard.openUIConfirm(5, null, null, -1);
         }
-        if (item.template.id == 2024) { // hộp thần linh thường
+        if (item.template.id == 2028) { // hộp thần linh thường
             player.resetMenu();
             player.menuBoard.chat = mResources.SAY_CHON_HANH_TINH;
             player.menuBoard.arrMenu.add(new MenuInfo(mResources.TRAI_DAT_THAN_LINH, 421));
@@ -101,7 +103,7 @@ public class UseItem {
             player.menuBoard.arrMenu.add(new MenuInfo(mResources.XAYDA_THAN_LINH, 423));
             player.menuBoard.openUIConfirm(5, null, null, -1);
         }
-        if (item.template.id == 2027) { // hộp hd
+        if (item.template.id == 2029) { // hộp hd
             player.resetMenu();
             player.menuBoard.chat = mResources.SAY_CHON_HANH_TINH;
             player.menuBoard.arrMenu.add(new MenuInfo(mResources.TRAI_DAT_THAN_LINH, 424));
@@ -109,7 +111,7 @@ public class UseItem {
             player.menuBoard.arrMenu.add(new MenuInfo(mResources.XAYDA_THAN_LINH, 426));
             player.menuBoard.openUIConfirm(5, null, null, -1);
         }
-        if (item.template.id == 2028) { // thay chiêu 2 3 đệ tử
+        if (item.template.id == 2030) { // thay chiêu 2 3 đệ tử
             if (player.myPet != null) {
                 if (player.myPetz().skills.size() > 1) {
                     player.myPetz().skills.set(1, Skill.arrSkill[player.myPetz().arrSkillPet[1][Util.gI().nextInt(player.myPetz().arrSkillPet[1].length)]].clone());
@@ -126,7 +128,7 @@ public class UseItem {
                 player.session.service.Body(player.head, player.arrItemBody);
             }
         }
-        if (item.template.id == 2029) {// thay chiêu 3 4 đệ tử
+        if (item.template.id == 2031) {// thay chiêu 3 4 đệ tử
             if (player.myPet != null) {
                 if (player.myPetz().skills.size() > 3) {
                     player.myPetz().skills.set(3, Skill.arrSkill[player.myPetz().arrSkillPet[3][Util.gI().nextInt(player.myPetz().arrSkillPet[1].length)]].clone());
@@ -224,6 +226,42 @@ public class UseItem {
                 player.useItemBag(item.indexUI, 1);
             }
         }
+        // ======================== Đạo Lữ Items ========================
+        // Hồn Đạo Lữ (2070) - mở confirm tạo/đổi Đạo Lữ
+        if (item.template.id == 2070) {
+            player.resetMenu();
+            if (player.myDaoLu != null) {
+                // Đã có Đạo Lữ → cho đổi phẩm
+                String tenPham = dragon.t.ConstDaoLu.getTenPham(player.myDaoLu.typeDaoLu);
+                player.menuBoard.chat = "|1|Bạn đang có Đạo Lữ |7|" + tenPham + "|0|\n"
+                        + "Dùng Hồn Đạo Lữ sẽ |1|XÓA Đạo Lữ cũ|0| và tạo mới!\n"
+                        + "|7|10% Tam Phẩm|0| - |5|30% Nhị Phẩm|0| - 60% Nhất Phẩm\n"
+                        + "|1|Mất toàn bộ tiến trình tu luyện!";
+            } else {
+                player.menuBoard.chat = "Sử dụng Hồn Đạo Lữ để chiêu mộ đạo lữ?\n"
+                        + "|7|10% Tam Phẩm|0| - |5|30% Nhị Phẩm|0| - 60% Nhất Phẩm";
+            }
+            player.menuBoard.arrMenu.add(new MenuInfo("Chiêu Mộ", 2081));
+            player.menuBoard.arrMenu.add(new MenuInfo(mResources.REFUSE, 0));
+            player.menuBoard.openUIConfirm(5, null, null, -1);
+        }
+        // Đan Dược (2071-2080) - cộng Tu Vi cho Đạo Lữ (cơ chế giống gameplayopen)
+        // Tu Vi = 10 * (maxTinh - capTinh + 1), nhân/chia 10 theo chênh lệch cấp đan vs cấp Đạo Lữ
+        if (item.template.id >= 2071 && item.template.id <= 2080) {
+            if (player.myDaoLu == null) {
+                player.session.service.addInfo("|1|Không có đạo lữ, không dùng được đan này");
+            } else {
+                openDanDaoLu(player, item, item.template.id - 2071);
+            }
+        }
+        // Mảnh Đà Xá Cổ Đế (2081) - hiển thị thông tin
+        if (item.template.id == 2081) {
+            int soLuong = player.getItemBagQuantityById(2081);
+            player.session.service.addInfo("Mảnh Đà Xá Cổ Đế Ngọc: |7|" + soLuong + "/4|0|\n"
+                    + "Thu thập đủ 4 mảnh để đột phá Đạo Lữ lên Đấu Đế!\n"
+                    + "Dùng qua menu chat |7|dl|0| → Đột Phá Đấu Đế");
+        }
+
         //An danh
         if (item.template.id == 385) {
             int sc = 600;
@@ -406,10 +444,11 @@ public class UseItem {
                 player.session.service.chatTHEGIOI(mResources.EMPTY, mResources.HAVE_THUC_AN, null, 0);
             }
         }
-        // binh snsm
+         // binh snsm
         if (item.template.id >= 1901 && item.template.id <= 1903) {
-            if (player.isExistItem(item.template.iconID) || (!player.isExistItem(23000) && !player.isExistItem(23001) && !player.isExistItem(23002))) {
-                player.setItem(item.template.iconID, 60 * 30, 1, item);
+//            if (player.isExistItem(item.template.iconID) || (!player.isExistItem(23000) && !player.isExistItem(23001) && !player.isExistItem(23002))) {
+            if (item.template.id >= 1901 && item.template.id <= 1903) {
+                player.setItem(item.template.iconID, 60 * 30, 0, item);
                 player.useItemBag(item.indexUI, 1);
             } else {
                 player.session.service.chatTHEGIOI(mResources.EMPTY, mResources.HAVE_THUC_AN, null, 0);
@@ -670,6 +709,54 @@ public class UseItem {
             player.setItem(5829, 3600, 1, 0);
             player.useItemBag(item.indexUI, 1);
         }
+        // use Danh hiệu
+        
+        if (item.isItemDanhhieu()) {
+            for (EffChar effChar : player.aEffChar) {
+                player.removeOptionItem(effChar.item);
+                player.zoneMap.removeEffCharAll(player.charID);
+            }
+            player.aEffChar.clear();
+            player.useDanhHieu(item);
+        }
+        
+//        if (item.isItemDanhhieu()) {
+//            for (EffChar effChar : player.aEffChar) {
+//                player.removeOptionItem(effChar.item);
+//                player.zoneMap.removeEffCharAll(player.charID);
+//            }
+//            player.aEffChar.clear();
+//            player.useDanhHieu(item);
+//            if (player.timeUseDanhhieu > 0) {
+//                player.session.service.chatTHEGIOI(
+//                        mResources.EMPTY,
+//                        String.format(mResources.DELAY_THAO_TAC, Util.gI().getStrTime(player.timeUseDanhhieu)),
+//                        null, 0
+//                );
+//            } else {
+//                if (player.useDanhhieu != null) {
+//                    player.timeUseDanhhieu = 1000;
+//                } else {
+//                    for (EffChar effChar : player.aEffChar) {
+//                        if (effChar.item.template.id == item.template.id) {
+//                            player.useDanhhieu = effChar.item;
+//                        }
+//                    }
+//                }
+//                if (item == player.useDanhhieu) {
+//                    player.removeEffChar(-1, player.useDanhhieu.template.id);
+//                    player.useDanhHieu(null); // tháo
+//                    player.removeOptionItem(item); // xóa option cộng thêm
+//                } else {
+//                    if (player.useDanhhieu != null) {
+//                        player.removeEffChar(-1, player.useDanhhieu.template.id);// sau muốn đè tắt cái này
+//                        player.removeOptionItem(item); // xóa option cộng thêm
+//                    }
+//                    player.useDanhHieu(item); // đổi hoặc gắn mới
+//                }
+//            }
+//        }
+
         //usePetFollowz
 //        if (item.isItemPetFollowz()) {
 //            if (player.timeUsePet > 0) {
@@ -703,6 +790,9 @@ public class UseItem {
         }
         if (item.template.id == 722) {
             UseItem.openCapsuleHong(player, item);
+        }
+        if (item.template.id == 1302) {
+            UseItem.openCapsuleHongNgoc(player, item);
         }
         //Cuong no 2
         if (item.template.id == 1150) {
@@ -840,18 +930,33 @@ public class UseItem {
         if (item.template.id == 1796) {
             OpenHopMu(player, item);
         }
-//        if (item.template.id == 568) {
-//            if(player.myPet == null || player.myPet != null) { //đệ mabu
-//                player.arrItem = new Item[] {item};
-//                player.resetMenu();
-//                player.menuBoard.chat = mResources.REQUEST_CHANGE_PET;
-//                player.menuBoard.arrMenu.add(new MenuInfo(mResources.PET_TRAI_DAT, 417));
-//                player.menuBoard.arrMenu.add(new MenuInfo(mResources.PET_NAMEC, 418));
-//                player.menuBoard.arrMenu.add(new MenuInfo(mResources.PET_XAYDA, 419));
-//                player.menuBoard.arrMenu.add(new MenuInfo(mResources.REFUSE, 0));
-//                player.menuBoard.openUIConfirm(5, null, null, -1);
-//            }
-//        }
+        if (item.template.id == 1806) {
+            OpenQuaHit(player, item);
+        }
+        if (item.template.id == 1807) {
+            OpenPokemon(player, item);
+        }
+        if (item.template.id == 2042) {
+            OpenVanBay(player, item);
+        }
+         if (item.template.id == 2010) {
+            Opencaitrang(player, item);
+        }
+        if (item.template.id == 2045) {
+            Opentuimu(player, item);
+        }
+    if (item.template.id == 568) {
+            if(player.myPet == null || player.myPet != null) { //đệ mabu
+                player.arrItem = new Item[] {item};
+               player.resetMenu();
+                player.menuBoard.chat = mResources.REQUEST_CHANGE_PET;
+               player.menuBoard.arrMenu.add(new MenuInfo(mResources.PET_TRAI_DAT, 417));
+               player.menuBoard.arrMenu.add(new MenuInfo(mResources.PET_NAMEC, 418));
+                player.menuBoard.arrMenu.add(new MenuInfo(mResources.PET_XAYDA, 419));
+                player.menuBoard.arrMenu.add(new MenuInfo(mResources.REFUSE, 0));
+                player.menuBoard.openUIConfirm(5, null, null, -1);
+            }
+        }
         if (item.template.id == 1975) {
             if (player.myPet == null || player.myPet != null) { // đệ tử thường
                 player.arrItem = new Item[]{item};
@@ -864,6 +969,31 @@ public class UseItem {
                 player.menuBoard.openUIConfirm(5, null, null, -1);
             }
         }
+        if (item.template.id == 2043) {
+            if(player.myPet == null || player.myPet != null) { //đệ mabu
+                player.arrItem = new Item[] {item};
+               player.resetMenu();
+                player.menuBoard.chat = mResources.REQUEST_CHANGE_PET;
+               player.menuBoard.arrMenu.add(new MenuInfo(mResources.PET_TRAI_DAT, 542));
+               player.menuBoard.arrMenu.add(new MenuInfo(mResources.PET_NAMEC, 543));
+                player.menuBoard.arrMenu.add(new MenuInfo(mResources.PET_XAYDA, 544));
+                player.menuBoard.arrMenu.add(new MenuInfo(mResources.REFUSE, 0));
+                player.menuBoard.openUIConfirm(5, null, null, -1);
+            }
+        }
+        if (item.template.id == 2044) {
+    player.arrItem = new Item[]{item};
+    player.resetMenu();
+    player.menuBoard.chat = mResources.REQUEST_CHANGE_PET2;
+
+    player.menuBoard.arrMenu.add(new MenuInfo(mResources.PET_TRAI_DAT, 20441));
+    player.menuBoard.arrMenu.add(new MenuInfo(mResources.PET_NAMEC, 20442));
+    player.menuBoard.arrMenu.add(new MenuInfo(mResources.PET_XAYDA, 20443));
+    player.menuBoard.arrMenu.add(new MenuInfo(mResources.REFUSE, 0));
+
+    player.menuBoard.openUIConfirm(5, null, null, -1);
+    return;
+}
         if (item.template.id == 1981) { // đệ tử black
             if (player.myPet == null || player.myPet != null) {
                 player.arrItem = new Item[]{item};
@@ -958,15 +1088,155 @@ public class UseItem {
                 item2.options.add(new ItemOption(50, Util.gI().nextInt(1, 5)));
                 item2.options.add(new ItemOption(77, Util.gI().nextInt(1, 5)));
                 item2.options.add(new ItemOption(103, Util.gI().nextInt(1, 5)));
-                item2.options.add(new ItemOption(80, Util.gI().nextInt(1, 5)));
-                item2.options.add(new ItemOption(81, Util.gI().nextInt(1, 5)));
+//                item2.options.add(new ItemOption(80, Util.gI().nextInt(1, 5)));
+//                item2.options.add(new ItemOption(81, Util.gI().nextInt(1, 5)));
                 item2.options.add(new ItemOption(93, Util.gI().nextInt(1, 5)));
             } else {
                 item2.options.add(new ItemOption(50, Util.gI().nextInt(1, 7)));
                 item2.options.add(new ItemOption(77, Util.gI().nextInt(1, 7)));
                 item2.options.add(new ItemOption(103, Util.gI().nextInt(1, 7)));
-                item2.options.add(new ItemOption(80, Util.gI().nextInt(1, 7)));
-                item2.options.add(new ItemOption(81, Util.gI().nextInt(1, 7)));
+//                item2.options.add(new ItemOption(80, Util.gI().nextInt(1, 7)));
+//                item2.options.add(new ItemOption(81, Util.gI().nextInt(1, 7)));
+                item2.options.add(new ItemOption(73, 0));
+            }
+            player.addItemBag(0, item2);
+            player.session.service.setCombineEff(6, item.template.iconID, item2.template.iconID, -1);
+        } else {
+            player.session.service.chatTHEGIOI(mResources.EMPTY, mResources.BAG_FULL, null, (byte) 0);
+        }
+    }
+    private static void OpenVanBay(Char player, Item item) {
+        int indexUI = player.getEmptyBagIndex();
+        int id = Util.gI().nextInt(0, 100);
+        if (indexUI != -1) {
+            player.useItemBag(item.indexUI, 1);
+            Item item2;
+            int temp = new int[]{1767, 1768, 1563, 1625, 1363, 1513, 1578, 1443}[Util.gI().nextInt(8)];
+            item2 = new Item(temp, false, 1, ItemOption.getOption(temp, 0, 0), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
+            if (id < 99) {
+                item2.options.add(new ItemOption(50, Util.gI().nextInt(5, 15)));
+                item2.options.add(new ItemOption(77, Util.gI().nextInt(5, 15)));
+                item2.options.add(new ItemOption(103, Util.gI().nextInt(5, 15)));
+                item2.options.add(new ItemOption(148, 25));
+                item2.options.add(new ItemOption(84, 0));
+                item2.options.add(new ItemOption(93, Util.gI().nextInt(1, 7)));
+            } else {
+                item2.options.add(new ItemOption(50, Util.gI().nextInt(5, 15)));
+                item2.options.add(new ItemOption(77, Util.gI().nextInt(5, 15)));
+                item2.options.add(new ItemOption(103, Util.gI().nextInt(5, 15)));
+                item2.options.add(new ItemOption(148, 25));
+                item2.options.add(new ItemOption(84, 0));
+                item2.options.add(new ItemOption(73, 0));
+            }
+            player.addItemBag(0, item2);
+            player.session.service.setCombineEff(6, item.template.iconID, item2.template.iconID, -1);
+        } else {
+            player.session.service.chatTHEGIOI(mResources.EMPTY, mResources.BAG_FULL, null, (byte) 0);
+        }
+    }
+     private static void Opencaitrang(Char player, Item item) {
+        int indexUI = player.getEmptyBagIndex();
+        int id = Util.gI().nextInt(0, 100);
+        if (indexUI != -1) {
+            player.useItemBag(item.indexUI, 1);
+            Item item2;
+            int temp = new int[]{198,2032}[Util.gI().nextInt(2)];
+            item2 = new Item(temp, false, 1, ItemOption.getOption(temp, 0, 0), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
+            if (id < 90) {
+                item2.options.add(new ItemOption(50, Util.gI().nextInt(10, 15)));
+                item2.options.add(new ItemOption(77, Util.gI().nextInt(10, 15)));
+                item2.options.add(new ItemOption(103, Util.gI().nextInt(10, 15)));
+                 item2.options.add(new ItemOption(95, Util.gI().nextInt(10, 10)));
+                  item2.options.add(new ItemOption(96, Util.gI().nextInt(10, 10)));
+                item2.options.add(new ItemOption(93, Util.gI().nextInt(1, 7)));
+            } else {
+              item2.options.add(new ItemOption(50, Util.gI().nextInt(10, 15)));
+                item2.options.add(new ItemOption(77, Util.gI().nextInt(10, 15)));
+                item2.options.add(new ItemOption(103, Util.gI().nextInt(10, 15)));
+                 item2.options.add(new ItemOption(95, Util.gI().nextInt(10, 10)));
+                  item2.options.add(new ItemOption(96, Util.gI().nextInt(10, 10)));
+            }
+            player.addItemBag(0, item2);
+            player.session.service.setCombineEff(6, item.template.iconID, item2.template.iconID, -1);
+        } else {
+            player.session.service.chatTHEGIOI(mResources.EMPTY, mResources.BAG_FULL, null, (byte) 0);
+        }
+    }
+
+    private static void Opentuimu(Char player, Item item) {
+    int indexUI = player.getEmptyBagIndex();
+    int id = Util.gI().nextInt(0, 100);
+    if (indexUI == -1) {
+        player.session.service.chatTHEGIOI(mResources.EMPTY, mResources.BAG_FULL, null, (byte) 0);
+        return;
+    }
+
+    player.useItemBag(item.indexUI, 1);
+
+    int temp = Util.gI().nextInt(100) < 70 ? 17 + Util.gI().nextInt(4) : 2046;
+    Item item2 = new Item(temp, false, 1, ItemOption.getOption(temp, 0, 0),
+            mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
+
+    if (temp == 2046) {
+        item2.options.add(new ItemOption(50, Util.gI().nextInt(20, 35)));
+        item2.options.add(new ItemOption(77, Util.gI().nextInt(40, 60)));
+        item2.options.add(new ItemOption(103, Util.gI().nextInt(40, 60)));
+        item2.options.add(new ItemOption(5, Util.gI().nextInt(70, 200)));
+        item2.options.add(new ItemOption(101, Util.gI().nextInt(30, 40)));
+        if (id < 90) item2.options.add(new ItemOption(93, Util.gI().nextInt(1, 5)));
+    }
+
+    player.addItemBag(0, item2);
+    player.session.service.setCombineEff(6, item.template.iconID, item2.template.iconID, -1);
+
+    }
+
+    private static void OpenPokemon(Char player, Item item) {
+        int indexUI = player.getEmptyBagIndex();
+        int id = Util.gI().nextInt(0, 100);
+        if (indexUI != -1) {
+            player.useItemBag(item.indexUI, 1);
+            Item item2;
+            int temp = new int[]{1797, 1798, 1799, 1800, 1801, 1802, 1804, 1805}[Util.gI().nextInt(8)];
+            item2 = new Item(temp, false, 1, ItemOption.getOption(temp, 0, 0), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
+            if (id < 99) {
+                item2.options.add(new ItemOption(50, Util.gI().nextInt(5, 15)));
+                item2.options.add(new ItemOption(77, Util.gI().nextInt(5, 15)));
+                item2.options.add(new ItemOption(103, Util.gI().nextInt(5, 15)));
+                item2.options.add(new ItemOption(93, Util.gI().nextInt(1, 7)));
+            } else {
+                item2.options.add(new ItemOption(50, Util.gI().nextInt(5, 15)));
+                item2.options.add(new ItemOption(77, Util.gI().nextInt(5, 15)));
+                item2.options.add(new ItemOption(103, Util.gI().nextInt(5, 15)));
+                item2.options.add(new ItemOption(73, 0));
+            }
+            player.addItemBag(0, item2);
+            player.session.service.setCombineEff(6, item.template.iconID, item2.template.iconID, -1);
+        } else {
+            player.session.service.chatTHEGIOI(mResources.EMPTY, mResources.BAG_FULL, null, (byte) 0);
+        }
+    }
+
+    private static void OpenQuaHit(Char player, Item item) {
+        int indexUI = player.getEmptyBagIndex();
+        int id = Util.gI().nextInt(0, 100);
+        if (indexUI != -1) {
+            player.useItemBag(item.indexUI, 1);
+            Item item2;
+            int temp = 884;
+            item2 = new Item(temp, false, 1, ItemOption.getOption(temp, 0, 0), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
+            if (id < 99) {
+                item2.options.add(new ItemOption(50, Util.gI().nextInt(10, 25)));
+                item2.options.add(new ItemOption(77, Util.gI().nextInt(10, 25)));
+                item2.options.add(new ItemOption(103, Util.gI().nextInt(10, 25)));
+                item2.options.add(new ItemOption(5, Util.gI().nextInt(40, 80)));
+                item2.options.add(new ItemOption(93, Util.gI().nextInt(1, 5)));
+            } else {
+                item2.options.add(new ItemOption(50, Util.gI().nextInt(10, 25)));
+                item2.options.add(new ItemOption(77, Util.gI().nextInt(10, 25)));
+                item2.options.add(new ItemOption(103, Util.gI().nextInt(10, 25)));
+                item2.options.add(new ItemOption(5, Util.gI().nextInt(40, 80)));
+                item2.options.add(new ItemOption(106, 0));
                 item2.options.add(new ItemOption(73, 0));
             }
             player.addItemBag(0, item2);
@@ -1764,6 +2034,17 @@ public class UseItem {
         }
     }
 
+    private static void openCapsuleHongNgoc(Char player, Item item) {
+        int indexUI = player.getEmptyBagIndex();
+        if (indexUI != -1) {
+            player.useItemBag(item.indexUI, 1);
+            Item item2 = new Item(861, false, Util.gI().nextInt(10, 30), null, mResources.EMPTY, mResources.EMPTY, mResources.EMPTY);
+            player.addItemBag(0, item2);
+        } else {
+            player.session.service.chatTHEGIOI(mResources.EMPTY, mResources.BAG_FULL, null, (byte) 0);
+        }
+    }
+
     private static void openCapsuleHong(Char player, Item item) {
         int indexUI = player.getEmptyBagIndex();
         if (indexUI != -1) {
@@ -1981,5 +2262,58 @@ public class UseItem {
         } else {
             player.session.service.chatTHEGIOI(mResources.EMPTY, mResources.BAG_FULL, null, (byte) 0);
         }
+    }
+
+    /**
+     * Sử dụng Đan Dược cho Đạo Lữ - cộng Tu Vi (port từ gameplayopen).
+     * Công thức Tu Vi:
+     *   base = 10 * (maxTinh(cấp_đạo_lữ) - capTinh_hiện_tại + 1)
+     *   Nếu cấp đạo lữ < cấp đan: base *= 10 mỗi bậc chênh (đan cao hơn → nhiều Tu Vi hơn)
+     *   Nếu cấp đạo lữ > cấp đan: base /= 10 mỗi bậc chênh (đan thấp hơn → ít Tu Vi)
+     *
+     * @param pl      Player sử dụng
+     * @param item    Item đan dược đang dùng
+     * @param capDan  Cấp bậc của đan (0=Đấu Khí, 1=Đấu Giả, ... 9=Đấu Thánh)
+     */
+    private static void openDanDaoLu(Char pl, Item item, int capDan) {
+        int capDaoLu = pl.myDaoLu.pointCapCanhGioi;
+        long tuviAdd = 5 * (ConstDaoLu.getMaxTinh(capDaoLu) - pl.myDaoLu.pointCapTinh + 1);
+
+        if (capDaoLu < capDan) {
+            // Đan cao cấp hơn Đạo Lữ → nhân 10 mỗi bậc chênh
+            for (int i = 0; i < capDan - capDaoLu; i++) {
+                tuviAdd *= 10;
+            }
+        } else if (capDaoLu > capDan) {
+            // Đan thấp hơn Đạo Lữ → chia 10 mỗi bậc chênh
+            for (int i = 0; i < capDaoLu - capDan; i++) {
+                tuviAdd /= 10;
+                if (tuviAdd < 1) {
+                    tuviAdd = 0;
+                    break;
+                }
+            }
+        }
+
+        // Fix Tu Vi âm
+        if (pl.myDaoLu.pointTuVi < 0) {
+            pl.myDaoLu.pointTuVi = 0;
+        }
+        // Giới hạn tràn số
+        if (tuviAdd > 2_000_000_000) {
+            tuviAdd = 2_000_000_000;
+        }
+
+        pl.myDaoLu.pointTuVi += (int) tuviAdd;
+
+        if (tuviAdd > 0) {
+            pl.session.service.addInfo("|4|Đạo lữ đã tăng tu vi thêm " + ((int) tuviAdd)
+                    + "\n|0|Tu Vi hiện tại: |7|" + pl.myDaoLu.pointTuVi);
+        } else {
+            pl.session.service.addInfo("|7|Đan dược và cấp bậc quá chênh lệch, không tăng thêm tu vi!");
+        }
+
+        // Trừ 1 viên đan + cập nhật bag
+        pl.useItemBag(item.indexUI, 1);
     }
 }

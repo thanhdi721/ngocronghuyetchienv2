@@ -4407,7 +4407,23 @@ INSERT INTO `itemtemplate` (`id`, `type`, `gender`, `name`, `description`, `leve
 (2020, 40, 3, 'Chân mệnh Cấp 8', 'Vòng hào quang bừng sáng từ chân ', 1, 0, 30606, -1, 0, 0),
 (2021, 40, 3, 'Chân mệnh Cấp 9', 'Vòng hào quang bừng sáng từ chân ', 1, 0, 30606, -1, 0, 0),
 (2022, 27, 3, 'Đá tinh luyện Cao cấp', 'Vật phẩm tinh luyện', 1, 0, 31695, -1, 0, 0),
-(2023, 27, 3, 'Đá Tẩy tinh luyện Cao cấp', 'Vật phẩm tinh luyện', 1, 0, 31694, -1, 0, 0);
+(2023, 27, 3, 'Đá Tẩy tinh luyện Cao cấp', 'Vật phẩm tinh luyện', 1, 0, 31694, -1, 0, 0),
+-- ======================== Đạo Lữ Items (2070-2081) ========================
+-- Hồn Đạo Lữ - dùng để chiêu mộ Đạo Lữ
+(2070, 27, 3, 'Hồn Đạo Lữ', 'Dùng để chiêu mộ đạo lữ song tu, có 5% chiêu mộ được đạo lữ tam phẩm, 30% nhận được đạo lữ nhị phẩm, còn lại là đạo lữ nhất phẩm', 1, 0, 11959, -1, 0, 1),
+-- 10 loại Đan Dược - nguyên liệu tu luyện Đạo Lữ
+(2071, 27, 3, 'Tụ Khí Tán', 'Đan Dược chuyên dùng cho Đạo Lữ cấp bậc Đấu Khí', 1, 0, 11960, -1, 0, 1),
+(2072, 27, 3, 'Thanh Linh Đan', 'Đan Dược chuyên dùng cho Đạo Lữ cấp bậc Đấu Giả', 1, 0, 11961, -1, 0, 1),
+(2073, 27, 3, 'Địa Linh Đan', 'Đan Dược chuyên dùng cho Đạo Lữ cấp bậc Đấu Sư', 1, 0, 11962, -1, 0, 1),
+(2074, 27, 3, 'Huyền Linh Đan', 'Đan Dược chuyên dùng cho Đạo Lữ cấp bậc Đại Đấu Sư', 1, 0, 11963, -1, 0, 1),
+(2075, 27, 3, 'Ngưng Linh Đan', 'Đan Dược chuyên dùng cho Đạo Lữ cấp bậc Đấu Linh', 1, 0, 11964, -1, 0, 1),
+(2076, 27, 3, 'Hoàng Cực Đan', 'Đan Dược chuyên dùng cho Đạo Lữ cấp bậc Đấu Vương', 1, 0, 11965, -1, 0, 1),
+(2077, 27, 3, 'Thiên Tông Đan', 'Đan Dược chuyên dùng cho Đạo Lữ cấp bậc Đấu Hoàng', 1, 0, 11966, -1, 0, 1),
+(2078, 27, 3, 'Thanh Hồn Đan', 'Đan Dược chuyên dùng cho Đạo Lữ cấp bậc Đấu Tông', 1, 0, 11967, -1, 0, 1),
+(2079, 27, 3, 'Vô Thượng Đan', 'Đan Dược chuyên dùng cho Đạo Lữ cấp bậc Đấu Tôn', 1, 0, 11968, -1, 0, 1),
+(2080, 27, 3, 'Vô Thượng Thánh Đan', 'Đan Dược chuyên dùng cho Đạo Lữ cấp bậc Đấu Thánh', 1, 0, 11969, -1, 0, 1),
+-- Mảnh Đà Xá Cổ Đế - nguyên liệu thăng Đấu Đế
+(2081, 27, 3, 'Mảnh Đà Xá Cổ Đế Ngọc', 'Thu Thập Đủ 4 Mảnh Để Đột Phá Đạo Lữ Lên Cấp Bậc Cao Nhất - Cấp Bậc Đấu Đế!', 1, 0, 11970, -1, 0, 1);
 
 -- --------------------------------------------------------
 

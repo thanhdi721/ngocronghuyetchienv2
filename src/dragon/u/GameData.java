@@ -414,6 +414,54 @@ public class GameData {
                     n++;
                 }
                 res.close();
+                // [ĐẠO LỮ] Kiểm tra item template Đạo Lữ đã load chưa
+                {
+                    int dlCount = 0;
+                    for (int dlId = 2070; dlId <= 2081; dlId++) {
+                        if (ItemTemplate.get((short) dlId) != null) {
+                            dlCount++;
+                        }
+                    }
+                    if (dlCount == 12) {
+                        System.out.println("[DaoLu] OK: 12/12 item templates (2070-2081) đã load.");
+                    } else if (dlCount == 0) {
+                        System.out.println("[DaoLu] CẢNH BÁO: Item template 2070-2081 CHƯA CÓ trong database nro_data!");
+                        System.out.println("[DaoLu] Chạy SQL: INSERT INTO itemtemplate ... từ file sql/nro_daolu.sql");
+                    } else {
+                        System.out.println("[DaoLu] CẢNH BÁO: Chỉ có " + dlCount + "/12 item templates Đạo Lữ!");
+                    }
+
+                    // [FIX CRITICAL] Điền placeholder cho khoảng trống giữa max hiện tại và DaoLu items
+                    // Client cần nhận item template liên tục từ 0 → max. Nếu có khoảng trống (vd: 2059-2069)
+                    // thì updateItem2/3 sẽ NPE → client disconnect.
+                    if (dlCount > 0) {
+                        int oldMax = ItemTemplate.max;
+                        int newMax = 2082; // DaoLu item cuối cùng (2081) + 1
+                        // Điền placeholder cho khoảng trống (nếu có)
+                        for (int gapId = oldMax; gapId < 2070; gapId++) {
+                            if (ItemTemplate.get((short) gapId) == null) {
+                                ItemTemplate placeholder = new ItemTemplate();
+                                placeholder.id = (short) gapId;
+                                placeholder.type = 27;
+                                placeholder.gender = 3;
+                                placeholder.name = "";
+                                placeholder.description = "";
+                                placeholder.level = 0;
+                                placeholder.strRequire = 0;
+                                placeholder.iconID = -1;
+                                placeholder.part = -1;
+                                placeholder.isUpToUp = false;
+                                ItemTemplate.add(placeholder);
+                            }
+                        }
+                        // Cập nhật max để bao gồm DaoLu items
+                        if (newMax > ItemTemplate.max) {
+                            ItemTemplate.max = newMax;
+                            System.out.println("[DaoLu] ItemTemplate.max cập nhật: " + oldMax + " → " + newMax + " (thêm placeholder cho gap " + oldMax + "-2069)");
+                        }
+                    }
+                }
+                System.out.println("Load ItemTemplate: " + ItemTemplate.itemTemplates.size() + " items loaded (max=" + ItemTemplate.max + ")");
                 //THE END
 
                 //____________LOAD SHOPS________________//

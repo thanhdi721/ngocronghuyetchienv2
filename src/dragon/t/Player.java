@@ -428,6 +428,7 @@ public class Player extends Char {
                             super.skill_not_focus((byte) 1, skillF);
                             super.chargeDamage = 5;
                             super.tCharge = 10000;
+                             skillF.lastTimeUseThisSkill = 15000 + System.currentTimeMillis();
                             break;
                         case 12:
                             super.skill_not_focus((byte) 8, skillF);
@@ -546,8 +547,8 @@ public class Player extends Char {
                 if (this.charTemplate.id != 6 && this.charTemplate.id != 8 && this.charTemplate.id != 9 && this.charTemplate.id != 10) {
                     //Super Broly
                     if (this.charTemplate.id == 13) {
-//                        if (super.cHPGoc >= 1000000L) {
-                        if (super.isTaiTao && Util.gI().nextInt(2) == 0) {
+                        if (super.cHPFull >= 2500000) {
+                        //if (super.isTaiTao) {
                             bot = Player.addBoss(14, 0, -1, -1, true, super.cx, super.cy, null, 10000, super.indexXH);
                             bot.arrInMap = super.arrInMap;
                             if (super.numberXH != -1) {
@@ -571,6 +572,7 @@ public class Player extends Char {
                                 }
                             }
                             Server.gI().chatVip(String.format(mResources.BOSS_HAVE, bot.cName, zoneMap.mapTemplate.mapName));
+                      //  }
                         } else if (numberXH != -1) {
                             Char bot2 = Player.addBoss(13, 0, -1, -1, true, super.cx, super.cy, null, 10000, super.indexXH);
                             bot2.cName = super.cName;
@@ -685,6 +687,22 @@ public class Player extends Char {
                         super.zoneMap.join(bot6, 0, -1, -1);
                         Server.gI().chatVip(String.format(mResources.BOSS_HAVE, bot6.cName, zoneMap.mapTemplate.mapName));
                     }
+                    //baby cadic
+                    if (this.charTemplate.id == 192) {
+                        Char bot192 = Player.addBoss(193, 5, -1, -1, true, super.cx, super.cy, null, -1, super.indexXH);
+                        super.zoneMap.join(bot192, 0, -1, -1);
+                        Server.gI().chatVip(String.format(mResources.BOSS_HAVE, bot192.cName, zoneMap.mapTemplate.mapName));
+                    }
+                    if (this.charTemplate.id == 193) {
+                        Char bot193 = Player.addBoss(194, 5, -1, -1, true, super.cx, super.cy, null, -1, super.indexXH);
+                        super.zoneMap.join(bot193, 0, -1, -1);
+                        Server.gI().chatVip(String.format(mResources.BOSS_HAVE, bot193.cName, zoneMap.mapTemplate.mapName));
+                    }
+//                    if (this.charTemplate.id == 208) {
+//                        Char bot192 = Player.addBoss(209, 5, -1, -1, true, super.cx, super.cy, null, -1, super.indexXH);
+//                        super.zoneMap.join(bot192, 0, -1, -1);
+//                        Server.gI().chatVip(String.format(mResources.BOSS_HAVE, bot192.cName, zoneMap.mapTemplate.mapName));
+//                    }
                 }
                 if (this.charTemplate.type == 9 && this.isPlayerId != -1) {
                     Map map = Map.getMapServer(Server.gI().arrMapMabu[Util.gI().nextInt(Server.gI().arrMapMabu.length)]);
@@ -786,6 +804,12 @@ public class Player extends Char {
                 }
                 if (this.charTemplate.id == 72) {
                     Char player = super.findBossInMapById(73);
+                    if (player != null) {
+                        player.changeTypePk(5);
+                    }
+                }
+                if (this.charTemplate.id == 208) {
+                    Char player = super.findBossInMapById(209);
                     if (player != null) {
                         player.changeTypePk(5);
                     }
@@ -1147,6 +1171,45 @@ public class Player extends Char {
         petz.charID = -charz.charID;
         petz.cName = mResources.MABU;
         petz.headDefault = 297;
+        petz.arrItemBag = new Item[20];
+        petz.arrItemBox = new Item[20];
+        petz.arrItemBody = new Item[Char.MAXBODY_PET];
+        petz.cgender = (byte) charz.cgender;
+        petz.nClassId = 3;
+        petz.cHP = petz.cHPGoc = Util.gI().nextInt(800, 3000);
+        petz.cMP = petz.cMPGoc = Util.gI().nextInt(800, 3000);
+        petz.cDamGoc = Util.gI().nextInt(28, 60);
+        petz.cDefGoc = Util.gI().nextInt(20, 50);
+        petz.cCriticalGoc = Util.gI().nextInt(1, 3);
+        petz.cTiemNang = 2000;
+        petz.cPower = 1500000;
+        petz.cStamina = petz.cMaxStamina = 1000;
+        petz.nextSkillPet(0, 0);
+        petz.myChar = charz;
+        petz.updateAll();
+        charz.myPet = petz;
+        charz.session.service.petInfo1();
+    }
+        public static void CellnhiInfo(Char charz,int gender) {
+        if (charz.myPet != null) {
+            if (charz.myPetz().zoneMap != null) {
+                charz.myPetz().zoneMap.exit(charz.myPetz(), 0);
+            }
+            charz.myPet = null;
+        }
+        Char petz = new Char();
+        petz.levelpet = 0;
+        petz.isBienHinh = false;
+        petz.cry = true;
+        petz.me = false;
+        petz.isBaby = false;
+        petz.isMabu = 0;
+        petz.iscellnhi = 2;
+        petz.charID = -charz.charID;
+        petz.cName = mResources.CELLNHI;
+        petz.headDefault = 1437;
+        petz.bodyDefault = 1438;
+        petz.legDefault  = 1439;
         petz.arrItemBag = new Item[20];
         petz.arrItemBox = new Item[20];
         petz.arrItemBody = new Item[Char.MAXBODY_PET];

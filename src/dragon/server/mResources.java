@@ -47,10 +47,28 @@ public class mResources {
     public static final String UPDATE_MAGICTREES = "UPDATE `magictrees` SET `level` = '%d', `currPeas` = '%d', `miliseconds` = '%d', `isUpdate` = %b WHERE `playerId` = '%d' LIMIT 1";
     public static final String UPDATE_ARRFRIENDS = "UPDATE `arrfriends` SET `arrFriend` = '%s' WHERE `playerId` = '%d' LIMIT 1";
     public static final String UPDATE_ARRAMUS = "UPDATE `arramus` SET `arrAmu` = '%s' WHERE `playerId` = '%d' LIMIT 1";
-    public static final String UPDATE_PETZS = "UPDATE `petzs` SET `have` = true, `name` = '%s', `head` = '%d', `body` = '%d', `leg` = '%d', `cPower` = '%d', `cPowerLimit` = '%d', `cgender` = '%d', `nClassId` = '%d', `cHPGoc` = '%d', `cMPGoc` = '%d', `cDamGoc` = '%d', `cDefGoc` = '%d', `cCriticalGoc` = '%d', `cTiemNang` = '%d', `petStatus` = '%d', `cHP` = '%d', `cMP` = '%d', `cStamina` = '%d', `cMaxStamina` = '%d', `timeHS` = '%d', `timeHopThe` = '%d', `isBaby` = %b, `isHopThe` = '%d', `arrItemBody` = '%s', `skills` = '%s', `isMabu` = '%d',`isBlack` = %b, `levelPet` = '%d' WHERE `playerId` = '%d' LIMIT 1";
-    public static final String UPDATE_PETZS2 = "UPDATE `petzs` SET `have` = false, `name` = '', `head` = '-1', `body` = '-1', `leg` = '-1', `cPower` = '0', `cPowerLimit` = '0', `cgender` = '-1', `nClassId` = '-1', `cHPGoc` = '0', `cMPGoc` = '0', `cDamGoc` = '0', `cDefGoc` = '0', `cCriticalGoc` = '0', `cTiemNang` = '0', `petStatus` = '0', `cHP` = '0', `cMP` = '0', `cStamina` = '1000', `cMaxStamina` = '1000', `timeHS` = '-1', `timeHopThe` = '-1', `isBaby` = false, `isHopThe` = '0', `arrItemBody` = '[]', `skills` = '[]', `isMabu` = '0',`isBlack` = false, `levelPet` = '0' WHERE `playerId` = '%d' LIMIT 1";
+    public static final String UPDATE_PETZS = "UPDATE `petzs` SET `have` = true, `name` = '%s', `head` = '%d', `body` = '%d', `leg` = '%d', `cPower` = '%d', `cPowerLimit` = '%d', `cgender` = '%d', `nClassId` = '%d', `cHPGoc` = '%d', `cMPGoc` = '%d', `cDamGoc` = '%d', `cDefGoc` = '%d', `cCriticalGoc` = '%d', `cTiemNang` = '%d', `petStatus` = '%d', `cHP` = '%d', `cMP` = '%d', `cStamina` = '%d', `cMaxStamina` = '%d', `timeHS` = '%d', `timeHopThe` = '%d', `isBaby` = %b, `isHopThe` = '%d', `arrItemBody` = '%s', `skills` = '%s', `isMabu` = '%d',`isBlack` = %b, `levelPet` = '%d', `iscellnhi` = '%d' WHERE `playerId` = '%d' LIMIT 1";
+    public static final String UPDATE_PETZS2 = "UPDATE `petzs` SET `have` = false, `name` = '', `head` = '-1', `body` = '-1', `leg` = '-1', `cPower` = '0', `cPowerLimit` = '0', `cgender` = '-1', `nClassId` = '-1', `cHPGoc` = '0', `cMPGoc` = '0', `cDamGoc` = '0', `cDefGoc` = '0', `cCriticalGoc` = '0', `cTiemNang` = '0', `petStatus` = '0', `cHP` = '0', `cMP` = '0', `cStamina` = '1000', `cMaxStamina` = '1000', `timeHS` = '-1', `timeHopThe` = '-1', `isBaby` = false, `isHopThe` = '0', `arrItemBody` = '[]', `skills` = '[]', `isMabu` = '0',`isBlack` = false, `levelPet` = '0' ,`iscellnhi` = '0' WHERE `playerId` = '%d' LIMIT 1";
     public static final String UPDATE_ARRAYS = "UPDATE `arrays` SET `array` = '%s' WHERE `playerId` = '%d' LIMIT 1";
     public static final String UPDATE_ARRTEXTTIME = "UPDATE `arrtexttime` SET `textTime` = '%s' WHERE `playerId` = '%d' LIMIT 1";
+
+    // [ĐẠO LỮ] SQL queries cho bảng daolus
+    public static final String QUERY_SELECT_DAOLUS = "SELECT * FROM `daolus` WHERE `playerId` = '%d' LIMIT 1;";
+    public static final String INSERT_DAOLUS = "INSERT INTO `daolus` (`playerId`) VALUES ('%d');";
+    public static final String UPDATE_DAOLUS = "UPDATE `daolus` SET `have` = 1, `name` = '%s', `typeDaoLu` = '%d', `cgender` = '%d', `status` = '%d', `pointTuVi` = '%d', `pointCapTinh` = '%d', `pointCapCanhGioi` = '%d', `timeThangCap` = '%d', `isTransform` = %b, `isMacDo` = %b, `var2` = '%d', `cPower` = '%d', `cPowerLimit` = '%d', `cHPGoc` = '%d', `cMPGoc` = '%d', `cDamGoc` = '%d', `cDefGoc` = '%d', `cCriticalGoc` = '%d', `cTiemNang` = '%d', `cHP` = '%d', `cMP` = '%d', `cStamina` = '%d', `cMaxStamina` = '%d', `arrItemBody` = '%s', `skills` = '%s' WHERE `playerId` = '%d' LIMIT 1";
+    public static final String UPDATE_DAOLUS_RESET = "UPDATE `daolus` SET `have` = 0 WHERE `playerId` = '%d' LIMIT 1";
+
+    // [Điểm danh] Chuỗi đăng nhập 7 ngày – bảng login_streak (DB nro_root)
+    public static final String QUERY_SELECT_LOGIN_STREAK = "SELECT `lastLoginDate`, `streakDays` FROM `login_streak` WHERE `playerId` = '%d' LIMIT 1;";
+    public static final String INSERT_LOGIN_STREAK = "INSERT INTO `login_streak` (`playerId`, `lastLoginDate`, `streakDays`) VALUES ('%d', '%s', '%d');";
+    public static final String UPDATE_LOGIN_STREAK = "UPDATE `login_streak` SET `lastLoginDate` = '%s', `streakDays` = '%d' WHERE `playerId` = '%d' LIMIT 1;";
+    public static final String UPSERT_LOGIN_STREAK = "INSERT INTO `login_streak` (`playerId`, `lastLoginDate`, `streakDays`) VALUES ('%d', '%s', '%d') ON DUPLICATE KEY UPDATE `lastLoginDate` = VALUES(`lastLoginDate`), `streakDays` = VALUES(`streakDays`);";
+    
+    /** Battle Pass / Hành trình mùa */
+    public static final String QUERY_SEASON_PASS = "SELECT `level`, `exp`, `passType`, `lastClaimLevel` FROM `season_pass` WHERE `playerId` = '%d' AND `seasonId` = '%s' LIMIT 1;";
+    public static final String QUERY_SEASON_PASS_TASK = "SELECT `fideKillCount`,`tieuDoiTruongKillCount`,`superBojackKillCount`,`kingKongKillCount`,`onlineMinutes`,`monsterKillCount`,`monsterMilestoneGiven`,`pvpKillCount` FROM `season_pass_task` WHERE `playerId` = '%d' AND `seasonId` = '%s' LIMIT 1;";
+    public static final String UPSERT_SEASON_PASS = "INSERT INTO `season_pass` (`playerId`,`seasonId`,`level`,`exp`,`passType`,`lastClaimLevel`) VALUES (%d,'%s',%d,%d,%d,%d) ON DUPLICATE KEY UPDATE `level`=VALUES(`level`),`exp`=VALUES(`exp`),`passType`=VALUES(`passType`),`lastClaimLevel`=VALUES(`lastClaimLevel`);";
+    public static final String UPSERT_SEASON_PASS_TASK = "INSERT INTO `season_pass_task` (`playerId`,`seasonId`,`fideKillCount`,`tieuDoiTruongKillCount`,`superBojackKillCount`,`kingKongKillCount`,`onlineMinutes`,`monsterKillCount`,`monsterMilestoneGiven`,`pvpKillCount`) VALUES (%d,'%s',%d,%d,%d,%d,%d,%d,%d,%d) ON DUPLICATE KEY UPDATE `fideKillCount`=VALUES(`fideKillCount`),`tieuDoiTruongKillCount`=VALUES(`tieuDoiTruongKillCount`),`superBojackKillCount`=VALUES(`superBojackKillCount`),`kingKongKillCount`=VALUES(`kingKongKillCount`),`onlineMinutes`=VALUES(`onlineMinutes`),`monsterKillCount`=VALUES(`monsterKillCount`),`monsterMilestoneGiven`=VALUES(`monsterMilestoneGiven`),`pvpKillCount`=VALUES(`pvpKillCount`);";
     public static final String INSUFFICIENT_GOLD_CHATTHEGIOI = "Bạn không đủ ngọc để chat khênh thế giới";
     public static final String BAG_FULL = "Hành trang đã đầy.";
     public static final String NPC_SAY_DEFAULT = "Chào các bạn";
@@ -72,6 +90,7 @@ public class mResources {
     public static final String SHOP_HEAD = "Tiệm Hớt tóc";
     public static final String SAY_SANTA = "Xin chào, ta có một số vật phẩm đặt biệt cậu có muốn xem không?";
     public static final String SAY_ADMIN = "Xin chào, cửa hàng của ta chỉ bán đồ vip?";
+    public static final String SAY_NOEL = "Xin chào, Trang Trí Cây Thông Noel Để Nhận Phần Quà Hấp Dẫn!";
     public static final String AGREE = "Đồng ý";
     public static final String REFUSE = "Từ chối";
     public static final String X1_TV = "thỏi vàng\nx1";
@@ -90,6 +109,7 @@ public class mResources {
     public static final String ZONE_FULL_PLAYER = "Khu vực đầy";
     public static final String SAY_DR_BRIEF = "Tàu Vũ Trụ của ta có thể đưa cậu đến hành tinh khác chỉ trong 3 giây. Cậu muốn đi đâu?";
     public static final String SHOP_BUA = "Cửa hàng Bùa";
+    public static final String SACH_TUYET_KY1 = "Sách tuyệt kỹ";
     public static final String SHOP_BUA_1H = "Bùa Dùng 1 giờ";
     public static final String SHOP_BUA_8H = "Bùa Dùng 8 giờ";
     public static final String SHOP_BUA_30D = "Bùa Dùng 1 tháng";
@@ -112,6 +132,13 @@ public class mResources {
     public static final String PROTECTED_BROKEN = "Khiên năng lượng đã bị vỡ";
     public static final String OK_TRITHUONG = "Cảm ơn %s đã cứu mình";
     public static final String EPSAO_TRANGBI = "Ép sao trang bị";
+    public static final String MUA_VIP = "MUA VIP";
+    public static final String MUA_VIP_1  = "MUA VIP1 ";
+    public static final String MUA_VIP_2 = "MUA VIP2 ";
+    public static final String MUA_VIP_3  = "MUA VIP3 ";
+    public static final String MUA_VIP_4  = "MUA VIP4 ";
+
+
     public static final String PHALEHOA_TRANGBI = "Pha lê hóa trong bị";
     public static final String CHUYENHOA_TRANGBI = "Chuyển hóa Trang bị";
     public static final String NANG_SET_KICH_HOAT = "Nâng Cấp SKH VIP";
@@ -119,6 +146,7 @@ public class mResources {
     public static final String DOI_CHAN_THIEN_TU = "Đổi chân\n Thiên tử";
     public static final String NANG_CAP_THIEN_TU = "Nâng cấp\n Chân mệnh";
     public static final String SAY_BA_HAT_MIT_DT = "Ngươi muốn nâng cấp đệ tử nào?";
+    public static final String SAY_BA_HAT_MIT_MUA_VIP = "DẠI GIA MUA VIP MẤY NÀO";
     public static final String NANG_CAP_DE_TU_BLACK = "Black";
     public static final String NANG_DE_TU_BLACK = "Vào hành trang\n trước hết ngươi cần có đệ tử Black\nChọn x10 đá nguyền ấn\n Và 10 thỏi vàng\nSau đó chọn 'Nâng cấp'";
     public static final String NANG_DE_TU_SAY = "Ta sẽ phù phép\ncho đệ tử của ngươi\nlên cấp độ cao hơn";
@@ -195,13 +223,14 @@ public class mResources {
     public static final String SAY_THAN_VU_TRU = "Con đã mạnh nhất phía bắc vũ trụ này rồi đấy\n nhưng ngoài vũ trụ bao la kia vẫn có kẻ mạnh hơn nhìu\ncon cần phải luyện tập để mạnh hơn nữa";
     public static final String SAY_THAN_VU_TRU_2 = "Ta sẽ đưa con đi";
     public static final String DOWN_THAN_DIEN = "Về thần điện";
+    public static final String REQUEST_CHANGE_PET2 = "Bạn có chắc thay thế đệ tử hiện tại bằng đệ tử mới\nNếu còn trang bị sẽ bị xóa vĩnh viễn\nmở trứng sẽ có tỉ lệ \n 50% đệ tử thường \n20% đệ mabu tăng 10% chỉ số \n 10% đệ cell tăng 15% chỉ số";
     public static final String GO_THANH_DIA_KIAO = "Thánh địa Kiao";
     public static final String DI_CHUYEN = "Di chuyển";
     public static final String SAY_TO_SU_KAIO_1 = "Tập luyện với Tổ sư Kaio sẽ tăng 0 sức mạnh mỗi phút, có thể tăng giảm tùy vào khả năng đánh quái của con";
     public static final String SAY_TO_SU_KAIO_2 = "Con muốn nâng giới hạn sức mạnh cho bản thân hay cho đệ tử?";
     public static final String SAY_TO_SU_KAIO_3 = "Ta sẽ truyền năng lượng giúp con mở giới hạn sức mạnh\ncủa bản thân lên %s\nLưu ý: từ 40 tỉ trở lên sức mạnh của con sẽ tăng chậm đáng kể";
     public static final String SAY_OSIN = "Ta có thể giúp gì cho ngươi ?";
-    public static final String SAY_MIAN = "Tải game tại ngocrongzeno.com\nGiftcode: [ zeno1, zeno2, zeno3, zeno4]\nĐệ Thường: [ Giết Super ]\nĐệ MaBu: [ Boss 22H ]\nĐệ Black: [ Săn Boss Zamasu ]\nNgọc Rồng: [ Boss Tương Lai, Ngục Tù, Doanh Trại, BDKB, Sự Kiện ]\nẤp Tứng Linh Thú: [ Bên Trái Siêu Thị ]\nDanh Hiệu: [ Hành Tinh Ngục Tù 2 ]";
+    public static final String SAY_MIAN = "Tải game tại nrohuyetchien.click\nGiftcode: [ cocaiconcac ]\nĐệ Thường: [ Giết Super ]\nĐệ MaBu: [ Boss 22H ]\nĐệ Black: [ Săn Boss Zamasu ]\nNgọc Rồng: [ Boss Tương Lai, Ngục Tù, Doanh Trại, BDKB, Sự Kiện ]\nẤp Tứng Linh Thú: [ Bên Trái Siêu Thị ]\nDanh Hiệu: [ Hành Tinh Ngục Tù 2 ]";
     public static final String NHAN_VANG = "Nhận 500m vàng";
     public static final String NHAN_NGOC = "Nhận 50k ngọc";
     public static final String SAY_CA_LICH = "Chào chú, cháu có thể giúp gì?";
@@ -276,7 +305,7 @@ public class mResources {
     public static final String BIEN_DI = "Biến đi";
     public static final String THUI_QUA = "Thúi quá";
     public static final String NHAN_DETU = "Nhận đệ tử";
-    public static final String TB = "Chào mừng bạn đến với thế giới Ngọc Rồng   Phiên bản chính thức từ ngocrongzeno.com";
+    public static final String TB = "Chào mừng bạn đến với thế giới Ngọc Rồng   Phiên bản chính thức từ nrohuyetchien.click";
     public static final String QUERY_SELECT_USER_TONG_NAP = "SELECT `tongnap` FROM `account` WHERE `id` = '%d' LIMIT 1;";
 
     public static final String SAY_NOI_TAI = "Nội tại là một kỹ năng bị động hỗ trợ đặc biệt\nBạn có muốn mở hoặc thay đổi nội tại không?";
@@ -515,6 +544,7 @@ public class mResources {
     public static final String UM_BA_LA = "Úm ba la xì bùa";
     public static final String PHET = "phẹt";
     public static final String MABU = "Mabư";
+    public static final String CELLNHI = "cell nhi";
     public static final String CRY = "Oa oa oa";
     public static final String BIEN_HINH = "bien hinh";
     public static final String SAY_QUA_TRUNG1 = "Hãy thu thập năng lượng\nbằng cách làm nhiệm vụ hàng ngày\ntại Bò Mộng từ mức độ khó trở lên\nđể trứng mau nở nhé.";
@@ -777,9 +807,12 @@ public class mResources {
     public static final String GO_BILL = "Đến\nhành tinh\nBill";
     public static final String SHOP_2 = "Cửa\nhàng";
     public static final String GO_NGUC_TU = "Đến\nhành tinh\nNgục tù";
+    public static final String GO_BILL_2 = "Đến\nhành tinh\nBill 2";
     public static final String SAY_BILL_4 = "...";
     public static final String GO_KAIO_2 = "Về\nthánh địa\nKaio";
-    public static final String SAY_SHOP_KY_GUI_1 = "Cửa hàng chúng tôi chuyên mua bán hàng hiệu, cám hơn các bạn đã ghé thăm.|7| Lưu ý : |9| Cửa hàng kí gửi Thỏi Vàng : Kí Dưới 9999 sẽ là đơn vị thỏi vàng\b Khi kí gửi trên 9999 cụ thể là 10000 đến 2 tỉ sẽ là đơn vị vàng bình thường";
+        public static final String SAY_SHOP_KY_GUI_1 = "Chức Năng Hiện Đang Bảo Trì!";
+
+//    public static final String SAY_SHOP_KY_GUI_1 = "Cửa hàng chúng tôi chuyên mua bán hàng hiệu, cám hơn các bạn đã ghé thăm.|7| Lưu ý : |9| Cửa hàng kí gửi Thỏi Vàng : Kí Dưới 9999 sẽ là đơn vị thỏi vàng\b Khi kí gửi trên 9999 cụ thể là 10000 đến 2 tỉ sẽ là đơn vị vàng bình thường";
     public static final String SHOP_KY_GUI = "Mua bán\nKý gửi";
     public static final String SHOP_KY_GUI_2 = "Đơn vị\nThỏi vàng";
     public static final String SAY_SHOP_KY_GUI_2 = "Cửa hàng chuyên nhận ký gửi mua bán vật phẩm\bChỉ với %s ngọc và %d%% phí ký gửi\bGiá trị ký gửi %s-%s vàng hoặc %s-%s ngọc\bMột người bán, vạn người mua, mai dô mại dô";
@@ -877,6 +910,8 @@ public class mResources {
     public static final String SAY_MABU_MAP = "Xin chào, ta có một số vật phẩm ngươi có muốn xem không?";
     public static final String THINH_HANH = "Thịnh hành";
     public static final String TRANG_BI = "Trang bị";
+    public static final String DANH_HIEU1 = "Sop Danh Hiệu";
+    public static final String SHOP_VIP = "Shop VIP";
     public static final String SAY_WISH_1 = "Thử đánh với ta xem nào.\nNgươi còn %d lượt nữa cơ mà.";
     public static final String SAY_WISH2 = "Ta đang đói bụng, nếu có đồ ăn ngon thì ta sẽ tiếp tục tập với ngươi";
     public static final String LEVEL_2 = "[LV:%d]";
@@ -920,6 +955,8 @@ public class mResources {
     public static final String SAY_DAD_1 = "Rồng vô cực sẽ ban 1 điều ước cho toàn bộ vũ trụ của ngươi.\nHãy mau chọn, điều ước nào được chọn nhiều nhất sẽ được thực hiện\nLưu ý: điều ước chỉ tác dụng với ai đang online tại thời điểm thực hiện điều ước";
     public static final String WISH_PERCENT = "%s\n(%.1f %%)";
     public static final String X2_TEXT_RVC = "Rồng vô cực X2 TN,SM đánh quái";
+    public static final String AD_SDHPKI_TEXT_1d = "10% HP KI SD trong vòng 1 ngày";
+
     public static final String CHAT_DAD_3 = "Ta sẽ gọi Rồng Vô Cực\nVào lúc 21h thứ 7 hàng tuần.";
     public static final String CHAT_DAD_2 = "Từ 21h-21h30 các ngươi có 30p để chọn điều ước.";
     public static final String CHAT_DAD_1 = "Từ 21h Rồng Vô Cực sẽ xuất hiện tại làng trước nhà.";
@@ -973,7 +1010,7 @@ public class mResources {
     public static final String TUNG_TUNG_TUNG2 = "tùng tùng tùng xèn";
     public static final String EVENT_TETNGUYENDAN = "Sự Kiện\nTết 2025";
     public static final String SAY_QUY_LAO_KAME_20 = "Sự Kiện Tết Nguyên Đán 2025 nhận quả khủng đang diễn ra\nChi tiết sự kiện tại Group và Page Dragon Lôi Lạc No1";
-    public static final String TB_ACC = "Chức năng bảo trì để đăng ký tài khoản truy cập http://ngocrongzeno.com";
+    public static final String TB_ACC = "Chức năng bảo trì để đăng ký tài khoản truy cập http://nrohuyetchien.click";
     public static final String AD_SDHPKI_TEXT = "+50k sức đánh, HP,KI";
     public static final String YOU_INVATE_DRAGON_3 = "Bạn có muốn gọi Rồng Băng không?";
     public static final String SAY_RONG_THAN_5 = "Ta sẽ ban cho ngươi 1 điều ước, ngươi có 5 phút, hãy chọn đi:\n1) Đổi kỹ năng 3 và 4 của đệ tử (Lưu ý: Kỹ năng mới có cấp 1 và vẫn có thể trùng lại với kỹ năng vốn có).\n2) 1 giờ x2 TN,SM đánh quái.\n3) Quả trứng Mabu 7 ngày.\n4) +50k sức đánh, HP, KI trong 1 giờ.";
@@ -1004,9 +1041,11 @@ public class mResources {
     public static final String ADD_LINHLUC_1 = "2 Đá\nLinh lực\n1 giờ";
     public static final String ADD_LINHLUC_2 = "15 Đá\nLinh lực\n10 giờ";
     public static final String ADD_LINHLUC_3 = "30 Đá\nLinh lực\n1 ngày";
+    public static final String ADD_LINHLUC_4 = "150 Đá\nLinh lực\n5 ngày";
     public static final String SAY_QUA_TRUNG9 = "Dùng 2 Đá linh lực + 50 triệu vàng sẽ giảm 1 giờ nở trứng";
     public static final String SAY_QUA_TRUNG10 = "Dùng 15 Đá linh lực + 1 tỉ vàng sẽ giảm 10 giờ nở trứng";
     public static final String SAY_QUA_TRUNG11 = "Dùng 30 Đá linh lực + 4 Thỏi Vàng sẽ giảm 1 ngày nở trứng";
+    public static final String SAY_QUA_TRUNG13 = "Dùng 150 Đá linh lực + 20 Thỏi Vàng sẽ giảm 5 ngày nở trứng";
     public static final String SAY_QUA_TRUNG12 = "Bạn cần nguyên liệu:";
     public static final String XI_HUT = "Xí hụt.";
     public static final String DAMAGE_CRIT = "Sát thương chí mạng +%d%%";
@@ -1134,7 +1173,7 @@ public class mResources {
     public static final String PRIZE_SIEU_CAP2 = "Siêu cấp 2";
     public static final String PRIZE_SIEU_CAP3 = "Siêu cấp 3";
     public static final String CHAT_FUTURE1 = "Bạn đã đến tương lai, khi chết ở đây bạn sẽ bị giảm sức mạnh và tiềm năng";
-    public static final String HD_DHVT = "Lịch thi đấu trong ngày\bGiải Nhi Đồng :8,14,18h \bGiải Siêu Cấp 1:9h,13h,19h\bGiải Siêu cấp 2:10h,15h,20h\bGiải Siêu cấp 3:11h,16h,21h\bGiải Ngoại hạng:12h,17h,22h,23h\nGiải thưởng khi thắng vòng\bGiải Nhi Đồng : 50 ngọc \bGiải Siêu Cấp 1: 100 ngọc \bGiải Siêu cấp 2: 200 ngọc \bGiải Siêu cấp 3: 300 ngọc \bGiải Ngoại hạng: 50tr Vàng \b Vô Địch : 1 Cúp Vàng \nLệ phí đăng ý giải đấu \bGiải Nhi Đồng : 50 ngọc \bGiải Siêu Cấp 1: 100 ngọc \bGiải Siêu cấp 2: 200 ngọc \bGiải Siêu cấp 3: 300 ngọc \bGiải Ngoại hạng: 50tr Vàng \nKhi win mỗi vòng bạn sẽ được thưởng 1 cúp vàng \b Vô địch bạn sẽ được cúp vàng dùng nó đổi quà tại Npc Mabu tại Đảo Kame\nVui lòng đến đúng giờ để đăng kí thi đấu.";
+    public static final String HD_DHVT = "Lịch thi đấu trong ngày\bGiải Nhi Đồng :8,14,18h \bGiải Siêu Cấp 1:9h,13h,19h\bGiải Siêu cấp 2:10h,15h,20h\bGiải Siêu cấp 3:11h,16h,21h\bGiải Ngoại hạng:12h,17h,22h,23h\nGiải thưởng khi thắng vòng\bGiải Nhi Đồng : 1 Cup Bạc \bGiải Siêu Cấp 1: 1 Cup Bạc \bGiải Siêu cấp 2: 1 Cup Bạc \bGiải Siêu cấp 3: 1 Cup Bạc \bGiải Ngoại hạng: 1 Cup Bạc \b Vô Địch : 1 Cúp Vàng \nLệ phí đăng ý giải đấu \bGiải Nhi Đồng : 50 ngọc \bGiải Siêu Cấp 1: 100 ngọc \bGiải Siêu cấp 2: 200 ngọc \bGiải Siêu cấp 3: 300 ngọc \bGiải Ngoại hạng: 50tr Vàng \nKhi win mỗi vòng bạn sẽ được thưởng 1 cúp vàng \b Vô địch bạn sẽ được cúp vàng dùng nó đổi quà tại Npc Mabu tại Đảo Kame\nVui lòng đến đúng giờ để đăng kí thi đấu.";
     public static final String USING_ITEM = "Đang sử dụng, không thể dùng thêm";
     public static final String LEVEL_TOO_HIGH = "Trình độ đối phương quá cao không thể thực hiện";
     public static final String GIAO_RUA_CON = "Giao\nRùa con";
@@ -1243,9 +1282,9 @@ public class mResources {
     public static final String SAY_SUKIEN2 = "Trong thời gian mùa 1 diễn ra\n(từ 20/8/2025 đến hết 20/9/2025)\nTạo nhân vật mới sẽ được nhiều GiftCode miễn phí\nNếu nâng cấp VIP sẽ được nhận nhiều ưu đãi hơn nữa.\nLưu ý: nâng cấp VIP chỉ được 3 lần mỗi mùa";
     public static final String VIP_NUMBER = "Vip %d";
     public static final String POINT_SEASON = "%d\nđiểm mùa\n[%d]";
-    public static final String SAY_SUKIEN3 = "Nâng cấp VIP 1 bạn sẽ được\nNhận ngay 20 tỉ vàng, 4999 Bí Kíp Tuyệt Kĩ\n299 Tinh Thể ,10 quả trứng linh thú\n10 Thẻ Đội Trưởng Vàng,5 Thẻ Rồng Thần Namek\nTặng 1 Đệ tử Mabu, 99 viên Đá bảo vệ khóa\nCải trang Black Goku SSJ White Vĩnh Viễn\nThần chết cute Vĩnh viễn\nPet Gas hạn sử dụng Vĩnh viễn.\nQuả bóng siêu việt 30 ngày.\nDanh Hiệu Vip 1 3% HP KI SD 30 Ngày.";
-    public static final String SAY_SUKIEN4 = "Nâng cấp VIP 2 bạn sẽ được\nNhận ngay 10 tỉ vàng, 2000 Bí Kíp Tuyệt Kĩ\n199 Tinh Thể ,5 quả trứng linh thú\n5 Thẻ Đội Trưởng Vàng,2 Thẻ Rồng Thần Namek\nTặng 1 Đệ tử Mabu, 30 viên Đá bảo vệ khóa\nCải trang Black Goku SSJ White 60 ngày\nThần chết cute 30 ngày\nPet Gas hạn sử dụng 30 ngày.\nQuả bóng siêu việt 15 ngày.\nDanh Hiệu Vip 2 2% HP KI SD 30 Ngày.";
-    public static final String SAY_SUKIEN5 = "Nâng cấp VIP 3 bạn sẽ được\nNhận ngay 5 tỉ vàng, 999 Bí Kíp Tuyệt Kĩ\n99 Tinh Thể ,1 quả trứng linh thú\n3 Thẻ Đội Trưởng Vàng\nTặng 1 Đệ tử Mabu, 10";
+    public static final String SAY_SUKIEN3 = "Nâng cấp VIP 3 bạn sẽ nhận được\n 2000 thỏi vàng khóa \n 50 túi mù \n  2 bộ ngọc rồng từ 1 tới 7  sao \n 10 bộ ngọc rồng băng \n 15 bình tnsm x3 x5 x7\n danh hiệu VIP 3.";
+    public static final String SAY_SUKIEN4 = "Nâng cấp VIP 2 bạn sẽ nhận được\n 500 thỏi vàng khóa \n 5 bộ ngọc rồng băng \n 30 túi mù \n 5 bình tnsm x3 x5 x7 \n 10v 3s \n trứng bư \n danh hiệu VIP 2 .";
+    public static final String SAY_SUKIEN5 = "Nâng cấp VIP 1 bạn sẽ nhận được \n 200 thỏi vàng khóa \n 1 bộ ngọc rồng băng \n 3 hộp túi mù \n 2 bình tnsm x3 x5 x7 \n danh hiệu VIP 1";
     public static final String SAY_SUKIEN6 = "Bạn đang có đệ tử, bạn có muốn đổi lấy đệ tử mới (sơ sinh)\ntheo tộc mình không ?\nNhớ thu lại trang bị của đệ tử trước khi đổi.";
     public static final String NOT_RECEIVED_PET = "Không nhận\nđệ tử mới";
     public static final String DONE_VIP = "Chúc mừng bạn nâng cấp tài khoản thành VIP %d";
@@ -1255,6 +1294,7 @@ public class mResources {
     public static final String MAKE_SKH = "text0 %s \n|0|Ngẫu nhiên 1 trong 3 set kích hoạt ;:xu0 200000000;:menu1 Đồng ý:=385;:menu0 Từ chối:=0;:cbag0 1"; // nút nâng cấp
     public static final String TB_KICK_HOAT = "Trang bị\nKích hoạt";
 
+    public static final String POINT_SEASON2 = "[%s]\nvnd\n[%s]";
     public static final String SAY_DANH_HIEU = "Đây là toàn bộ các danh hiệu hiện có:\n";
     public static final String DANH_HIEU2 = "%d\n[%s]%s";
     public static final String SAY_WISH1 = "Ta có thể giúp gì cho ngươi.";
@@ -1277,7 +1317,7 @@ public class mResources {
     public static final String HAVE_BINH_CHUA = "Bạn chỉ có thể dùng 1 loại vật chứa";
     public static final String SAY_DUONG_TANG_4 = "A mi phò phò, Ngộ Không mau hộ tống sư phụ đi thỉnh chân kinh nào";
     public static final String HD_BLACKBALL1 = "Mỗi ngày từ 20h đến 21h các hành tinh có Ngọc Rồng Sao Đen sẽ xảy ra 1 cuộc đại chiến\bNgười nào tìm thấy và giữ được Ngọc Rồng Sao Đen sẽ mang phần thưởng về cho bang chủ của mình trong vòng 1 ngày\nLưu ý mỗi bang có thể chiếm hữu nhiều viên khác nhau\bNhưng nếu cùng loại cũng chỉ nhận được 1 lần phần thưởng đó.\bCó 2 cách để thắng:\b1) Giữ ngọc sao đen trên người hơn 5 phút liên tục\b2) Sau 30 phút tham gia tàu sẽ đón về và giữ ngọc sao đen trên người\nCác phần thưởng như sau\b";
-    public static final String HD_BLACKBALL2 = "1 sao đen: +15% sức đánh cho toàn bang\b2 sao đen: +20% HP tối đa cho toàn bang\b3 sao đen: +20% KI tối đa cho toàn bang\b4 sao đen: 20% TN,SM cho toàn bang\b5 sao đen: +5% chí mạng cho toàn bang\b6 sao đen: +15% giáp cho toàn bang\b7 sao đen: +5% sức đánh chí mạng cho toàn bang\bCác phần thưởng mỗi giờ đến gặp ta để nhận nhé";
+    public static final String HD_BLACKBALL2 = "1 sao đen: +15% sức đánh cho toàn bang\b2 sao đen: +20% HP KI tối đa cho toàn bang\b3 sao đen: +5 Chí Mạng\b4 sao đen: 20% TN,SM cho toàn bang\b5 sao đen: +5% Sức Đánh chí mạng cho toàn bang\b6 sao đen: +10% Hút KP\b7 sao đen: +10% Hút KI\bCác phần thưởng mỗi giờ đến gặp ta để nhận nhé";
     public static final String HD_COMMESON = "Thứ bị phong ấn tại đây là vũ khí có tên Commeson\bĐược tạo ra nhằm bảo vệ cho hành tinh Potaufeu\bTuy nhiên nó đã tàn phá mọi thứ trong quá khứ\nKhiến cư dân Potaufeu niêm phong nó với cái giá\bphải trả là mạng sống của họ\bTa, Potage là người duy nhất sống sót\bvà ta đã bảo vệ phong ấn hơn một trăm năm.\nTuy nhiên bọn xâm lượt Gryll đã đến và giải thoát Commeson\bHãy giúp ta tiêu diệt bản sao do Commeson tạo ra\bvà niêm phong Commeson một lần và mãi mãi";
     public static final String HD_DESTRONGAS1 = "Chúng ta gặp rắc rối rồi\bThượng Đế nói với tôi rằng có một loại khí\bgọi là Destron Gas, thứ này không thuộc về nơi đây\nNó tích tụ trên Trái Đất\bvà nó sẽ hủy diệt mọi mô tế bào sống\bCó tất cả 4 địa điểm mà Thượng Đế bảo tôi nói với cậu\bCậu có thể đến và kiểm tra...\n";
     public static final String HD_DESTRONGAS2 = "Đầu tiên là Thành phố Santa tọa lạc ở phía tây nam của thủ đô ở Viễn Đông.\nThứ hai là gần Kim Tự Tháp ở vùng Xa Mạc viễn tây của thủ đô Phía Bắc.\nThứ ba Vùng Đất Băng Giá ở Phương Bấc xa xôi\nThứ tư là Hành tinh Bóng Tối đang che phủ một phần địa cầu\bCậu đã hiểu rõ chưa?";
@@ -1328,7 +1368,7 @@ public class mResources {
     public static final String STR_NANGCAP2 = "Sau %d lần nâng cấp thất bại, bạn không đủ ngọc để tiếp tục";
     public static final String STR_NANGCAP3 = "Thành công sau %d lần nâng cấp.";
     public static final String STR_NANGCAP4 = "Thất bại sau %d lần nâng cấp.";
-    public static final String SRC_BIG_MESSAGE1 = "Thông báo|ngocrongzeno.com|trang chủ";
+    public static final String SRC_BIG_MESSAGE1 = "Thông báo|nrohuyetchien.click|trang chủ";
     public static final String CHAT_MAI_ARR = "Mọi người ơi, mọi người ơi|Xin hãy đi với em, Ca lích đột nhiên mất tích rồi|Em đã tìm khắp nơi mà không gặp cậu ấy, Các anh hãy tìm Ca lích giúp em.";
     public static final String CHAT_ME_ARR = "Hi Mai|Cái gì, biến mất à? Em không tìm thấy Ca lích à!|Chắc có lẽ Ca lích tương lai đến chỗ Kaio Shin luyện tập rồi.|Hành tinh ngục tù? Làm sao ngươi lại biết|Trời, khí của hắn thật khủng khiếp!|Mai, quá nguy hiểm mau trốn đi";
     public static final String CHAT_FU_ARR = "Cho phép tôi được giải thích|Tôi tên là Fu, tôi là bạn của Ca lích|Ca lích hiện đang gặp rắc rồi và bị kẹt ở Hành tinh ngục tù.|Bạn của tôi đang gặp nguy hiểm và tôi đang điều tra|Hành tinh ngục tù là nơi giam giữ những tên tội phạm nguy hiểm từ khắp các vũ trụ.|Nếu mọi người không đến Ca lích sẽ gặp nguy hiểm.|Cumber hạ hết bọn chúng cho ta";
@@ -1340,6 +1380,7 @@ public class mResources {
     public static final String BAN_NHAN_DUOC_9 = "Bạn nhận được %d %s, tại hòm thư";
     public static final String BAN_NHAN_DUOC_10 = "Bạn nhận được %s, tại hòm thư";
     public static final String MAILBOX1 = "Hòm thư";
+    public static final String CHANGE_DH_FREE = "Danh Hiệu\nMiễn Phí";
     public static final String NHAN_NGOC_FREE = "Nhận Ngọc Free";
     public static final String EVENT_HE_2023 = "Sự kiện\nHè 2025";
     public static final String SAY_SUKIEN1 = "Ta có thể giúp gì cho ngươi?";
@@ -1389,14 +1430,14 @@ public class mResources {
     public static final String PET_TRAI_DAT = "Trái đất";
     public static final String PET_NAMEC = "Namec";
     public static final String PET_XAYDA = "Xayda";
-    public static final String SAY_QUYLAO_N = "Danh hiệu YTB giúp tăng 2% HP, KI, Sức đánh\nCậu có muốn nhận danh hiệu không";
+    public static final String SAY_QUYLAO_N = "Danh hiệu Server giúp tăng 5% HP, KI, Sức đánh\nCậu có muốn nhận danh hiệu không";
     public static final String NHAN_NGAY2 = "Nhận ngay";
 
     public static final String SRC_SKH_NEW = "Vào hành trang\n"
-            + "Chọn 3 trang bị Huỷ diệt bất kì\n "
+            + "Chọn 3 trang bị Thần Linh bất kì\n "
             + "Và 500tr vàng \n "
             + "* Lưu ý : đồ SKH VIP sẽ cùng loại\n "
-            + "với món đồ Huỷ Diệt đầu tiên bạn bỏ vào ! \n"
+            + "với món đồ Thần Linh đầu tiên bạn bỏ vào ! \n"
             + "Chỉ cần chọn 'Nâng cấp'";
     public static final String SAY_SKH_NEW = "Ta sẽ phù phép\ncho trang bị của ngươi\ntrở thành trang bị kích hoạt";
 
@@ -1406,4 +1447,109 @@ public class mResources {
             + "x50 Đá Ngục tù \n"
             + "'Sau đó chọn Nâng cấp'";
     public static final String NANG_CHAN_MENH_SAY = "Ngươi có muốn nâng cấp chân mệnh không ?";
+    public static final String SAY_BA_HAT_MIT12 = "Ta cho thể giúp gì cho ngươi ?";
+    public static final String SACH_TUYET_KY2 = "Đóng thành\nSách cũ";
+    public static final String SACH_TUYET_KY3 = "Đổi sách\n Tuyệt kỹ";
+    public static final String SACH_TUYET_KY4 = "Giám định\nSách";
+    public static final String SACH_TUYET_KY5 = "Tẩy\nSách";
+    public static final String SACH_TUYET_KY6 = "Nâng cấp\nSách\nTuyệt kỹ";
+    public static final String SACH_TUYET_KY7 = "Hồi phục\nSách";
+    public static final String SACH_TUYET_KY8 = "Phân rã\nSách";
+    public static final String MAKE_BOOK1 = "text0 |1|Chế tạo cuốn sách cũ;:co0;:item1 1281 99 0;:item1 1282 1 0;:text0 \n|7|Tỉ lệ thành công: 20%\nThất bại mất 9 trang sách và 1 bìa sách;:cbag 1;:menu1 Đồng ý:=462;:menu0 Từ chối:=0";
+    public static final String MAKE_BOOK2 = "text0 |1|Đổi sách Tuyệt Kỹ 1;:co0;:item0 1283 10;:item0 1285 1;:text0 \n|7|Tỉ lệ thành công: 20%;:cbag 1;:menu1 Đồng ý:=464;:menu0 Từ chối:=0;:cbag0 1";
+    public static final String SRC_NANGCAP_15 = "Vào hành trang chọn\n1 sách cần giám định \n Và 2 bùa giám định";
+    public static final String SRC_NANGCAP_16 = "Ta sẽ phù phép\ngiám định sách đó cho ngươi";
+    public static final String FAILED_GIAM_DINH_1 = "Không thể giám định vật phẩm này.";
+    public static final String FAILED_GIAM_DINH_2 = "Không thể tẩy thuộc tính vật phẩm này.";
+    public static final String MAKE_BOOK3 = "text0 |1|Giám định %s ?;:item0 1284 2;:menu1 Giám định:=630;:menu0 Từ chối:=0";
+    public static final String BOOK_AND_AMU = "Cần Sách Tuyệt Kỹ và bùa giám định.";
+    public static final String SRC_NANGCAP_17 = "Vào hành trang chọn\n1 sách cần tẩy";
+    public static final String SRC_NANGCAP_18 = "Ta sẽ phù phép\ntẩy sách đó cho ngươi";
+    public static final String MAKE_BOOK4 = "text0 |2|Tẩy Sách Tuyệt Kỹ ?;:menu1 Đồng ý:=630;:menu0 Từ chối:=0";
+    public static final String CLEAR_BOOK_FAILD = "Cần Sách Tuyệt Kỹ để tẩy.";
+    public static final String SRC_NANGCAP_19 = "Vào hành trang chọn\nSách Tuyệt Kỹ 1 cần nâng cấp và 10 Kìm bấm giấy";
+    public static final String SRC_NANGCAP_20 = "Ta sẽ phù phép\nNâng cấp Sách Tuyệt Kỹ cho ngươi";
+    public static final String MAKE_BOOK5 = "text0 |2|Nâng cấp sách tuyệt kỹ ?\nCần 10 Kìm bấm giấy\nTỉ lệ thành công: 10%\nNâng cấp thất bại sẽ mất 10 Kìm bấm giấy;:item2 1285 10;:menu1 Nâng cấp:=630;:menu0 Từ chối:=0";
+    public static final String UPGRADE_BOOK_FAILD = "Cần Sách Tuyệt Kỹ 1 và 10 Kìm bấm giấy.";
+    public static final String SRC_NANGCAP_21 = "Vào hành trang chọn\nCác Sách Tuyệt Kỹ cần phục hồi";
+    public static final String SRC_NANGCAP_22 = "Ta sẽ phù phép\nphục hồi sách cho ngươi";
+    public static final String MAKE_BOOK6 = "text0 |2|Hồi phục Sách Tuyệt Kỹ ?\nCần 1 cuốn\n1 điểm độ bền cần phục hồi\nCần 5 ngọc;:menu1 Đồng ý:=630;:menu0 Từ chối:=0";
+    public static final String BROKEN_BOOK_FAILD = "Cần Sách Tuyệt Kỹ bị hỏng để phục hồi.";
+    public static final String SRC_NANGCAP_23 = "Vào hành trang chọn\n1 sách cần phân rã";
+    public static final String SRC_NANGCAP_24 = "Ta sẽ phù phép\nphân rã sách đó cho ngươi";
+    public static final String MAKE_BOOK7 = "text0 |2|Phân rã sách\nNhận lại 5 cuốn sách cũ\nPhí rã 10 triệu vàng;:menu1 Đồng ý:=630;:menu0 Từ chối:=0;:cbag0 1";
+    public static final String DECAY_BOOK_FAILD = "Cần Sách Tuyệt Kỹ để phân rã.";
+
+    //tb anh sang
+    public static final String TBANHSANG = "Quang Ám Hóa";
+    public static final String SAY_HAT_MIT_BT_AS = "Quang và Ám, vốn là hai thái cực vĩnh hằng.\nTrang bị này... ngươi muốn nó kế thừa sức mạnh nào?";
+    public static final String TRANG_BI_THIEU_K_PHU_HOP = "Vật phẩm hoặc trang bị không phù hợp.";
+    public static final String GHEP_TINH_THE = "Tinh Luyện Tinh Thể";
+    public static final String KHONG_DU_TINH_THE = "%s không đủ để tinh luyện. Vui lòng bổ sung thêm !";
+    public static final String SAY_GHEP_TINH_THE_0 = "Vào hành trang, chọn vật phẩm\nTinh Thể Hắc Ám hoặc Tinh Thể Thánh Quang\nSau đó chọn 'Nâng Cấp'";
+    public static final String SAY_GHEP_TINH_THE_1 = "Ta sẽ đưa sức mạnh vào\nđể tinh luyện tinh thể\nnày thành loại đá ngươi cần.";
+    public static final String SAY_INFO_GHEP_TINH_THE = "Tinh luyện cần tối thiểu 4 tinh thể cùng loại.\nHiện có: %d %s| Có thể tinh luyện ra: %d | Cần %s vàng";
+    public static final String NANG_CAP_TINH_THE = "Tinh Luyện";
+    public static final String NANG_CAP_TINH_THE_LIEN_TUC = "Tinh Luyện Liên Tục";
+
+    //--- BÓNG TỐI HÓA (ÁM HÓA) ---
+    public static final String BONG_TOI_HOA = "Ám Hóa\ntrang bị";
+    public static final String MAX_BONG_TOI_HOA = "Trang bị đã hấp thụ Hắc Ám đến cực hạn.";
+    public static final String KHONG_DUOC_BONG_TOI_HOA = "Trang bị này đang mang sức mạnh của Thánh Quang!\nQuang và Ám không thể dung hòa.\nHãy 'Tịnh Hóa' nó về trạng thái 'Cân Bằng' trước.";
+    public static final String THIEU_VANG_BONG_TOI_HOA = "Không đủ Vàng để Ám Hóa.";
+    public static final String THIEU_NGOC_BONG_TOI_HOA = "Không đủ Ngọc để Ám Hóa.";
+    public static final String THIEU_DA_BONG_TOI_HOA = "Không đủ Đá Hắc Ám.";
+    public static final String SAY_BONG_TOI_HOA_0 = "Vào hành trang\nChọn trang bị\n(Áo, quần, găng, giày, rada hoặc cải trang)\nChọn Đá Hắc Ám\nSau đó chọn 'Nâng cấp'";
+    public static final String SAY_BONG_TOI_HOA_1 = "Ta sẽ dẫn dắt Hắc Ám\nchú nhập vào trang bị này.";
+    public static final String SAY_INFO_BONG_TOI_HOA = "Ám Hóa %s lên cấp %d\nCần: %s Vàng | %d Ngọc | %d Đá Hắc Ám\nTỉ lệ thành công: %d%%";
+    public static final String NANG_CAP_BONG_TOI_HOA = "Ám Hóa";
+    public static final String NANG_CAP_BONG_TOI_HOA_X10 = "Ám Hóa\n(x10)";
+
+    //--- TẨY BÓNG TỐI (TỊNH HÓA ÁM) ---
+    public static final String TAY_BONG_TOI = "Tịnh Hóa Ám\ntrang bị";
+    public static final String SAY_TAY_BONG_TOI_0 = "Vào hành trang\nChọn trang bị\n(Áo, quần, găng, giày, rada hoặc cải trang)\nChọn Đá Thánh Quang\nSau đó chọn 'Nâng cấp'";
+    public static final String SAY_TAY_BONG_TOI_1 = "Ta sẽ Tịnh Hóa Hắc Ám,\nđưa trang bị trở về\ntrạng thái Cân Bằng.";
+    public static final String THIEU_DA_ANH_SANG = "Cần Đá Thánh Quang để Tịnh Hóa Hắc Ám."; // ID gốc là THIEU_DA_ANH_SANG, nội dung đã sửa
+    public static final String THIEU_NGOC_TAY_BONG_TOI = "Không đủ Ngọc để Tịnh Hóa.";
+    public static final String SAY_INFO_TAY_BONG_TOI = "Tịnh Hóa 1 cấp Hắc Ám, đưa trang bị về trạng thái Cân Bằng.\nCần: %d Ngọc | %d Đá Thánh Quang";
+    public static final String TAY_BONG_TOI_1_LAN = "Tịnh Hóa\n(x1)";
+    public static final String TAY_BONG_TOI_ALL = "Hoàn Nguyên";
+
+    //--- ÁNH SÁNG HÓA (QUANG HÓA) ---
+    public static final String ANH_SANG_HOA = "Quang Hóa\ntrang bị";
+    public static final String MAX_ANH_SANG_HOA = "Trang bị đã hấp thụ Thánh Quang đến cực hạn.";
+    public static final String KHONG_DUOC_ANH_SANG_HOA = "Trang bị này đang nhuốm Hắc Ám!\nQuang và Ám không thể dung hòa.\nHãy 'Tịnh Hóa' nó về trạng thái 'Cân Bằng' trước.";
+    public static final String THIEU_VANG_ANH_SANG_HOA = "Không đủ Vàng để Quang Hóa.";
+    public static final String THIEU_NGOC_ANH_SANG_HOA = "Không đủ Ngọc để Quang Hóa.";
+    public static final String THIEU_DA_ANH_SANG_HOA = "Không đủ Đá Thánh Quang.";
+    public static final String SAY_ANH_SANG_HOA_0 = "Vào hành trang\nChọn trang bị\n(Áo, quần, găng, giày, rada hoặc cải trang)\nChọn Đá Thánh Quang\nSau đó chọn 'Nâng cấp'";
+    public static final String SAY_ANH_SANG_HOA_1 = "Ta sẽ dẫn dắt Thánh Quang\nchú nhập vào trang bị này.";
+    public static final String SAY_INFO_ANH_SANG_HOA = "Quang Hóa %s lên cấp %d\nCần: %s Vàng | %d Ngọc | %d Đá Thánh Quang\nTỉ lệ thành công: %d%%"; // Đã sửa lỗi logic (cần đá Thánh Quang, không phải đá bóng tối)
+    public static final String NANG_CAP_ANH_SANG_HOA = "Quang Hóa";
+    public static final String NANG_CAP_ANH_SANG_HOA_X10 = "Quang Hóa\n(x10)";
+
+    //--- TẨY ÁNH SÁNG (TỊNH HÓA QUANG) ---
+    public static final String TAY_ANH_SANG = "Tịnh Hóa Quang\ntrang bị";
+    public static final String SAY_TAY_ANH_SANG_0 = "Vào hành trang\nChọn trang bị\n(Áo, quần, găng, giày, rada hoặc cải trang)\nChọn Đá Hắc Ám\nSau đó chọn 'Nâng cấp'";
+    public static final String SAY_TAY_ANH_SANG_1 = "Ta sẽ Tịnh Hóa Thánh Quang,\nđưa trang bị trở về\ntrạng thái Cân Bằng.";
+    public static final String THIEU_DA_BONG_TOI = "Cần Đá Hắc Ám để Tịnh Hóa Thánh Quang."; // ID gốc là THIEU_DA_BONG_TOI, nội dung đã sửa lỗi logic (cần đá Hắc Ám, không phải đá ánh sáng)
+    public static final String THIEU_NGOC_TAY_ANH_SANG = "Không đủ Ngọc để Tịnh Hóa.";
+    public static final String SAY_INFO_TAY_ANH_SANG = "Tịnh Hóa 1 cấp Thánh Quang, đưa trang bị về trạng thái Cân Bằng.\nCần: %d Ngọc | %d Đá Hắc Ám";
+    public static final String TAY_ANH_SANG_1_LAN = "Tịnh Hóa\n(x1)";
+    public static final String TAY_ANH_SANG_ALL = "Hoàn Nguyên";
+
+    /////
+    public static final String SAY_DR_MY_1 = "Ngươi muốn về hả ?";
+    public static final String SAY_DR_MY = "Năm 740, ta tìm thấy kí sinh trùng của King Tuffle,\nsau đó ta đã nghiên cứu và chế tạo ra kí sinh trùng Baby.\nBaby có khả năng bám vào cơ thể của người khác,\nkiểm soát sức mạnh của họ và làm việc theo ý của ta.\ntuy nhiên ta đã mất kiểm soát nó hoàn toàn...\nngươi có thể giúp ta chế ngự nó không ?";
+
+    //noel
+    public static final String EVENT_NOEL = "Trang Trí\nCây Thông";
+    public static final String EVENT_MAP_NOEL = "Vùng Đất Băng Giá Sự Kiện Noel";
+    public static final String SAY_EVENT_NOEL = "Bạn có thể chọn trang trí cây thông hoặc trang trí cây thông hoặc trang trí bằng ngọc rồng";
+    public static final String SAY1_EVENT_NOEL = "Chức Năng Hiện tại đang phát triển. sẽ update sau!";
+
+    public static final String CAY_THONG_NOEL = "Trang Trí\nCây Thông";
+    public static final String NGOC_RONG = "Trang Trí\nNgọc Rồng";
+    public static final String SAY_CAY_THONG_NOEL = "Để trang trí cây thông cần:\n99 Chuông, 99 Quả Châu, 99 Ngôi Sao, 50 Dây Kim Tuyến, 50 Móc Treo Noel";
+    public static final String SAY_NGOC_RONG = "Để trang trí ngọc rồng cần:\n1 Ngọc Rồng 1s,2 Ngọc Rồng 2s,3 Ngọc Rồng 3s,4 Ngọc Rồng 4s";
 }

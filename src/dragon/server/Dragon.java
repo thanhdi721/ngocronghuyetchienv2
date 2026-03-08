@@ -27,13 +27,13 @@ import hethong.AutoSave;
 public class Dragon {
     
     protected static int vResource = 5714017;
-    protected static byte vData = 33;
-    protected static byte vMap = 33;
+    protected static byte vData = 47;
+    protected static byte vMap = 47;
     protected static byte vSkill = 14;
     protected static byte vItem = 38;
-    public static String LINK_IP_PORT_SERVER = "Nro Zeno :127.0.0.1:14445:0,0,0";
- 
-    public static int PORT = 14445;
+    public static String LINK_IP_PORT_SERVER = "Nro Huyết Chiến :160.191.175.24:12345:0,0,0";
+ // sự kiện>>
+    public static int PORT = 12345;
     public static boolean isEvent_Noel = false;
     public static boolean isEvent_Mabu = false;
     public static boolean isEvent_NHS = false;
@@ -44,9 +44,9 @@ public class Dragon {
     public static boolean isEvent_TetNguyenDan = false;
     public static boolean isEvent_Girl = false;
     public static boolean isEvent_HungVuong = false;
-    public static boolean isEvent_HE2023 = true;
+    public static boolean isEvent_HE2023 = false;
     public static boolean isEvent_DIET_SAU_BO_2023 = false;
-    public static boolean isEvent_VIP = false;
+    public static boolean isEvent_VIP = true;
 
     
     public static void main(String[] args) {
@@ -54,6 +54,22 @@ public class Dragon {
         System.out.println("DEBUG="+ Util.gI().debug);
         ServerActivity.gI().Activity();
         GameData.init();
+        // [ĐẠO LỮ] Kiểm tra bảng daolus trong database nro_player
+        try {
+            MySQL checkDB = MySQL.createData3();
+            try {
+                checkDB.getConnection().prepareStatement("SELECT 1 FROM `daolus` LIMIT 1").executeQuery();
+                System.out.println("[DaoLu] OK: Bảng 'daolus' tồn tại trong nro_player.");
+            } catch (Exception e) {
+                System.out.println("[DaoLu] CẢNH BÁO: Bảng 'daolus' CHƯA CÓ trong database nro_player!");
+                System.out.println("[DaoLu] Chạy SQL: CREATE TABLE daolus ... từ file sql/nro_daolu.sql");
+                System.out.println("[DaoLu] Lỗi: " + e.getMessage());
+            } finally {
+                checkDB.close();
+            }
+        } catch (Exception e2) {
+            System.out.println("[DaoLu] Không thể kết nối nro_player: " + e2.getMessage());
+        }
         Server.init();
         MapTemplate.initCollisionPixel();
         Map.initMapServer();
@@ -77,7 +93,6 @@ public class Dragon {
         AutoSave.startAutoSave();
         Server.gI().initBotTop();
         Server.gI().initMabu();
-//        MocNapManager.instance().loadData();
         Server.start(PORT);
         
     }

@@ -419,7 +419,7 @@ public class Item {
     }
 
     public boolean isItemSLL() {
-        return this.template.id == 590 || this.template.id == 933;
+        return this.template.id == 590 || this.template.id == 933 || this.template.id == 2027;
     }
 
     public boolean isItemPet() {
@@ -447,11 +447,20 @@ public class Item {
                 || this.template.id == 1748 || this.template.id == 1750
                 || this.template.id == 1786 || this.template.id == 1791
                 || this.template.id == 1792 || this.template.id == 1793
-                || this.template.id == 1794) {
+                || this.template.id == 1794 || this.template.id == 1797
+                || this.template.id == 1798 || this.template.id == 1799
+                || this.template.id == 1800 || this.template.id == 1801
+                || this.template.id == 1802 || this.template.id == 1804
+                || this.template.id == 1805 || this.template.id == 1861
+                || this.template.id == 1862
+                || this.template.id == 1863|| this.template.id == 1847
+                || this.template.id == 1848|| this.template.id == 1849
+                || this.template.id == 2047) {
             return true;
         }
         return (this.template.id >= 916 && this.template.id <= 919) || (this.template.id >= 942 && this.template.id <= 944) || this.template.id == 1039 || this.template.id == 1040 || this.template.id == 1046 || this.template.id == 908 || this.template.id == 909 || this.template.id == 910 || this.template.id == 967 || this.template.id == 1107 || this.template.id == 1114 || this.template.id == 1188;
     }
+    
 
     public boolean isItemLimit() {
         return this.template.id == 984 || this.template.id == 574 || this.template.id == 1116;
@@ -484,10 +493,16 @@ public class Item {
     public boolean isItemKyGui() {
         return this.isHaveOption(86) || this.isHaveOption(87) || (this.template.id >= 14 && this.template.id <= 20) || (this.template.id >= 63 && this.template.id <= 65) || this.template.id == 352 || this.template.id == 523 || this.template.id == 595 || this.template.type == 14;
     }
+    public boolean isItemDanhhieu() {
+        return this.template.id == 1289
+                || this.template.id == 1290
+                || this.template.id == 1294
+                || this.template.id == 1295;
+    }
 
     public int maxQuantity() {
         if (this.template.id == 457) {
-            return 30000;
+            return 3000000;
         }
         if (this.template.id >= 199 && this.template.id <= 202) {
             return 10000;
@@ -504,6 +519,7 @@ public class Item {
         if (this.template.id == 1134) {
             return 30000;
         }
+
         if (this.template.id >= 1177 && this.template.id <= 1181) {
             return 30000;
         }
@@ -550,6 +566,10 @@ public class Item {
         //su kien he 2025 2
         if (this.template.id >= 1237 && this.template.id <= 1240 || this.template.id >= 1245 && this.template.id <= 1251 || this.template.id >= 1987 && this.template.id <= 1988) {
             return 99999;
+        }
+        //Trang sach
+        if (this.template.id == 1281) {
+            return 999999;
         }
         return 99999;
     }
@@ -891,7 +911,7 @@ public class Item {
     }
 
     public boolean isItemPetFollowz() {
-        return (this.template.id >= 972 && this.template.id <= 977);
+        return (this.template.id >= 972 && this.template.id <= 977) || (this.template.id >= 1910 && this.template.id <= 1958);
     }
 
     public boolean isItemNamekBall() {
@@ -919,7 +939,7 @@ public class Item {
                 || this.template.type == 5 || this.template.type == 6 || this.template.type == 7 || this.template.type == 11 || this.template.type == 13 || this.template.type == 14
                 || this.template.type == 15 || this.template.type == 16 || this.template.type == 22 || this.template.type == 23 || this.template.type == 24 || this.template.type == 25
                 || this.template.type == 27 || this.template.type == 29 || this.template.type == 30 || this.template.type == 31 || this.template.type == 32 || this.template.type == 33
-                || this.template.type == 21 || this.template.type == 72 || this.template.type == 40;
+                || this.template.type == 21 || this.template.type == 72 || this.template.type == 40 || this.template.type == 36;
     }
 
     public String strOption() {

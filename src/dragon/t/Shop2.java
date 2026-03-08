@@ -69,6 +69,13 @@ public class Shop2 {
                 return true;
             }
         }
+        //Hong ngoc
+        if (item.iconSpec == 7743) {
+            if (charz.luongKhoa < item.buySpec) {
+                charz.addInfo1(String.format(mResources.CAN_ITEM_2, Util.gI().numberTostring(item.buySpec - charz.luongKhoa), "hồng ngọc"));
+                return true;
+            }
+        }
         //Vang
         if (item.iconSpec == 930) {
             if (charz.xu < item.buySpec) {

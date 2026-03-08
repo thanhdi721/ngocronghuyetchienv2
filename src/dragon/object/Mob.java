@@ -356,6 +356,10 @@ public class Mob {
                     //
                     this.fallItem(charz, itemMaps, type, this.getCharIdMaxDam());
                     this.zone.mobDie(this.mobId, dam, flag, itemMaps);
+                    if (!this.isMobMe && charz != null) {
+                        dragon.object.Char player = charz.myCharz();
+                        if (player != null && !player.isTemplate) dragon.t.SeasonPass.gI().addMonsterKill(player);
+                    }
                     if (charz != null && charz.myCharz().isHutVP) {
                         for (i = 0; i < itemMaps.size(); i++) {
                             ItemMap itemMap3 = itemMaps.get(i);

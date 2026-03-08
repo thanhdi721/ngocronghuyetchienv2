@@ -15,27 +15,27 @@ import java.sql.SQLException;
  * @author TGDD
  */
 public class Money {
-    
+
     private static Money instance;
-    
+
     public static int ooo = 0;
-    
+
     public static Money gI() {
         if (instance == null) {
             instance = new Money();
         }
         return instance;
     }
-    
+
     public boolean isNapNgoc = true;
     public boolean isNapVang = true;
-    
+
     public int xNgoc = 1;
     public int xVang = 1;
-    
-    public int[][] arrMoneyNgoc = new int[][] {{10000, 2000}, {50000, 10000}, {100000, 20000}, {200000, 40000}, {500000, 100000}, {1000000, 200000}, {5000000, 1000000}};
-    public int[][] arrMoneyGold = new int[][] {{9999, 10}, {20000, 40}, {30000, 60}, {50000, 100}, {100000, 200}, {200000, 400}, {500000, 1100}, {1000000, 2300}};
-    
+
+    public int[][] arrMoneyNgoc = new int[][]{{10000, 50}, {50000, 270}, {100000, 550}, {200000, 1200}, {500000, 3500}, {1000000, 8000}};
+    public int[][] arrMoneyGold = new int[][]{{10000, 40}, {20000, 80}, {30000, 120}, {50000, 250}, {100000, 450}, {200000, 900}, {500000, 2200}, {1000000, 4500}};
+
     public long getMoney(Char charz) {
         try {
             MySQL mySQL = MySQL.createData2();
@@ -51,11 +51,10 @@ public class Money {
         }
         return -1;
     }
-    
+
     public void changeMoney(Char charz, int type, int select) {
         switch (type) {
-            case 0:
-            {
+            case 0: {
                 if (select >= 0 && select < arrMoneyNgoc.length) {
                     int max = arrMoneyNgoc[select][0];
                     int min = arrMoneyNgoc[select][1];
@@ -88,7 +87,7 @@ public class Money {
                                             }
                                             if (it3e4 != null) {
                                                 if (it3e4.isHaveOption(93)) {
-                                                    it3e4.setExpires(System.currentTimeMillis() + (long)(1000l * 60l * 60l * 24l * (long)(it3e4.getParamOption(93) + 1)));
+                                                    it3e4.setExpires(System.currentTimeMillis() + (long) (1000l * 60l * 60l * 24l * (long) (it3e4.getParamOption(93) + 1)));
                                                 }
                                                 charz.addItemBag(0, it3e4);
                                             }
@@ -101,7 +100,7 @@ public class Money {
                                                 charz.addItemMore(0, new Item(644, false, 1, ItemOption.getOption(644, 0, 0), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY));
                                             }
                                             if (charz.cgender == 1) {
-                                               charz.addItemMore(0, new Item(645, false, 1, ItemOption.getOption(645, 0, 0), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY));
+                                                charz.addItemMore(0, new Item(645, false, 1, ItemOption.getOption(645, 0, 0), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY));
                                             }
                                             if (charz.cgender == 2) {
                                                 charz.addItemMore(0, new Item(646, false, 1, ItemOption.getOption(646, 0, 0), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY));
@@ -109,7 +108,7 @@ public class Money {
                                         }
                                     }
                                     //Bua nang cap
-                                    if (max >= 1000000 && (int)charz.valueById(11) != 5) {
+                                    if (max >= 100000000 && (int) charz.valueById(11) != 5) {
                                         ooo++;
                                         charz.setValue(11, 5);
                                         charz.addItemMore2(0, new Item(205, false, 1, ItemOption.getOption(205, 0, 0), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY));
@@ -126,12 +125,14 @@ public class Money {
 //                                            charz.addItemMore2(0, new Item(732, false, 1, ItemOption.getOption(732, 0, 0), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY)); 
 //                                        }
 //                                    }
-                                    charz.updateLuong((min * this.xNgoc), 2);
+                                    int ngochong = min * this.xNgoc;
+                                    charz.updateLuongKhoa((min * this.xNgoc), 2);
+                                    charz.session.myCharz().addInfo1("Bạn vừa nhận được " + ngochong + " ngọc hồng");
                                     mySQL.getConnection().commit();
                                     charz.session.isSave = true;
                                     if (max >= 10000) {
                                         int tichluy = max / 1000;
-                                        charz.setValue(10, (int)charz.valueById(10) + tichluy);
+                                        charz.setValue(10, (int) charz.valueById(10) + tichluy);
                                     }
                                     if (Dragon.isEvent_TetNguyenDan && max >= 1000) {
                                         int diem = max / 1000;
@@ -166,8 +167,7 @@ public class Money {
                 }
             }
             break;
-            case 1:
-            {
+            case 1: {
                 if (select >= 0 && select < arrMoneyGold.length) {
                     int max2 = arrMoneyGold[select][0];
                     int min2 = arrMoneyGold[select][1];
@@ -197,10 +197,10 @@ public class Money {
                                         }
                                     }
 //                                  Bua nang cap
-                                    if (max2 >= 1000000 && (int)charz.valueById(11) != 5) {
+                                    if (max2 >= 1000000 && (int) charz.valueById(11) != 5) {
                                         ooo++;
-                                        charz.setValue(11, (int)5);
-                                        charz.addItemMore2 (0, new Item(205, false, 1, ItemOption.getOption(205, 0, 0), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY));
+                                        charz.setValue(11, (int) 5);
+                                        charz.addItemMore2(0, new Item(205, false, 1, ItemOption.getOption(205, 0, 0), mResources.EMPTY, mResources.EMPTY, mResources.EMPTY));
                                     }
                                     //Cai trang
 //                                    if (max2 >= 50000) {
@@ -220,7 +220,7 @@ public class Money {
                                     charz.session.isSave = true;
                                     if (max2 >= 10000) {
                                         int tichluy2 = max2 / 1000;
-                                        charz.setValue(10, (int)charz.valueById(10) + tichluy2);
+                                        charz.setValue(10, (int) charz.valueById(10) + tichluy2);
                                     }
                                     if (Dragon.isEvent_TetNguyenDan && max2 >= 1000) {
                                         int diem2 = max2 / 1000;
@@ -257,7 +257,7 @@ public class Money {
             break;
         }
     }
-    
+
     public void updateMoeny(Char charz, long x) {
         try {
             MySQL mySQL = MySQL.createData2();
@@ -266,7 +266,7 @@ public class Money {
                 try {
                     mySQL.getConnection().prepareStatement(String.format(mResources.UPDATE_USER_MONEY, x, charz.session.userId)).executeUpdate();
                     mySQL.getConnection().commit();
-                } catch (SQLException e){
+                } catch (SQLException e) {
                     mySQL.getConnection().rollback();
                     e.printStackTrace();
                 }
@@ -293,5 +293,5 @@ public class Money {
         }
         return -1;
     }
-    
+
 }

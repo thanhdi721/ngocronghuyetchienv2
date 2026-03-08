@@ -7,8 +7,13 @@ public class Memory {
 
     public int userId = -1;
     public int lastlogout = 0;
+    public int pointEvent2 = 0;
     public int nFreeWish = 1;
+    public boolean isRuongDaiHoi = false;
     public long timeWaitRoadSnake = -1;
+    public boolean isThoDaiCa = false;
+    public int nBanDoKhoBau = 3;
+    public int nKhiHuyDiet = 3;
 
     public Memory(int userId) {
         this.userId = userId;

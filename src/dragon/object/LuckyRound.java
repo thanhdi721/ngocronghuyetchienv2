@@ -25,7 +25,7 @@ public class LuckyRound {
     public int[] rand_coin_K2 = new int[]{100, 120, 150, 200, 240, 290, 300, 390, 420, 460, 500, 1000};
 
     public int[] price = new int[]{
-        25000000,
+        250000000,
         10
     };
 

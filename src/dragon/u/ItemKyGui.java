@@ -224,7 +224,7 @@ public class ItemKyGui {
                         //new item
                         ItemKyGui kygui0 = new ItemKyGui(charz.arrItemBag[itemId].clone(), charz.playerId);
                         //Xoa
-                        charz.updateLuong(-NGOC_SALE, 2);
+                        charz.updateLuongKhoa(-NGOC_SALE, 2);
                         charz.useItemBag(itemId, quaintly);
                         //Set
                         kygui0.item.quantity = quaintly;
@@ -359,7 +359,7 @@ public class ItemKyGui {
                                         kygui3.item.buyGold = -1;
                                     }
                                 } else {
-                                    charz.updateLuong(-kygui3.item.buyGold, 0);
+                                    charz.updateLuongKhoa(-kygui3.item.buyGold, 0);
                                     kygui3.item.buyCoin = -1;
                                 }
                                 kygui3.item.buyType = 2;
