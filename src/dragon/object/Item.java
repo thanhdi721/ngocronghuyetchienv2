@@ -374,8 +374,12 @@ public class Item {
         return this.template.id == 531 || this.template.id == 536;
     }
 
+    public boolean isItemTraining4() {
+        return this.template.id == 1716;
+    }
+
     public boolean isItemTraining() {
-        return this.isItemTraining1() || this.isItemTraining2() || this.isItemTraining3();
+        return this.isItemTraining1() || this.isItemTraining2() || this.isItemTraining3() || this.isItemTraining4();
     }
 
     public boolean isItemWishGem() {
@@ -727,6 +731,20 @@ public class Item {
         return str;
     }
 
+    /** Nội dung gửi client: thêm dòng tích phút (option 9) cho giáp luyện tập để hiển thị như cấp 3. */
+    public String getContentForSend() {
+        String c = this.content != null ? this.content : mResources.EMPTY;
+        if (this.isItemTraining() && this.isHaveOption(9) && GameData.iOptionTemplates != null && 9 < GameData.iOptionTemplates.length) {
+            ItemOption opt9 = this.getOption(9);
+            if (opt9 != null) {
+                String linePhut = GameData.iOptionTemplates[9].name.replaceAll(mResources.OPTION_PARAM, mResources.EMPTY + opt9.param);
+                if (!c.isEmpty()) c += "\n";
+                c += String.format(mResources.FONT_COLOR_OPTION, linePhut);
+            }
+        }
+        return c;
+    }
+
     public String optionCombine() {
         String str = mResources.EMPTY;
         int i;
@@ -824,6 +842,10 @@ public class Item {
         item.bagTemp = Short.parseShort(jarr.get(m++).toString());
         item.wpTemp = Short.parseShort(jarr.get(m++).toString());
         item.expires = Long.parseLong(jarr.get(m++).toString());
+        // Giáp luyện tập cấp 4 (1716): đảm bảo có option 9 (tích phút) khi load từ DB
+        if (item.template != null && item.template.id == 1716 && !item.isHaveOption(9)) {
+            item.options.add(new ItemOption(9, 0));
+        }
         return item;
     }
 

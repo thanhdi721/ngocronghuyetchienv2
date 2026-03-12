@@ -1563,6 +1563,9 @@ public class ItemOption {
             case 536:
                 options.add(new ItemOption(9, 0));
                 break;
+            case 1716:
+                options.add(new ItemOption(9, 0));
+                break;
             case 549:
                 options.add(new ItemOption(8, 4));
                 options.add(new ItemOption(50, 20));

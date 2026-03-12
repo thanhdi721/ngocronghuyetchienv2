@@ -790,7 +790,7 @@ public class Service {
                     msg.writer().writeShort(itemBody.template.id);
                     msg.writer().writeInt(itemBody.quantity);
                     msg.writer().writeUTF(itemBody.info);
-                    msg.writer().writeUTF(itemBody.content);
+                    msg.writer().writeUTF(itemBody.getContentForSend());
                     //=================Write Option==============//
                     if (itemBody.options.isEmpty()) {
                         msg.writer().writeByte(1);
@@ -815,7 +815,7 @@ public class Service {
                     msg.writer().writeShort(itemBag.template.id);
                     msg.writer().writeInt(itemBag.quantity);
                     msg.writer().writeUTF(itemBag.info);
-                    msg.writer().writeUTF(itemBag.content);
+                    msg.writer().writeUTF(itemBag.getContentForSend());
                     //=================Write Option==============//
                     if (itemBag.options.isEmpty()) {
                         msg.writer().writeByte(1);
@@ -840,7 +840,7 @@ public class Service {
                     msg.writer().writeShort(itemBox.template.id);
                     msg.writer().writeInt(itemBox.quantity);
                     msg.writer().writeUTF(itemBox.info);
-                    msg.writer().writeUTF(itemBox.content);
+                    msg.writer().writeUTF(itemBox.getContentForSend());
                     //=================Write Option==============//
                     if (itemBox.options.isEmpty()) {
                         msg.writer().writeByte(1);
@@ -1441,7 +1441,7 @@ public class Service {
                     msg.writer().writeShort(item.template.id);
                     msg.writer().writeInt(item.quantity);
                     msg.writer().writeUTF(item.info);
-                    msg.writer().writeUTF(item.content);
+                    msg.writer().writeUTF(item.getContentForSend());
                     if (item.options.isEmpty()) {
                         msg.writer().writeByte(1);
                         msg.writer().writeByte(73);
@@ -1479,7 +1479,7 @@ public class Service {
                     msg.writer().writeShort(item.template.id);
                     msg.writer().writeInt(item.quantity);
                     msg.writer().writeUTF(item.info);
-                    msg.writer().writeUTF(item.content);
+                    msg.writer().writeUTF(item.getContentForSend());
                     if (item.options.isEmpty()) {
                         msg.writer().writeByte(1);
                         msg.writer().writeByte(73);
@@ -1631,7 +1631,7 @@ public class Service {
                     msg.writer().writeShort(item.template.id);
                     msg.writer().writeInt(item.quantity);
                     msg.writer().writeUTF(item.info);
-                    msg.writer().writeUTF(item.content);
+                    msg.writer().writeUTF(item.getContentForSend());
                     if (item.options.isEmpty()) {
                         msg.writer().writeByte(1);
                         msg.writer().writeByte(73);
@@ -3244,7 +3244,7 @@ public class Service {
                     msg.writer().writeShort(petz.arrItemBody[i].template.id);
                     msg.writer().writeInt(petz.arrItemBody[i].quantity);
                     msg.writer().writeUTF(petz.arrItemBody[i].info);
-                    msg.writer().writeUTF(petz.arrItemBody[i].content);
+                    msg.writer().writeUTF(petz.arrItemBody[i].getContentForSend());
                     if (petz.arrItemBody[i].options.isEmpty()) {
                         msg.writer().writeByte(1);
                         msg.writer().writeByte(73);

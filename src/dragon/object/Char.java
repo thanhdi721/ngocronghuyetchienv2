@@ -1617,6 +1617,10 @@ public class Char {
                 if (this.arrItemBody[6].isItemTraining3()) {
                     this.cDamFull = this.cDamFull - ((int) ((long) this.cDamFull * 30L / 100L));
                 }
+                if (this.arrItemBody[6].isItemTraining4()) {
+                    this.cDamFull = this.cDamFull - ((int) ((long) this.cDamFull * 40L / 100L));
+                    this.cHPFull = this.cHPFull + ((int) ((long) this.cHPFull * 20L / 100L));
+                }
             }
             }
             if (this.isMonkeyCheat) {
@@ -1635,6 +1639,9 @@ public class Char {
             }
             if (this.itemGLT.isItemTraining3()) {
                 this.cDamFull = this.cDamFull + ((int) ((long) this.cDamFull * 30L / 100L));
+            }
+            if (this.itemGLT.isItemTraining4()) {
+                this.cDamFull = this.cDamFull + ((int) ((long) this.cDamFull * 40L / 100L));
             }
         }
          }
